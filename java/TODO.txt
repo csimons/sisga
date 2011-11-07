@@ -1,0 +1,5 @@
+- Implement bit-string decoders (bit-string -> X, bit-string -> X, Y).
+- Implement additional fitness functions.
+- Dynamically load fitness determinant classes based on command-line
+  arguments, so that changing fitness functions can be done without
+  having to recompile.
