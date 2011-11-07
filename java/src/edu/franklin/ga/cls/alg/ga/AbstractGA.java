@@ -1,10 +1,10 @@
-package edu.franklin.ga.cls;
+package edu.franklin.ga.cls.ga;
 
-import edu.franklin.ga.cls.alg.GeneMutation;
-import edu.franklin.ga.cls.alg.GeneSetMutation;
-import edu.franklin.ga.cls.alg.ParentSelection;
-import edu.franklin.ga.cls.alg.Recombination;
-import edu.franklin.ga.cls.alg.SurvivorSelection;
+import edu.franklin.ga.cls.alg.mutation.gene.GeneMutation;
+import edu.franklin.ga.cls.alg.mutation.geneset.GeneSetMutation;
+import edu.franklin.ga.cls.alg.selection.parent.ParentSelection;
+import edu.franklin.ga.cls.alg.selection.survivor.SurvivorSelection;
+import edu.franklin.ga.cls.alg.recombination.Recombination;
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
 import edu.franklin.ga.cls.model.Gene;
 import edu.franklin.ga.cls.util.GAResultSet;

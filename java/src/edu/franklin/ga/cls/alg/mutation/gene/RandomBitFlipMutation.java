@@ -1,4 +1,4 @@
-package edu.franklin.ga.cls.alg;
+package edu.franklin.ga.cls.alg.mutation.gene;
 
 import edu.franklin.ga.cls.model.Gene;
 

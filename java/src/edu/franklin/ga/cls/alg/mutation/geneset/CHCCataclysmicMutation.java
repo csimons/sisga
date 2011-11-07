@@ -1,4 +1,4 @@
-package edu.franklin.ga.cls.alg;
+package edu.franklin.ga.cls.alg.mutation.geneset;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
 import edu.franklin.ga.cls.model.Gene;
