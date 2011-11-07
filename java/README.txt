@@ -1,3 +1,8 @@
+This project has been built in the UNIX environment and has not been tested
+under Windows.  The plotting script definitely will not work natively in
+Windows (a bash script), although it might run with 'cygwin'.
+
+
 BUILDING
 
 To build:
@@ -6,7 +11,7 @@ To build:
    a. Ensure that the JAVA_HOME environment variable is set.
    b. Ensure that JAVA_HOME/bin is present in your PATH.
 
-2. Install Apache Ant.
+2. Install Apache Ant (1.7+ REQUIRED, due to JUnit4 stuff).
    a. Ensure the ANT_HOME environment variable is set.
    b. Ensure that ANT_HOME/bin is present in your PATH.
 
