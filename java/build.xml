@@ -2,6 +2,7 @@
 <project name="JGA" basedir="." default="main">
 
  <!-- Christopher L. Simons -->
+ <!-- Depends on JUnit4 being installed. -->
 
  <property name="main-class"  value="edu.franklin.ga.cls.util.GARunner" />
 
@@ -38,7 +39,22 @@
   </jar>
  </target>
 
- <target name="run" depends="jar">
+ <target name="test" depends="jar">
+  <junit showoutput="yes" printsummary="yes" haltonfailure="yes">
+   <!-- <formatter type="xml" /> -->
+   <classpath>
+    <fileset dir="${dist.dir}" includes="${ant.project.name}.jar" />
+    <fileset dir="${lib.dir}" includes="*.jar" />
+   </classpath>
+   <batchtest fork="yes">
+    <fileset dir="${src.dir}">
+     <include name="**/*Test.java" />
+    </fileset>
+   </batchtest>
+  </junit>
+ </target>
+
+ <target name="run" depends="test">
   <java fork="true" classname="${main-class}">
    <classpath>
     <fileset dir="${dist.dir}" includes="${ant.project.name}.jar" />
