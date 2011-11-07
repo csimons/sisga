@@ -78,7 +78,7 @@ public class CanonicalGA extends AbstractGA
                 newGeneration.add(childA);
                 // in case of odd-numbered population sizes:
                 if (newGeneration.size() < geneSet.size())
-                    newGeneration.add(childA);
+                    newGeneration.add(childB);
             }
 
             geneSet = newGeneration;
