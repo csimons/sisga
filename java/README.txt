@@ -4,15 +4,25 @@ To build:
 
 1. Install the JDK (versions 5 and up should work).
    a. Ensure that the JAVA_HOME environment variable is set.
-   b. Ensure that JAVA_HOME/bin is in your PATH.
+   b. Ensure that JAVA_HOME/bin is present in your PATH.
 
 2. Install Apache Ant.
    a. Ensure the ANT_HOME environment variable is set.
-   b. Ensure that ANT_HOME/bin is in your PATH.
+   b. Ensure that ANT_HOME/bin is present in your PATH.
 
-3. Run "ant".  The build should succeed, and should end with a usage message.
+3. Install Gnuplot
+   a. Ensure that the directory containing the "gnuplot" executable
+   is present in your PATH environment variable.
 
-4. From the java/ directory, run something like:
+4. From the java/ directory, run "ant".  The build should succeed, and
+   should end with a usage message.
+
+5. To see what arguments need to be supplied to the program, view
+   a usage by running the generated JAR file without any arguments:
+
+   $ java -jar dist/JGA.jar
+
+   Then run it, as follows, substituting other parameter values as desired:
 
    $ java -jar dist/JGA.jar GA 50 100 0.7 0.1 1000 100
 
@@ -20,17 +30,10 @@ To build:
    where [algorithm] is the high-level GA algorithm specified on the
    command-line (above, "GA").
 
-   To see what the arguments do, run the JAR without them:
+6. To plot the results as a PNG image file, run the following, passing in
+   the same algorithm you passed to the JGA JAR (for example, "GA" or "CHC"):
 
-   $ java -jar dist/JGA.jar
+   $ bash scripts/plot.sh GA
 
-5. To plot the results, run the most appropriate of the following
-   (hopefully one generic script will take the place of the multiple
-    scripts soon):
-
-   $ gnuplot scripts/plot-ga.gnuplot  > my-graph.png
-   $ gnuplot scripts/plot-chc.gnuplot > my-graph.png
-
-   Note that GnuPlot must be installed, and its path in your environment's
-   PATH variable.
+   Th above will create the file GA.png, containing the graph image.
 
