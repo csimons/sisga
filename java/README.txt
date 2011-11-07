@@ -22,7 +22,7 @@ To build:
 
    To see what the arguments do, run the JAR without them:
 
-   $ java -jar dist/JGA.jar GA 50 100 0.7 0.1 1000 100
+   $ java -jar dist/JGA.jar
 
 5. To plot the results, run the most appropriate of the following
    (hopefully one generic script will take the place of the multiple
