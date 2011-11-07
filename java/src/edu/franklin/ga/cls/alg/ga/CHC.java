@@ -1,10 +1,10 @@
-package edu.franklin.ga.cls;
+package edu.franklin.ga.cls.ga;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.alg.CHCCataclysmicMutation;
-import edu.franklin.ga.cls.alg.ElitistSurvivorSelection;
-import edu.franklin.ga.cls.alg.HUXRecombination;
-import edu.franklin.ga.cls.alg.RouletteParentSelection;
+import edu.franklin.ga.cls.alg.mutation.geneset.CHCCataclysmicMutation;
+import edu.franklin.ga.cls.alg.recombination.HUXRecombination;
+import edu.franklin.ga.cls.alg.selection.parent.RouletteParentSelection;
+import edu.franklin.ga.cls.alg.selection.survivor.ElitistSurvivorSelection;
 import edu.franklin.ga.cls.model.Gene;
 import edu.franklin.ga.cls.util.GAResultSet;
 import edu.franklin.ga.cls.util.GeneCollectionAnalyzer;

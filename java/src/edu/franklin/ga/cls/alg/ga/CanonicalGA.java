@@ -1,9 +1,9 @@
-package edu.franklin.ga.cls;
+package edu.franklin.ga.cls.ga;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.alg.RandomBitFlipMutation;
-import edu.franklin.ga.cls.alg.RouletteParentSelection;
-import edu.franklin.ga.cls.alg.SinglePointCrossover;
+import edu.franklin.ga.cls.alg.mutation.gene.RandomBitFlipMutation;
+import edu.franklin.ga.cls.alg.recombination.SinglePointCrossover;
+import edu.franklin.ga.cls.alg.selection.parent.RouletteParentSelection;
 import edu.franklin.ga.cls.model.Gene;
 import edu.franklin.ga.cls.util.GAResultSet;
 import edu.franklin.ga.cls.util.GeneCollectionAnalyzer;

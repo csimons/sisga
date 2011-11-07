@@ -1,4 +1,4 @@
-package edu.franklin.ga.cls.alg;
+package edu.franklin.ga.cls.alg.selection.parent;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
 import edu.franklin.ga.cls.model.Gene;

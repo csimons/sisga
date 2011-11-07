@@ -1,8 +1,8 @@
 package edu.franklin.ga.cls.util;
 
-import edu.franklin.ga.cls.GA;
-import edu.franklin.ga.cls.CanonicalGA;
-import edu.franklin.ga.cls.CHC;
+import edu.franklin.ga.cls.ga.GA;
+import edu.franklin.ga.cls.ga.CanonicalGA;
+import edu.franklin.ga.cls.ga.CHC;
 import edu.franklin.ga.cls.fitness.OneMaxFitnessDeterminant;
 import edu.franklin.ga.cls.util.GAResultSet;
 
