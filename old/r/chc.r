@@ -88,10 +88,10 @@ chc <- function(sizePopulation, chromosomeSize, generations, pCMutation)
         runBestFitnesses <- c(runBestFitnesses, bestFitness(population))
     }
 
-    #plot(runs, runBestFitnesses, type="p")
-    #par(new <- TRUE)
-    #plot(runs, runAvgFitnesses, type="l")
-    write(cbind(runs, runBestFitnesses, runAvgFitnesses), file = "chc.dat")
+    plot(runs, runBestFitnesses, type="p")
+    par(new <- TRUE)
+    plot(runs, runAvgFitnesses, type="l")
+    #write(cbind(runs, runBestFitnesses, runAvgFitnesses), file = "chc.dat")
 }
 
 print("Available: chc(sizePopulation, chromosomeSize, generations, pCMutation)")
