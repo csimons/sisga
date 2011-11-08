@@ -4,7 +4,7 @@
  <!-- Christopher L. Simons -->
  <!-- Depends on JUnit4 being installed. -->
 
- <property name="main-class"  value="edu.franklin.ga.cls.util.GARunner" />
+ <property name="main-class"  value="cls.util.GARunner" />
 
  <!-- From here down is generic. -->
 
