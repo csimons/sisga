@@ -1,12 +1,12 @@
 package edu.franklin.ga.cls.ga;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.alg.mutation.gene.RandomBitFlipMutation;
+import edu.franklin.ga.cls.alg.mutation.chromosome.RandomBitFlipMutation;
 import edu.franklin.ga.cls.alg.recombination.SinglePointCrossover;
 import edu.franklin.ga.cls.alg.selection.parent.RouletteParentSelection;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 import edu.franklin.ga.cls.util.GAResultSet;
-import edu.franklin.ga.cls.util.GeneCollectionAnalyzer;
+import edu.franklin.ga.cls.util.PopulationAnalyzer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class CanonicalGA extends AbstractGA
 
     /**
      * @param populationSize Population size.
-     * @param geneSize Gene size (chromosomes).
+     * @param chromosomeSize Chromosome size (genes per chromosome).
      * @param pC Probability of recombination.
      * @param pM Probability of mutation.
      * @param termGeneration Number of generations to run,
@@ -33,28 +33,28 @@ public class CanonicalGA extends AbstractGA
      * @param termFitness Fitness at which to halt,
      *        or null for generation-based termination.
      */
-    public GAResultSet run(int populationSize, int geneSize,
+    public GAResultSet run(int populationSize, int chromosomeSize,
             Double pC, Double pM,
             Integer termGeneration, Double termFitness)
     {
         GAResultSet results = new GAResultSet();
 
-        List<Gene> geneSet = new LinkedList<Gene>();
+        List<Chromosome> population = new LinkedList<Chromosome>();
         for (int i = 0; i < populationSize; i += 1)
-            geneSet.add(new Gene(geneSize));
+            population.add(new Chromosome(chromosomeSize));
 
         Double gBest = null;
         for (int i = 0; true; i += 1)
         {
             if (gBest == null)
-                gBest = GeneCollectionAnalyzer.bestFitness(geneSet, fd);
+                gBest = PopulationAnalyzer.bestFitness(population, fd);
             else
-                if (gBest < GeneCollectionAnalyzer.bestFitness(geneSet, fd))
-                    gBest = GeneCollectionAnalyzer.bestFitness(geneSet, fd);
+                if (gBest < PopulationAnalyzer.bestFitness(population, fd))
+                    gBest = PopulationAnalyzer.bestFitness(population, fd);
 
             results.bestFitnesses.add(gBest);
-            results.avgFitnesses.add(GeneCollectionAnalyzer
-                    .avgFitness(geneSet, fd));
+            results.avgFitnesses.add(PopulationAnalyzer
+                    .avgFitness(population, fd));
 
             if (termGeneration != null && i >= termGeneration)
                 break;
@@ -66,22 +66,22 @@ public class CanonicalGA extends AbstractGA
                                         .get(results.bestFitnesses.size() - 1))
                 break;
 
-            List<Gene> newGeneration = new LinkedList<Gene>();
+            List<Chromosome> newGeneration = new LinkedList<Chromosome>();
 
-            while (newGeneration.size() < geneSet.size())
+            while (newGeneration.size() < population.size())
             {
-                List<Gene> parents = getParents(geneSet);
-                Gene dad = parents.get(0);
-                Gene mom = parents.get(1);
-                Gene childA = mutate(recombinate(dad, mom, pC), pM);
-                Gene childB = mutate(recombinate(dad, mom, pC), pM);
+                List<Chromosome> parents = getParents(population);
+                Chromosome dad = parents.get(0);
+                Chromosome mom = parents.get(1);
+                Chromosome childA = mutate(recombinate(dad, mom, pC), pM);
+                Chromosome childB = mutate(recombinate(dad, mom, pC), pM);
                 newGeneration.add(childA);
                 // in case of odd-numbered population sizes:
-                if (newGeneration.size() < geneSet.size())
+                if (newGeneration.size() < population.size())
                     newGeneration.add(childB);
             }
 
-            geneSet = newGeneration;
+            population = newGeneration;
         }
 
         return results;

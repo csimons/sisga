@@ -5,8 +5,8 @@
 #
 # CHC GA algoritm in R.
 #
-# Genes are represented as a vector of numbers (0 or 1).
-# The gene set is represented as a list of these vectors.
+# Chromosomes are represented as a vector of numbers (0 or 1).
+# The population is represented as a list of these vectors.
 #
 
 source("galib.r")
@@ -14,22 +14,22 @@ source("galib.r")
 ################################################################################
 # LOWER-LEVEL ALGORITHM CONTROL
 ################################################################################
-ff          <- function(gene)  { return(oneMax(gene)) }
-getParents  <- function(genes) { return(getParentsFitProportionate(genes)) }
-recombinate <- function(a, b)  { return(hux(a, b)) }
-naturalSelection <- function(genes, n) { return(elitistSelect(genes, n, ff)) }
+ff               <- function(chrom)  { return(oneMax(chrom)) }
+getParents       <- function(pop)    { return(getParentsFitProportionate(pop)) }
+recombinate      <- function(a, b)   { return(hux(a, b)) }
+naturalSelection <- function(pop, n) { return(elitistSelect(pop, n, ff)) }
 ################################################################################
 
 ##############################
 # HIGH-LEVEL ALGORITHM LOGIC #
 ##############################
 
-chc <- function(sizePopulation, chromosomes, generations, pCMutation)
+chc <- function(sizePopulation, chromosomeSize, generations, pCMutation)
 {
     print("RUNNING")
     print("-------")
     print(paste("sizePopulation       = ", sizePopulation))
-    print(paste("chromosomes          = ", chromosomes))
+    print(paste("chromosomeSize       = ", chromosomeSize))
     print(paste("generations          = ", generations))
     print(paste("pCataclysmicMutation = ", pCMutation))
     print("-------")
@@ -38,11 +38,11 @@ chc <- function(sizePopulation, chromosomes, generations, pCMutation)
     runAvgFitnesses <- c()
     runBestFitnesses <- c()
 
-    genes <- initPopulation(sizePopulation, chromosomes)
+    population <- initPopulation(sizePopulation, chromosomeSize)
 
-    beginGenes <- genes
+    beginPopulation <- population
 
-    threshold = round(length(genes) / 4)
+    threshold = round(length(population) / 4)
 
     for (i in 1:generations)
     {
@@ -72,20 +72,20 @@ chc <- function(sizePopulation, chromosomes, generations, pCMutation)
         }
         else
         {
-            genes <- c(genes, children) # add children to population
-            genes <- naturalSelection(genes, sizePopulation) # remove unfit.
+            population <- c(population, children)
+            population <- naturalSelection(population, sizePopulation)
         }
 
         if(threshold < 0)
         {
-            genes <- cataclysmicMutation(genes, pCMutation, ff)
-            threshold <- pCMutation * (1 - pCMutation) * chromosomes
+            population <- cataclysmicMutation(population, pCMutation, ff)
+            threshold <- pCMutation * (1 - pCMutation) * chromosomeSize
         }
 
         # Update tracking vectors for plotting a graph.
         runs <- c(runs, i)
-        runAvgFitnesses <- c(runBestFitnesses, avgFitness(genes))
-        runBestFitnesses <- c(runBestFitnesses, bestFitness(genes))
+        runAvgFitnesses <- c(runBestFitnesses, avgFitness(population))
+        runBestFitnesses <- c(runBestFitnesses, bestFitness(population))
     }
 
     #plot(runs, runBestFitnesses, type="p")
@@ -94,5 +94,5 @@ chc <- function(sizePopulation, chromosomes, generations, pCMutation)
     write(cbind(runs, runBestFitnesses, runAvgFitnesses), file = "chc.dat")
 }
 
-print("Available: chc(sizePopulation, chromosomes, generations, pCMutation)")
+print("Available: chc(sizePopulation, chromosomeSize, generations, pCMutation)")
 print("Example:   chc(50, 100, 200, 0.35)")

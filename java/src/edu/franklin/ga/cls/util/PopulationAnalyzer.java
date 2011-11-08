@@ -3,37 +3,37 @@ package edu.franklin.ga.cls.util;
 import java.util.Collection;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
-public class GeneCollectionAnalyzer
+public class PopulationAnalyzer
 {
-    public static double avgFitness(Collection<Gene> geneSet,
+    public static double avgFitness(Collection<Chromosome> population,
             FitnessDeterminant fd)
     {
         double acc = 0;
 
-        for (Gene gene : geneSet)
-            acc += fd.fitness(gene);
+        for (Chromosome chromosome : population)
+            acc += fd.fitness(chromosome);
 
-        return acc / geneSet.size();
+        return acc / population.size();
     }
 
-    public static double bestFitness(Collection<Gene> geneSet,
+    public static double bestFitness(Collection<Chromosome> population,
             FitnessDeterminant fd)
     {
         /*
          * Don't initialize this to zero as it will cause incorrect
-         * results if the fitnesses of all genes are negative.
+         * results if the fitnesses of all chromosomes are negative.
          */
         Double best = null;
 
-        for (Gene gene : geneSet)
+        for (Chromosome chromosome : population)
         {
             if (best == null)
-                best = fd.fitness(gene);
+                best = fd.fitness(chromosome);
             else
             {
-                double current = fd.fitness(gene);
+                double current = fd.fitness(chromosome);
                 best = current > best ? current : best;
             }
         }
@@ -41,7 +41,7 @@ public class GeneCollectionAnalyzer
         return best;
     }
 
-    public static double worstFitness(Collection<Gene> geneSet,
+    public static double worstFitness(Collection<Chromosome> population,
             FitnessDeterminant fd)
     {
         /*
@@ -50,13 +50,13 @@ public class GeneCollectionAnalyzer
          */
         Double worst = null;
 
-        for (Gene gene : geneSet)
+        for (Chromosome chromosome : population)
         {
             if (worst == null)
-                worst = fd.fitness(gene);
+                worst = fd.fitness(chromosome);
             else
             {
-                double current = fd.fitness(gene);
+                double current = fd.fitness(chromosome);
                 worst = current < worst ? current : worst;
             }
         }

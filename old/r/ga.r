@@ -5,8 +5,8 @@
 #
 # Canonical GA algoritm in R.
 #
-# Genes are represented as a vector of numbers (0 or 1).
-# The gene set is represented as a list of these vectors.
+# Chromosomes are represented as a vector of numbers (0 or 1).
+# The population is represented as a list of these vectors.
 #
 
 source("galib.r")
@@ -14,22 +14,22 @@ source("galib.r")
 ################################################################################
 # LOWER-LEVEL ALGORITHM CONTROL
 ################################################################################
-ff          <- function(gene)     { return(oneMax(gene)) }
-getParents  <- function(genes)    { return(getParentsFitProportionate(genes)) }
-recombinate <- function(a, b, pC) { return(singlePointCrossover(a, b, pC)) }
-mutate      <- function(gene, pM) { return(randomBitFlip(gene, pM)) }
+ff          <- function(chrom)     { return(oneMax(chrom)) }
+getParents  <- function(pop)       { return(getParentsFitProportionate(pop)) }
+recombinate <- function(a, b, pC)  { return(singlePointCrossover(a, b, pC)) }
+mutate      <- function(chrom, pM) { return(randomBitFlip(chrom, pM)) }
 ################################################################################
 
 ##############################
 # HIGH-LEVEL ALGORITHM LOGIC #
 ##############################
 
-ga <- function(sizePopulation, chromosomes, generations, pM, pC)
+ga <- function(sizePopulation, chromosomeSize, generations, pM, pC)
 {
     print("RUNNING")
     print("-------")
     print(paste("sizePopulation = ", sizePopulation))
-    print(paste("chromosomes    = ", chromosomes))
+    print(paste("chromosomeSize = ", chromosomeSize))
     print(paste("generations    = ", generations))
     print(paste("pMutation      = ", pM))
     print(paste("pCrossover     = ", pC))
@@ -40,14 +40,14 @@ ga <- function(sizePopulation, chromosomes, generations, pM, pC)
     runAvgFitnesses <- c()
     runBestFitnesses <- c()
 
-    genes <- initPopulation(sizePopulation, chromosomes)
+    population <- initPopulation(sizePopulation, chromosomeSize)
 
     for (i in 1:generations)
     {
-        newGenes = c()
+        offspring = c()
         for (j in 1:sizePopulation)
         {
-            parents <- getParents(genes)
+            parents <- getParents(population)
 
             dad <- parents[[1]]
             mom <- parents[[2]]
@@ -55,16 +55,16 @@ ga <- function(sizePopulation, chromosomes, generations, pM, pC)
             reco <- recombinate(dad, mom, pC)
             muta <- mutate(reco, pM)
 
-            newGenes <- c(newGenes, list(muta))
+            offspring <- c(offspring, list(muta))
         }
 
         # Replace parent population with offspring population.
-        genes <- newGenes
+        genes <- offspring
 
         # Update tracking vectors for plotting a graph.
         runs <- c(runs, i)
-        runAvgFitnesses <- c(runBestFitnesses, avgFitness(genes))
-        runBestFitnesses <- c(runBestFitnesses, bestFitness(genes))
+        runAvgFitnesses <- c(runBestFitnesses, avgFitness(population))
+        runBestFitnesses <- c(runBestFitnesses, bestFitness(population))
     }
 
     #plot(runs, runBestFitnesses, type="p")
@@ -73,5 +73,5 @@ ga <- function(sizePopulation, chromosomes, generations, pM, pC)
     write(cbind(runs, runBestFitness, runAvgFitness), file = "ga.dat")
 }
 
-print("Available: ga(sizePopulation, chromosomes, generations, pM, pC)")
+print("Available: ga(sizePopulation, chromosomeSize, generations, pM, pC)")
 print("Example:   ga(10, 100, 200, 0.2, 0.7)")

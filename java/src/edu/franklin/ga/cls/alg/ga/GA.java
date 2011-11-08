@@ -6,7 +6,7 @@ public interface GA
 {
     /**
      * @param populationSize Population size.
-     * @param geneSize Gene size (chromosomes).
+     * @param chromosomeSize Chromosome size (genes per chromosome).
      * @param pC Crossover probability.
      * @param pM Mutation probability.
      * @param termGeneration Number of generations to run,
@@ -14,7 +14,7 @@ public interface GA
      * @param termFitness Fitness at which to halt,
      *        or null for generation-based termination.
      */
-    public abstract GAResultSet run(int populationSize, int geneSize,
+    public abstract GAResultSet run(int populationSize, int chromosomeSize,
             Double pC, Double pM,
             Integer termGeneration, Double termFitness);
 }

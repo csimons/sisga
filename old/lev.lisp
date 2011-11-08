@@ -5,7 +5,7 @@
 ;;; A purely-functional implementation of a simple evolutionary computation
 ;;; system for optimizing single-variable real-valued functions.
 ;;;
-;;; Parent selection: Two random higher-than-average-fitness genes selected.
+;;; Parent selection: Two random higher-than-avg-fitness chromosomes selected.
 ;;; Recombination:    Random one-point crossover.
 ;;; Mutation:         Simple creeping/incremental (+/- some { x | 0 < x < 1 }.
 ;;;
