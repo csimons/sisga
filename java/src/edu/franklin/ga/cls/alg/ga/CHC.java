@@ -33,10 +33,12 @@ public class CHC extends AbstractGA
      *        or null for fitness-based termination.
      * @param termFitness Fitness at which to halt,
      *        or null for generation-based termination.
+     * @param verbose Whether to print periodic statistics.
      */
     public GAResultSet run(int populationSize, int chromosomeSize,
             Double pC, Double pCM,
-            Integer termGeneration, Double termFitness)
+            Integer termGeneration, Double termFitness,
+            boolean verbose)
     {
         GAResultSet results = new GAResultSet();
 
