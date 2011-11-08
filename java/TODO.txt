@@ -1,9 +1,5 @@
 - Complete implementation of bit-string decoders.
-  - Bit-string -> positive integer (done).
-  - Bit-string -> positive/negative integer.
-  - Bit-string -> positive real.
-  - Bit-string -> positive/negative real.
-  - Bit-string -> two (+/-) integers, user-specied demarcation point.
+  - Bit-string -> one (+/-) real. (done)
   - Bit-string -> two (+/-) reals, user-specified demarcation point.
 
 - Allow user to specify fitness function at run-time.
