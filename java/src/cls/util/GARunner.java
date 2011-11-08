@@ -63,6 +63,9 @@ public class GARunner
 
         GA ga = null;
 
+        /*
+         * TODO: Allow fitness function to be specified on the command-line.
+         */
         if (a.equals("GA"))
             ga = new CanonicalGA(new OneMaxFitnessDeterminant());
         else if (a.equals("CHC"))

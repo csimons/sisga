@@ -2,6 +2,9 @@ package cls.decode;
 
 import cls.model.Chromosome;
 
+/**
+ * Decodes chromosomes into positive integers.
+ */
 public class PositiveIntegerDecoder
 {
     public int decode(Chromosome chromosome)
