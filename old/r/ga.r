@@ -67,10 +67,10 @@ ga <- function(sizePopulation, chromosomeSize, generations, pM, pC)
         runBestFitnesses <- c(runBestFitnesses, bestFitness(population))
     }
 
-    #plot(runs, runBestFitnesses, type="p")
-    #par(new <- TRUE)
-    #plot(runs, runAvgFitnesses, type="l")
-    write(cbind(runs, runBestFitness, runAvgFitness), file = "ga.dat")
+    plot(runs, runBestFitnesses, type="p")
+    par(new <- TRUE)
+    plot(runs, runAvgFitnesses, type="l")
+    #write(cbind(runs, runBestFitness, runAvgFitness), file = "ga.dat")
 }
 
 print("Available: ga(sizePopulation, chromosomeSize, generations, pM, pC)")
