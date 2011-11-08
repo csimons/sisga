@@ -41,7 +41,7 @@
 
  <target name="test" depends="jar">
   <junit showoutput="yes" printsummary="yes" haltonfailure="yes">
-   <!-- <formatter type="xml" /> -->
+   <formatter type="brief" usefile="false" />
    <classpath>
     <fileset dir="${dist.dir}" includes="${ant.project.name}.jar" />
     <fileset dir="${lib.dir}" includes="*.jar" />
