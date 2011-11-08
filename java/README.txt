@@ -22,8 +22,8 @@ To build:
 4. From the java/ directory, run "ant".  The build should succeed, and
    should end with a usage message.
 
-5. To see what arguments need to be supplied to the program, view
-   a usage by running the generated JAR file without any arguments:
+5. To see what arguments need to be supplied to the program, view a
+   usage message by running the generated JAR file without any arguments:
 
    $ java -jar dist/JGA.jar
 

@@ -10,7 +10,7 @@ public class GAResultSet
 {
     public List<Double> avgFitnesses = new LinkedList<Double>();
     public List<Double> bestFitnesses = new LinkedList<Double>();
-    // public List<Double> worstFitnesses = new LinkedList<Double>();
+    public List<Double> worstFitnesses = new LinkedList<Double>();
 
     public void writeToGnuPlotDataFile(String filename)
         throws FileNotFoundException
@@ -19,13 +19,14 @@ public class GAResultSet
             throw new IllegalStateException("! |avg| == |best|");
 
         PrintWriter x = new PrintWriter(new FileOutputStream(filename));
-        x.println("#RUN\tAVG\tBEST");
+        x.println("#RUN\tAVG\tBEST\tWORST");
 
         for (int i = 0; i < avgFitnesses.size(); i += 1)
-            x.println(String.format("%d\t%f\t%f",
+            x.println(String.format("%d\t%f\t%f\t%f",
                         i,
                         avgFitnesses.get(i),
-                        bestFitnesses.get(i)));
+                        bestFitnesses.get(i),
+                        worstFitnesses.get(i)));
 
         x.close();
     }

@@ -47,6 +47,7 @@ public class CHC extends AbstractGA
         int threshold = Math.round(population.size() / 4);
 
         Double gBest = null;
+        Double gWorst = null;
         for (int i = 0; true; i += 1)
         {
             if (gBest == null)
@@ -54,6 +55,17 @@ public class CHC extends AbstractGA
             else
                 if (gBest < PopulationAnalyzer.bestFitness(population, fd))
                     gBest = PopulationAnalyzer.bestFitness(population, fd);
+
+            if (gWorst == null)
+                gWorst = PopulationAnalyzer.worstFitness(population, fd);
+            else
+                if (gWorst > PopulationAnalyzer.worstFitness(population, fd))
+                    gWorst = PopulationAnalyzer.worstFitness(population, fd);
+
+            results.bestFitnesses.add(gBest);
+            results.avgFitnesses.add(PopulationAnalyzer
+                    .avgFitness(population, fd));
+            results.worstFitnesses.add(gWorst);
 
             if (termGeneration != null && i >= termGeneration)
                 break;
@@ -96,7 +108,8 @@ public class CHC extends AbstractGA
                 if (threshold <= 0)
                 {
                     population = mutate(newGeneration, pCM);
-                    threshold = (int) Math.round(pCM * (1.0 - pCM) * chromosomeSize);
+                    threshold = (int) Math.round(
+                        pCM * (1.0 - pCM) * chromosomeSize);
                 }
             }
         }
