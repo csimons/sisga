@@ -51,7 +51,7 @@ chc <- function(sizePopulation, chromosomeSize, generations, pCMutation)
 
         for (j in 1:matings)
         {
-            parents <- getParents(genes)
+            parents <- getParents(population)
 
             dad <- parents[[1]]
             mom <- parents[[2]]

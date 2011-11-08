@@ -220,7 +220,7 @@ hux <- function(dad, mom)
 
     nonMatchingAlleles <- c() # indexes of non-matching alleles
 
-    for (i in 1:length(chromosome1))
+    for (i in 1:length(dad))
     {
         if (dad[i] != mom[i])
         {
