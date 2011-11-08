@@ -18,7 +18,8 @@ set title "GA Results"
 set grid
 
 plot \
-"$1.dat" using 1:2 title "Average Fitness" with dots, \
-      "" using 1:3 title "Best Fitness"    with lines
+"$1.dat" using 1:2 title "Average Fitness" with linespoints, \
+      "" using 1:3 title "Best Fitness"    with linespoints, \
+      "" using 1:4 title "Worst Fitness"   with linespoints
 
 EOF

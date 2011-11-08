@@ -44,6 +44,7 @@ public class CanonicalGA extends AbstractGA
             population.add(new Chromosome(chromosomeSize));
 
         Double gBest = null;
+        Double gWorst = null;
         for (int i = 0; true; i += 1)
         {
             if (gBest == null)
@@ -52,9 +53,16 @@ public class CanonicalGA extends AbstractGA
                 if (gBest < PopulationAnalyzer.bestFitness(population, fd))
                     gBest = PopulationAnalyzer.bestFitness(population, fd);
 
+            if (gWorst == null)
+                gWorst = PopulationAnalyzer.worstFitness(population, fd);
+            else
+                if (gWorst > PopulationAnalyzer.worstFitness(population, fd))
+                    gWorst = PopulationAnalyzer.worstFitness(population, fd);
+
             results.bestFitnesses.add(gBest);
             results.avgFitnesses.add(PopulationAnalyzer
                     .avgFitness(population, fd));
+            results.worstFitnesses.add(gWorst);
 
             if (termGeneration != null && i >= termGeneration)
                 break;
