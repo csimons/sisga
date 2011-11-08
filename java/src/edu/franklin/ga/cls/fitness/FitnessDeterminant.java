@@ -1,8 +1,8 @@
 package edu.franklin.ga.cls.fitness;
 
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 public interface FitnessDeterminant
 {
-    public double fitness(Gene gene);
+    public double fitness(Chromosome chromosome);
 }

@@ -5,33 +5,33 @@
 #
 # Library of GA-related functions.
 #
-# Genes are represented as a vector of numbers (0 or 1).
-# The gene set is represented as a list of these vectors.
+# Chromosomes are represented as a vector of numbers (0 or 1).
+# The population is represented as a list of these vectors.
 #
 
 #####################
 # UTILITY FUNCTIONS #
 #####################
 
-prettyPrint <- function(genes)
+prettyPrint <- function(population)
 {
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        print(genes[[i]])
+        print(population[[i]])
     }
 }
 
-initPopulation <- function(sizePopulation, chromosomes)
+initPopulation <- function(sizePopulation, chromosomeSize)
 {
-    genes <- list()
+    population <- list()
 
     for (i in 1:sizePopulation)
     {
-        gene <- list(round(runif(chromosomes, 0, 1)))
-        genes <- c(genes, gene)
+        chromosome <- list(round(runif(chromosomeSize, 0, 1)))
+        population <- c(population, chromosome)
     }
 
-    return(genes)
+    return(population)
 }
 
 listEq <- function(list1, list2)
@@ -70,27 +70,27 @@ flip <- function(x)
     return(result)
 }
 
-avgFitness <- function(genes)
+avgFitness <- function(population)
 {
     fitnessSum <- 0
 
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        fitnessesSum <- fitnessSum + ff(genes[[i]])
+        fitnessesSum <- fitnessSum + ff(population[[i]])
     }
 
-    avg <- (fitnessSum / length(genes))
+    avg <- (fitnessSum / length(population))
 
     return(avg)
 }
 
-bestFitness <- function(genes)
+bestFitness <- function(population)
 {
     best <- 0
 
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        current <- ff(genes[[i]])
+        current <- ff(population[[i]])
 
         if (current > best)
         {
@@ -101,21 +101,21 @@ bestFitness <- function(genes)
     return(best)
 }
 
-HammingDistance <- function(gene1, gene2)
+HammingDistance <- function(chromosome1, chromosome2)
 {
-    if (length(gene1) != length(gene2))
+    if (length(chromosome1) != length(chromosome2))
     {
         hDistance <- (-1)
     }
     else
     {
-        bits <- length(gene1)
+        bits <- length(chromosome1)
 
         hDistance <- 0
 
         for (i in 1:bits)
         {
-            if(gene1[i] != gene2[i])
+            if(chromosome1[i] != chromosome2[i])
             {
                 hDistance <- hDistance + 1
             }
@@ -131,83 +131,84 @@ HammingDistance <- function(gene1, gene2)
 
 # Return the sum of the bits in the bit string.
 #
-oneMax <- function(gene)
+oneMax <- function(chromosome)
 {
     result <- 0
 
-    for (i in 1:length(gene))
+    for (i in 1:length(chromosome))
     {
-        result <- result + gene[i]
+        result <- result + chromosome[i]
     }
 
     return(result)
 }
 
-#########################################
-# MUTATION ALGORITHMS (mutate one gene) #
-#########################################
+###############################################
+# MUTATION ALGORITHMS (mutate one chromosome) #
+###############################################
 
 # TODO: implement bit-swapping and other algorithms.
 
-# Randomly select a bit from the gene, and based on
-# probability p, flip the bit.
+# Randomly select an allele from the chromosome, and
+# based on probability p, flip the allele/bit.
 #
-randomBitFlip <- function(gene, p)
+randomBitFlip <- function(chromosome, p)
 {
-    bit <- round(runif(1, 1, length(gene)))
+    bit <- round(runif(1, 1, length(chromosome)))
     chance <- runif(1, 0, 1)
 
     if (chance < p)
     {
-        gene[bit] <- flip(gene[bit])
+        chromosome[bit] <- flip(chromosome[bit])
     }
 
-    return(gene)
+    return(chromosome)
 }
 
 # Cataclysmic mutation, for CHC:
 #
-# For every bit in every gene in the gene set, except for the
-# gene with the highest fitness, flip per probability 'p'.
+# For every allele in every chromosome in the population, except for
+# the chromosome with the highest fitness, flip per probability 'p'.
 #
-cataclysmicMutation <- function(genes, p, ff)
+cataclysmicMutation <- function(population, p, ff)
 {
-    bestGene <- genes[[1]]
+    bestChromosome <- population[[1]]
 
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        if (ff(genes[[i]]) > ff(bestGene))
+        if (ff(population[[i]]) > ff(bestChromosome))
         {
-            bestGene <- genes[[i]]
+            bestChromosome <- population[[i]]
         }
     }
 
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        gene <- genes[[i]]
+        chromosome <- population[[i]]
 
-        if (! identical(gene, bestGene)) # != doesn't work with vectors
+        # != doesn't work with vectors
+        if (! identical(chromosome, bestChromosome))
         {
-            for (j in 1:length(gene))
+            for (j in 1:length(chromosome))
             {
                 chance <- runif(1, 0, 1)
 
                 if (chance < p)
                 {
-                    gene[j] <- flip(gene[j])
+                    chromosome[j] <- flip(chromosome[j])
                 }
             }
         }
     }
 
-    return(genes)
+    return(population)
 }
 
-##################################################################
-# RECOMBINATION ALGORITHMS (create a gene from two parent genes) #
-##################################################################
+#############################################################################
+# RECOMBINATION ALGORITHMS (create a chromosomefrom two parent chromosomes) #
+#############################################################################
 
-hux <- function(gene1, gene2)
+hux <- function(dad, mom)
 {
     # HUX
     #
@@ -219,9 +220,9 @@ hux <- function(gene1, gene2)
 
     nonMatchingAlleles <- c() # indexes of non-matching alleles
 
-    for (i in 1:length(gene1))
+    for (i in 1:length(chromosome1))
     {
-        if (gene1[i] != gene2[i])
+        if (dad[i] != mom[i])
         {
             nonMatchingAlleles <- c(nonMatchingAlleles, i)
         }
@@ -239,48 +240,48 @@ hux <- function(gene1, gene2)
         }
     }
 
-    newGene <- c()
+    child <- c()
 
-    for (i in 1:length(gene1))
+    for (i in 1:length(dad))
     {
-        # Now, use all alleles from gene 1 except the 'swap' alleles above.
+        # Now, use all alleles from 'dad' except the 'swap' alleles.
 
         if (any(swapAlleles == i))
         {
-            newGene <- c(newGene, gene2[i])
+            child <- c(child, mom[i])
         }
         else
         {
-            newGene <- c(newGene, gene1[i])
+            child <- c(child, dad[i])
         }
     }
 
-    return(newGene)
+    return(child)
 }
 
 # Single-point crossover at a random point, per probability p.
 #
-singlePointCrossover <- function(gene1, gene2, p)
+singlePointCrossover <- function(dad, mom, p)
 {
     a <- runif(1, 0, 1)
 
     if (a < p) # Crossover case.  Pick a random point and crossover.
     {
-        chromosomes <- length(gene1)
+        alleles <- length(dad)
 
-        bit <- round(runif(1, 1, chromosomes))
+        bit <- round(runif(1, 1, alleles))
 
-        newGene <- c()
+        child <- c()
 
-        for (i in 1:chromosomes)
+        for (i in 1:alleles)
         {
             if (i < bit)
             {
-                newGene <- c(newGene, gene1[i])
+                child <- c(child, dad[i])
             }
             else
             {
-                newGene <- c(newGene, gene2[i])
+                child <- c(child, mom[i])
             }
         }
     }
@@ -290,15 +291,15 @@ singlePointCrossover <- function(gene1, gene2, p)
 
         if (b == 0)
         {
-            newGene = gene1
+            child <- dad
         }
         else
         {
-            newGene = gene2
+            child <- mom
         }
     }
 
-    return(newGene)
+    return(child)
 }
 
 ###############################
@@ -307,15 +308,15 @@ singlePointCrossover <- function(gene1, gene2, p)
 
 # Randomly select two parents.
 #
-getTwoParents <- function(genes)
+getTwoParents <- function(population)
 {
-    sizePopulation <- length(genes)
+    sizePopulation <- length(population)
     parents <- list()
 
     while(length(parents) < 2)
     {
         pick <- round(runif(1, 1, sizePopulation))
-        parents <- c(parents, list(genes[[pick]]))
+        parents <- c(parents, list(population[[pick]]))
     }
 
     return(parents)
@@ -323,44 +324,44 @@ getTwoParents <- function(genes)
 
 # Randomly select two distinct parents with higher-than-average fitness.
 #
-getTwoHigherFitParents <- function(genes)
+getTwoHigherFitParents <- function(population)
 {
-    sizePopulation <- length(genes)
+    sizePopulation <- length(population)
 
-    avg <- avgFitness(genes)
+    avg <- avgFitness(population)
     parents <- list()
 
     attempts <- 0
 
-    while((length(parents) < 2) & (attempts <= length(genes)))
+    while((length(parents) < 2) & (attempts <= length(population)))
     {
         attempts <- attempts + 1
 
         pick <- round(runif(1, 1, sizePopulation))
 
-        if (ff(genes[[pick]]) > avg)
+        if (ff(population[[pick]]) > avg)
         {
             if (length(parents) == 1)
             {
-                if (! (listEq(parents[[1]], genes[[pick]])))
+                if (! (listEq(parents[[1]], population[[pick]])))
                 {
-                    parents <- c(parents, list(genes[[pick]]))
+                    parents <- c(parents, list(population[[pick]]))
                 }
             }
             else
             {
-                parents <- c(parents, list(genes[[pick]]))
+                parents <- c(parents, list(population[[pick]]))
             }
         }
     }
 
-    # Two DISTINCT higher-than-average-fitness genes do not exist, so pick a
-    # random gene to be the other parent.
+    # Two DISTINCT higher-than-average-fitness chromosomes do not exist,
+    # so pick a random chromosome to be the other parent.
     #
     if (length(parents) < 2)
     {
         pick <- round(runif(1, 1, sizePopulation))
-        parents <- c(parents, list(genes[[pick]]))
+        parents <- c(parents, list(population[[pick]]))
     }
 
     return(parents)
@@ -368,20 +369,20 @@ getTwoHigherFitParents <- function(genes)
 
 # Select two parents via roulette-wheel (fitness-proportional) selection.
 #
-getParentsFitProportionate <- function(genes)
+getParentsFitProportionate <- function(population)
 {
     absoluteFitnesses <- c()
     proportionalFitnesses <- c()
 
     totalFitness <- 0
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        geneFitness = ff(genes[[i]])
-        totalFitness <- totalFitness + geneFitness
-        absoluteFitnesses <- c(absoluteFitnesses, geneFitness)
+        chromosomeFitness = ff(population[[i]])
+        totalFitness <- totalFitness + chromosomeFitness
+        absoluteFitnesses <- c(absoluteFitnesses, chromosomeFitness)
     }
 
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
         proportionalFitnesses <- c(proportionalFitnesses,
                                     absoluteFitnesses[i] / totalFitness)
@@ -393,11 +394,11 @@ getParentsFitProportionate <- function(genes)
     {
         p <- runif(1, 0, 1) # get probability between 0 and 1.
 
-        for (j in 1:length(genes))
+        for (j in 1:length(population))
         {
             if (p < proportionalFitnesses[j])
             {
-                parents <- c(parents, list(genes[[j]]))
+                parents <- c(parents, list(population[[j]]))
                 next
             }
             else
@@ -417,13 +418,13 @@ getParentsFitProportionate <- function(genes)
 
 # Rank genes from best to worst, per function ff, then keep n best genes.
 #
-elitistSelect <- function(genes, n, ff)
+elitistSelect <- function(population, n, ff)
 {
     fitnesses <- c()
 
-    for (i in 1:length(genes))
+    for (i in 1:length(population))
     {
-        fitnesses <- c(fitnesses, ff(genes[[i]]))
+        fitnesses <- c(fitnesses, ff(population[[i]]))
     }
 
     fitnesses <- sort(fitnesses, decreasing=TRUE)
@@ -439,9 +440,9 @@ elitistSelect <- function(genes, n, ff)
         {
             j <- j + 1
 
-            if (ff(genes[[j]]) == fitnesses[i])
+            if (ff(population[[j]]) == fitnesses[i])
             {
-                survivors <- c(survivors, list(genes[[j]]))
+                survivors <- c(survivors, list(population[[j]]))
             }
         }
     }
@@ -449,31 +450,31 @@ elitistSelect <- function(genes, n, ff)
     return (survivors)
 }
 
-# Randomly select two genes and kill off the one with lower fitness,
-# until the population size is as desired (sizePopulation).
+# Randomly select two chromosomes and kill off the one with lower
+# fitness, until the population size is as desired (sizePopulation).
 #
-# If one gene has the misfortune of being randomly selected twice, it
-# will compete against itself and die.
+# If one chromosome has the misfortune of being randomly selected
+# twice, it will compete against itself and die.
 #
-nTournaments <- function(genes, n, ff)
+nTournaments <- function(population, n, ff)
 {
-    while (length(genes) > n)
+    while (length(population) > n)
     {
-        pick1 <- round(runif(1, 1, length(genes)))
-        gladiator1 <- genes[[pick1]]
+        pick1 <- round(runif(1, 1, length(population)))
+        gladiator1 <- population[[pick1]]
 
-        pick2 <- round(runif(1, 1, length(genes)))
-        gladiator2 <- genes[[pick2]]
+        pick2 <- round(runif(1, 1, length(population)))
+        gladiator2 <- population[[pick2]]
 
         if (ff(gladiator1) <= ff(gladiator2))
         {
-            genes[[pick1]] <- NULL # remove gladiator 1 from list.
+            population[[pick1]] <- NULL # remove gladiator 1 from list.
         }
         else
         {
-            genes[[pick2]] <- NULL # remove gladiator 2 from list.
+            population[[pick2]] <- NULL # remove gladiator 2 from list.
         }
     }
 
-    return(genes)
+    return(population)
 }

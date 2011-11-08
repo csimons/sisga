@@ -1,7 +1,7 @@
 package edu.franklin.ga.cls.alg.selection.survivor;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +12,7 @@ import java.util.Map;
 /*
  * Elitist truncation survivor selection.
  *
- * Rank genes from best to worst, then keep the top N genes.
+ * Rank chromosomes from best to worst, then keep the top N chromosomes.
  */
 public class ElitistSurvivorSelection implements SurvivorSelection
 {
@@ -25,20 +25,24 @@ public class ElitistSurvivorSelection implements SurvivorSelection
         this.fd = fd;
     }
 
-    public List<Gene> select(List<Gene> geneSet, int targetPopulationSize)
+    public List<Chromosome> select(List<Chromosome> population,
+            int targetPopulationSize)
     {
-        if (targetPopulationSize > geneSet.size())
-            throw new IllegalArgumentException("targetSize > geneSetSize");
+        if (targetPopulationSize > population.size())
+            throw new IllegalArgumentException(
+                    "targetPopulationSize > populationSize");
 
-        Map<Double, List<Gene>> fitnessMap = new HashMap<Double, List<Gene>>();
-        List<Gene> survivors = new LinkedList<Gene>();
+        Map<Double, List<Chromosome>> fitnessMap
+            = new HashMap<Double, List<Chromosome>>();
 
-        for (Gene i : geneSet)
+        List<Chromosome> survivors = new LinkedList<Chromosome>();
+
+        for (Chromosome i : population)
         {
             double fitness = fd.fitness(i);
 
             if (fitnessMap.get(fitness) == null)
-                fitnessMap.put(fitness, new LinkedList<Gene>());
+                fitnessMap.put(fitness, new LinkedList<Chromosome>());
 
             fitnessMap.get(fitness).add(i);
         }
@@ -56,9 +60,11 @@ public class ElitistSurvivorSelection implements SurvivorSelection
             if (survivors.size() + fitnessMap.get(fitnesses[i]).size()
                     > targetPopulationSize)
             {
-                int genesToSave = targetPopulationSize - survivors.size();
+                int chromosomesToSave
+                    = targetPopulationSize - survivors.size();
+
                 int k = 0;
-                for (int j = 0; j < genesToSave; j += 1)
+                for (int j = 0; j < chromosomesToSave; j += 1)
                     survivors.add(fitnessMap.get(fitnesses[i]).get(k++));
             }
             else

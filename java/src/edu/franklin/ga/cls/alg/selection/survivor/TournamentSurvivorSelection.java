@@ -1,7 +1,7 @@
 package edu.franklin.ga.cls.alg.selection.survivor;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /*
  * Tournament truncation survivor selection.
  *
- * Randomly pick two genes from the population
+ * Randomly pick two chromosomes from the population
  * and discard the one with the lower fitness.
  */
 public class TournamentSurvivorSelection implements SurvivorSelection
@@ -23,24 +23,26 @@ public class TournamentSurvivorSelection implements SurvivorSelection
         this.fd = fd;
     }
 
-    public List<Gene> select(List<Gene> geneSet, int targetPopulationSize)
+    public List<Chromosome> select(List<Chromosome> population,
+            int targetPopulationSize)
     {
-        if (targetPopulationSize > geneSet.size())
-            throw new IllegalArgumentException("targetSize > geneSetSize");
+        if (targetPopulationSize > population.size())
+            throw new IllegalArgumentException(
+                    "targetPopulationSize > populationSize");
 
-        List<Gene> survivorSet = new LinkedList<Gene>();
+        List<Chromosome> survivorSet = new LinkedList<Chromosome>();
 
-        while(geneSet.size() > targetPopulationSize)
+        while(population.size() > targetPopulationSize)
         {
-            int indexA = (int) Math.random() * (geneSet.size() + 1);
-            int indexB = (int) Math.random() * (geneSet.size() + 1);
+            int indexA = (int) Math.random() * (population.size() + 1);
+            int indexB = (int) Math.random() * (population.size() + 1);
 
-            Gene a = geneSet.get(indexA);
-            Gene b = geneSet.get(indexB);
+            Chromosome a = population.get(indexA);
+            Chromosome b = population.get(indexB);
 
-            geneSet.remove(fd.fitness(a) < fd.fitness(b) ? a : b);
+            population.remove(fd.fitness(a) < fd.fitness(b) ? a : b);
         }
 
-        return geneSet;
+        return population;
     }
 }

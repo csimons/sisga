@@ -1,13 +1,13 @@
 package edu.franklin.ga.cls.ga;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.alg.mutation.geneset.CHCCataclysmicMutation;
+import edu.franklin.ga.cls.alg.mutation.population.CHCCataclysmicMutation;
 import edu.franklin.ga.cls.alg.recombination.HUXRecombination;
 import edu.franklin.ga.cls.alg.selection.parent.RouletteParentSelection;
 import edu.franklin.ga.cls.alg.selection.survivor.ElitistSurvivorSelection;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 import edu.franklin.ga.cls.util.GAResultSet;
-import edu.franklin.ga.cls.util.GeneCollectionAnalyzer;
+import edu.franklin.ga.cls.util.PopulationAnalyzer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class CHC extends AbstractGA
 
     /**
      * @param populationSize Population size.
-     * @param geneSize Gene size (chromosomes).
+     * @param chromosomeSize Chromosome size (genes per chromosome).
      * @param pC Crossover probability (ignored for CHC).
      * @param pCM Cataclysmic mutation probability.
      * @param termGeneration Number of generations to run,
@@ -34,26 +34,26 @@ public class CHC extends AbstractGA
      * @param termFitness Fitness at which to halt,
      *        or null for generation-based termination.
      */
-    public GAResultSet run(int populationSize, int geneSize,
+    public GAResultSet run(int populationSize, int chromosomeSize,
             Double pC, Double pCM,
             Integer termGeneration, Double termFitness)
     {
         GAResultSet results = new GAResultSet();
 
-        List<Gene> geneSet = new LinkedList<Gene>();
+        List<Chromosome> population = new LinkedList<Chromosome>();
         for (int i = 0; i < populationSize; i += 1)
-            geneSet.add(new Gene(geneSize));
+            population.add(new Chromosome(chromosomeSize));
 
-        int threshold = Math.round(geneSet.size() / 4);
+        int threshold = Math.round(population.size() / 4);
 
         Double gBest = null;
         for (int i = 0; true; i += 1)
         {
             if (gBest == null)
-                gBest = GeneCollectionAnalyzer.bestFitness(geneSet, fd);
+                gBest = PopulationAnalyzer.bestFitness(population, fd);
             else
-                if (gBest < GeneCollectionAnalyzer.bestFitness(geneSet, fd))
-                    gBest = GeneCollectionAnalyzer.bestFitness(geneSet, fd);
+                if (gBest < PopulationAnalyzer.bestFitness(population, fd))
+                    gBest = PopulationAnalyzer.bestFitness(population, fd);
 
             if (termGeneration != null && i >= termGeneration)
                 break;
@@ -65,15 +65,15 @@ public class CHC extends AbstractGA
                                         .get(results.bestFitnesses.size() - 1))
                 break;
 
-            List newGeneration = new LinkedList<Gene>();
-            int matings = Math.round(geneSet.size() / 2);
-            List<Gene> children = new LinkedList<Gene>();
+            List newGeneration = new LinkedList<Chromosome>();
+            int matings = Math.round(population.size() / 2);
+            List<Chromosome> children = new LinkedList<Chromosome>();
 
             for (int j = 0; j < matings; j += 1)
             {
-                List<Gene> parents = getParents(geneSet);
-                Gene dad = parents.get(0);
-                Gene mom = parents.get(1);
+                List<Chromosome> parents = getParents(population);
+                Chromosome dad = parents.get(0);
+                Chromosome mom = parents.get(1);
 
                 if ((dad.hammingDistanceTo(mom) / 2) > threshold)
                     for (int k = 0; k < 2; k += 1)
@@ -81,21 +81,22 @@ public class CHC extends AbstractGA
 
                 if (children.size() == 0)
                 {
-                    newGeneration = geneSet;
+                    newGeneration = population;
                     threshold -= 1;
                 }
                 else
                 {
-                    newGeneration.addAll(geneSet);
+                    newGeneration.addAll(population);
                     newGeneration.addAll(children);
 
-                    newGeneration = getSurvivors(newGeneration, geneSet.size());
+                    newGeneration = getSurvivors(newGeneration,
+                            population.size());
                 }
 
                 if (threshold <= 0)
                 {
-                    geneSet = mutate(newGeneration, pCM);
-                    threshold = (int) Math.round(pCM * (1.0 - pCM) * geneSize);
+                    population = mutate(newGeneration, pCM);
+                    threshold = (int) Math.round(pCM * (1.0 - pCM) * chromosomeSize);
                 }
             }
         }

@@ -70,8 +70,8 @@ public class GARunner
     {
         System.out.println(""
             + "\nusage: <program> < GA | CHC > m s pM pC g f\n\n"
-            + "\tm\tGenes per population    (integer)\n"
-            + "\ts\tChromosomes per gene    (integer)\n"
+            + "\tm\tPopulation size         (integer)\n"
+            + "\ts\tAlleles per chromosome  (integer)\n"
             + "\tpC\tCrossover probability   (real; 0 < x < 1)\n"
             + "\tpM\tMutation probability    (real; 0 < x < 1)\n"
             + "\tg\tGenerations to run      (integer)\n"

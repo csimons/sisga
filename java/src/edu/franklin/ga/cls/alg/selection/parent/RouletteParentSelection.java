@@ -1,7 +1,7 @@
 package edu.franklin.ga.cls.alg.selection.parent;
 
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,14 +20,14 @@ public class RouletteParentSelection implements ParentSelection
         this.fd = fd;
     }
 
-    public List<Gene> select(List<Gene> geneSet)
+    public List<Chromosome> select(List<Chromosome> population)
     {
         List<Double> absoluteFitnesses = new LinkedList<Double>();
         List<Double> proportionalFitnesses = new LinkedList<Double>();
 
         double totalFitness = 0;
 
-        for (Gene i : geneSet)
+        for (Chromosome i : population)
         {
             double fitness = fd.fitness(i);
             totalFitness += fitness;
@@ -37,15 +37,15 @@ public class RouletteParentSelection implements ParentSelection
         for (Double i : absoluteFitnesses)
             proportionalFitnesses.add(i / totalFitness);
 
-        List<Gene> parents = new LinkedList<Gene>();
+        List<Chromosome> parents = new LinkedList<Chromosome>();
 
         for (int i = 0; i < 2; i += 1)
         {
             double p = Math.random();
 
-            for (int j = 0; j < geneSet.size(); j += 1)
+            for (int j = 0; j < population.size(); j += 1)
                 if (p < proportionalFitnesses.get(j))
-                    parents.add(geneSet.get(j));
+                    parents.add(population.get(j));
                 else
                     p -= proportionalFitnesses.get(j);
         }

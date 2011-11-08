@@ -1,6 +1,6 @@
 package edu.franklin.ga.cls.alg.recombination;
 
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 public class SinglePointCrossover implements Recombination
 {
@@ -8,19 +8,19 @@ public class SinglePointCrossover implements Recombination
 
     /*
      * If our random number lies within the provided probability, we
-     * crossover the two genes at a random allele point.  Otherwise,
-     * we randomly select one of the two genes and return it.
+     * crossover the two chromosomes at a random allele point.  Otherwise,
+     * we randomly select one of the two chromosomes and return it.
      */
-    public Gene recombinate(Gene dad, Gene mom, Double pC)
+    public Chromosome recombinate(Chromosome dad, Chromosome mom, Double pC)
     {
         if (dad.size() != mom.size())
             throw new IllegalArgumentException("Arity of operators unequal.");
 
-        Gene child;
+        Chromosome child;
 
         if (Math.random() < pC)
         {
-            child = new Gene(dad.size());
+            child = new Chromosome(dad.size());
 
             int alleleIndex = dad.getRandIndex();
 

@@ -17,7 +17,7 @@ To build:
 
 3. Install Gnuplot
    a. Ensure that the directory containing the "gnuplot" executable
-   is present in your PATH environment variable.
+      is present in your PATH environment variable.
 
 4. From the java/ directory, run "ant".  The build should succeed, and
    should end with a usage message.

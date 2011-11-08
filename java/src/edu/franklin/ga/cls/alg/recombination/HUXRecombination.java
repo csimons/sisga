@@ -1,6 +1,6 @@
 package edu.franklin.ga.cls.alg.recombination;
 
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,11 +18,11 @@ public class HUXRecombination implements Recombination
     public HUXRecombination() {}
 
     /**
-     * @param dad First parent gene.
-     * @param mom Second parent gene.
+     * @param dad First parent chromosome.
+     * @param mom Second parent chromosome.
      * @param pC Recombination probability; gnored for HUXRecombination.
      */
-    public Gene recombinate(Gene dad, Gene mom, Double pC)
+    public Chromosome recombinate(Chromosome dad, Chromosome mom, Double pC)
     {
         if (dad.size() != mom.size())
             throw new IllegalArgumentException("Arity of operators unequal.");
@@ -38,7 +38,7 @@ public class HUXRecombination implements Recombination
             if (Math.round(Math.random()) == 0)
                 swapAlleles.add(i);
 
-        Gene child = new Gene(dad.size());
+        Chromosome child = new Chromosome(dad.size());
 
         for (int i = 0; i < child.size(); i += 1)
             child.set(i, swapAlleles.contains(i) ? mom.get(i) : dad.get(i));

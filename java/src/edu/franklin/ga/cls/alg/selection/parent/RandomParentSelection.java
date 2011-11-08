@@ -1,21 +1,21 @@
 package edu.franklin.ga.cls.alg.selection.parent;
 
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class RandomParentSelection implements ParentSelection
 {
-    public List<Gene> select(List<Gene> geneSet)
+    public List<Chromosome> select(List<Chromosome> population)
     {
-        int indexA = (int) Math.random() * (geneSet.size() + 1);
-        int indexB = (int) Math.random() * (geneSet.size() + 1);
+        int indexA = (int) Math.random() * (population.size() + 1);
+        int indexB = (int) Math.random() * (population.size() + 1);
 
-        List<Gene> genes = new LinkedList<Gene>();
-        genes.add(geneSet.get(indexA));
-        genes.add(geneSet.get(indexB));
+        List<Chromosome> chromosomes = new LinkedList<Chromosome>();
+        chromosomes.add(population.get(indexA));
+        chromosomes.add(population.get(indexB));
 
-        return genes;
+        return chromosomes;
     }
 }

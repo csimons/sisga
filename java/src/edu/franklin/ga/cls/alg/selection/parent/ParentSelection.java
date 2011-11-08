@@ -1,10 +1,10 @@
 package edu.franklin.ga.cls.alg.selection.parent;
 
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 
 import java.util.List;
 
 public interface ParentSelection
 {
-    public List<Gene> select(List<Gene> geneSet);
+    public List<Chromosome> select(List<Chromosome> population);
 }

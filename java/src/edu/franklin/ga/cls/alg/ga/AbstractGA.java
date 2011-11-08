@@ -1,12 +1,12 @@
 package edu.franklin.ga.cls.ga;
 
-import edu.franklin.ga.cls.alg.mutation.gene.GeneMutation;
-import edu.franklin.ga.cls.alg.mutation.geneset.GeneSetMutation;
+import edu.franklin.ga.cls.alg.mutation.chromosome.ChromosomeMutation;
+import edu.franklin.ga.cls.alg.mutation.population.PopulationMutation;
 import edu.franklin.ga.cls.alg.selection.parent.ParentSelection;
 import edu.franklin.ga.cls.alg.selection.survivor.SurvivorSelection;
 import edu.franklin.ga.cls.alg.recombination.Recombination;
 import edu.franklin.ga.cls.fitness.FitnessDeterminant;
-import edu.franklin.ga.cls.model.Gene;
+import edu.franklin.ga.cls.model.Chromosome;
 import edu.franklin.ga.cls.util.GAResultSet;
 
 import java.util.List;
@@ -17,28 +17,28 @@ public abstract class AbstractGA implements GA
     protected SurvivorSelection     algSS;
     protected ParentSelection       algPS;
     protected Recombination         algRec;
-    protected GeneMutation          algMutG;
-    protected GeneSetMutation       algMutGS;
+    protected ChromosomeMutation    algMutC;
+    protected PopulationMutation    algMutP;
 
     public AbstractGA(
             FitnessDeterminant  fd,
             SurvivorSelection   algSS,
             ParentSelection     algPS,
             Recombination       algRec,
-            GeneMutation        algMutG,
-            GeneSetMutation     algMutGS )
+            ChromosomeMutation  algMutC,
+            PopulationMutation  algMutP )
     {
         this.fd         = fd;
         this.algSS      = algSS;
         this.algPS      = algPS;
         this.algRec     = algRec;
-        this.algMutG    = algMutG;
-        this.algMutGS   = algMutGS;
+        this.algMutC    = algMutC;
+        this.algMutP    = algMutP;
     }
 
     /**
      * @param populationSize Population size.
-     * @param geneSize Gene size (chromosomes).
+     * @param chromosomeSize Chromosome size (genes per chromosome).
      * @param pC Crossover probability.
      * @param pM Mutation probability.
      * @param termGeneration Number of generations to run,
@@ -46,37 +46,38 @@ public abstract class AbstractGA implements GA
      * @param termFitness Fitness at which to halt,
      *        or null for generation-based termination.
      */
-    public abstract GAResultSet run(int populationSize, int geneSize,
+    public abstract GAResultSet run(int populationSize, int chromosomeSize,
             Double pC, Double pM,
             Integer termGeneration, Double termFitness);
 
-    protected double fitness(Gene gene)
+    protected double fitness(Chromosome chromosome)
     {
-        return fd.fitness(gene);
+        return fd.fitness(chromosome);
     }
 
-    protected List<Gene> getSurvivors(List<Gene> geneSet, int targetPopSize)
+    protected List<Chromosome> getSurvivors(List<Chromosome> population,
+            int targetPopSize)
     {
-        return algSS.select(geneSet, targetPopSize);
+        return algSS.select(population, targetPopSize);
     }
 
-    protected List<Gene> getParents(List<Gene> geneSet)
+    protected List<Chromosome> getParents(List<Chromosome> population)
     {
-        return algPS.select(geneSet);
+        return algPS.select(population);
     }
 
-    protected Gene recombinate(Gene a, Gene b, double pC)
+    protected Chromosome recombinate(Chromosome a, Chromosome b, double pC)
     {
         return algRec.recombinate(a, b, pC);
     }
 
-    protected Gene mutate(Gene gene, double pM)
+    protected Chromosome mutate(Chromosome chromosome, double pM)
     {
-        return algMutG.mutate(gene, pM);
+        return algMutC.mutate(chromosome, pM);
     }
 
-    protected List<Gene> mutate(List<Gene> geneSet, double pM)
+    protected List<Chromosome> mutate(List<Chromosome> population, double pM)
     {
-        return algMutGS.mutate(geneSet, pM);
+        return algMutP.mutate(population, pM);
     }
 }
