@@ -1,6 +1,7 @@
 package cls.alg.selection.parent;
 
-import cls.fitness.FitnessDeterminant;
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.model.Chromosome;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,13 +11,15 @@ import java.util.List;
  */
 public class RouletteParentSelection implements ParentSelection
 {
-    private FitnessDeterminant fd;
+    private Decoder d;
+    private Function f;
 
     private RouletteParentSelection() {}
 
-    public RouletteParentSelection(FitnessDeterminant fd)
+    public RouletteParentSelection(Decoder d, Function f)
     {
-        this.fd = fd;
+        this.d = d;
+        this.f = f;
     }
 
     public List<Chromosome> select(List<Chromosome> population)
@@ -28,7 +31,7 @@ public class RouletteParentSelection implements ParentSelection
 
         for (Chromosome i : population)
         {
-            double fitness = fd.fitness(i);
+            double fitness = f.f(d.decode(i));
             totalFitness += fitness;
             absoluteFitnesses.add(fitness);
         }

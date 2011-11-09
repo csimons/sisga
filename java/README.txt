@@ -29,7 +29,7 @@ To build:
 
    Then run it, as follows, substituting other parameter values as desired:
 
-   $ java -jar dist/JGA.jar -v GA 50 100 0.7 0.1 1000 100
+   $ java -jar dist/JGA.jar -v GA 10 10 0.7 0.1 200 99999 0
 
    This will create a GnuPlot data file with the name "[algorithm].dat",
    where [algorithm] is the high-level GA algorithm specified on the

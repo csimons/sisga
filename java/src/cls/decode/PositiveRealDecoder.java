@@ -7,13 +7,13 @@ import java.util.List;
 /**
  * Decodes chromosomes into real-valued, positive or negative numbers.
  */
-public class RealDecoder implements Decoder
+public class PositiveRealDecoder implements Decoder
 {
     private Integer decimalPlaces;
 
-    private RealDecoder() {} // force specification of decimal places.
+    private PositiveRealDecoder() {} // force specification of decimal places.
 
-    public RealDecoder(int decimalPlaces)
+    public PositiveRealDecoder(int decimalPlaces)
     {
         this.decimalPlaces = decimalPlaces;
     }
@@ -32,7 +32,7 @@ public class RealDecoder implements Decoder
          * the number is positive (false) or negative (true).
          */
         int base = 1;
-        for (int i = chromosome.size() - 1; i >= 1; base *= 2) // :)
+        for (int i = chromosome.size() - 1; i >= 0; base *= 2) // :)
             value += chromosome.get(i--) ? base : 0;
 
         /*
@@ -40,9 +40,6 @@ public class RealDecoder implements Decoder
          */
         for (int i = 0; i < decimalPlaces; i += 1)
             value *= 0.1;
-
-        if (chromosome.get(0))
-            value *= (-1);
 
         List<Double> list = new LinkedList<Double>();
         list.add(value);

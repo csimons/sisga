@@ -1,4 +1,4 @@
-- Complete implementation of bit-string decoders.
+- Implement bit-string decoders.
   - Bit-string -> one (+/-) real. (done)
   - Bit-string -> two (+/-) reals, user-specified demarcation point.
 

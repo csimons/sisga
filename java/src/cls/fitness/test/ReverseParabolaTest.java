@@ -1,6 +1,6 @@
-package cls.fitness.function.test;
+package cls.fitness.test;
 
-import cls.fitness.function.ReverseParabola;
+import cls.fitness.ReverseParabola;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Test;

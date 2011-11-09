@@ -1,8 +1,8 @@
-package cls.fitness.function;
+package cls.fitness;
 
 import java.util.List;
 
-public class ReverseSphere implements Function
+public class Sphere implements Function
 {
     public double f(List<Double> inputs)
     {
@@ -13,7 +13,7 @@ public class ReverseSphere implements Function
         double result = 0;
 
         for (Double i : inputs)
-            result -= (i * i);
+            result += (i * i);
 
         return result;
     }

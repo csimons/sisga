@@ -1,6 +1,7 @@
 package cls.alg.selection.survivor;
 
-import cls.fitness.FitnessDeterminant;
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.model.Chromosome;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -15,13 +16,15 @@ import java.util.Map;
  */
 public class ElitistSurvivorSelection implements SurvivorSelection
 {
-    private FitnessDeterminant fd;
+    private Decoder d;
+    private Function f;
 
     private ElitistSurvivorSelection() {}
 
-    public ElitistSurvivorSelection(FitnessDeterminant fd)
+    public ElitistSurvivorSelection(Decoder d, Function f)
     {
-        this.fd = fd;
+        this.d = d;
+        this.f = f;
     }
 
     public List<Chromosome> select(List<Chromosome> population,
@@ -38,7 +41,7 @@ public class ElitistSurvivorSelection implements SurvivorSelection
 
         for (Chromosome i : population)
         {
-            double fitness = fd.fitness(i);
+            double fitness = f.f(d.decode(i));
 
             if (fitnessMap.get(fitness) == null)
                 fitnessMap.put(fitness, new LinkedList<Chromosome>());

@@ -1,4 +1,4 @@
-package cls.fitness.function;
+package cls.fitness;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package cls.alg.mutation.population;
 
-import cls.fitness.FitnessDeterminant;
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.model.Chromosome;
 import cls.util.PopulationAnalyzer;
 import java.util.List;
@@ -11,13 +12,15 @@ import java.util.List;
  */
 public class CHCCataclysmicMutation implements PopulationMutation
 {
-    private FitnessDeterminant fd;
+    private Decoder d;
+    private Function f;
 
     private CHCCataclysmicMutation() {}
 
-    public CHCCataclysmicMutation(FitnessDeterminant fd)
+    public CHCCataclysmicMutation(Decoder d, Function f)
     {
-        this.fd = fd;
+        this.d = d;
+        this.f = f;
     }
 
     public List<Chromosome> mutate(List<Chromosome> population, double pCM)
@@ -25,10 +28,10 @@ public class CHCCataclysmicMutation implements PopulationMutation
         Chromosome bestFitChromosome = null;
 
         double bestFitness = PopulationAnalyzer
-            .bestFitness(population, fd);
+            .bestFitness(population, d, f);
 
         for (Chromosome chromosome : population)
-            if (fd.fitness(chromosome) == bestFitness)
+            if (f.f(d.decode(chromosome)) == bestFitness)
                 bestFitChromosome = chromosome;
 
         if (bestFitChromosome == null)

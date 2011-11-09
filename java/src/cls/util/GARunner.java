@@ -1,9 +1,15 @@
 package cls.util;
 
+import cls.decode.Decoder;
+import cls.decode.NumSetBitsDecoder;
+import cls.decode.PositiveRealDecoder;
+import cls.decode.RealDecoder;
+import cls.fitness.Function;
+import cls.fitness.IdentityFunction;
+import cls.fitness.ReverseParabola;
 import cls.ga.GA;
 import cls.ga.CanonicalGA;
 import cls.ga.CHC;
-import cls.fitness.OneMaxFitnessDeterminant;
 import cls.util.GAResultSet;
 
 public class GARunner
@@ -12,7 +18,7 @@ public class GARunner
     {
         boolean verbose = false;
 
-        if (! (args.length == 7 || args.length == 8))
+        if (! (args.length == 8 || args.length == 9))
             usage();
 
         String  vf  = null;
@@ -23,29 +29,32 @@ public class GARunner
         Double  pM  = null;
         Integer g   = null;
         Double  f   = null;
+        Integer fpp = null;
 
         try
         {
-            if (args.length == 7)
+            if (args.length == 8)
             {
-                a  = args[0];
-                m  = Integer.parseInt(args[1]);
-                s  = Integer.parseInt(args[2]);
-                pC = Double.parseDouble(args[3]);
-                pM = Double.parseDouble(args[4]);
-                g  = Integer.parseInt(args[5]);
-                f  = Double.parseDouble(args[6]);
+                a   = args[0];
+                m   = Integer.parseInt(args[1]);
+                s   = Integer.parseInt(args[2]);
+                pC  = Double.parseDouble(args[3]);
+                pM  = Double.parseDouble(args[4]);
+                g   = Integer.parseInt(args[5]);
+                f   = Double.parseDouble(args[6]);
+                fpp = Integer.parseInt(args[7]);
             }
-            else if (args.length == 8)
+            else if (args.length == 9)
             {
-                vf = args[0];
-                a  = args[1];
-                m  = Integer.parseInt(args[2]);
-                s  = Integer.parseInt(args[3]);
-                pC = Double.parseDouble(args[4]);
-                pM = Double.parseDouble(args[5]);
-                g  = Integer.parseInt(args[6]);
-                f  = Double.parseDouble(args[7]);
+                vf  = args[0];
+                a   = args[1];
+                m   = Integer.parseInt(args[2]);
+                s   = Integer.parseInt(args[3]);
+                pC  = Double.parseDouble(args[4]);
+                pM  = Double.parseDouble(args[5]);
+                g   = Integer.parseInt(args[6]);
+                f   = Double.parseDouble(args[7]);
+                fpp = Integer.parseInt(args[8]);
 
                 verbose = true;
             }
@@ -58,24 +67,38 @@ public class GARunner
 
             if (! (a.equals("GA") || a.equals("CHC")))
                 throw new NumberFormatException();
+
+            if (fpp > s - 1)
+                throw new IllegalArgumentException(
+                        "fpp must be <= s - 1");
         }
         catch (NumberFormatException e) { usage(); }
 
         GA ga = null;
 
+        // ############################################################
+        // # CONFIGURE HERE
+        // ############################################################
         /*
-         * TODO: Allow fitness function to be specified on the command-line.
+         * TODO: Allow decoder, function to be specified on the command-line.
+         */
+        Decoder decoder = new PositiveRealDecoder(fpp);
+        Function function = new IdentityFunction();
+
+        /*
+         * TODO: Allow GA-type to be specified on the command-line.
          */
         if (a.equals("GA"))
-            ga = new CanonicalGA(new OneMaxFitnessDeterminant());
+            ga = new CanonicalGA(decoder, function);
         else if (a.equals("CHC"))
-            ga = new CHC(new OneMaxFitnessDeterminant());
+            ga = new CHC(decoder, function);
         else
             throw new IllegalArgumentException(
                     "Algortihm should be one of {GA, CHC}.");
+        // ############################################################
 
         if (verbose)
-            printBeginInfo(a, m, s, pC, pM, g, f);
+            printBeginInfo(a, m, s, pC, pM, g, f, fpp);
 
         GAResultSet results = ga.run
         (
@@ -104,19 +127,20 @@ public class GARunner
     private static void usage()
     {
         System.out.println(""
-            + "\nusage: <program> [-v] < GA | CHC > m s pC pM g f\n\n"
-            + "\tm\tPopulation size         (integer)\n"
-            + "\ts\tAlleles per chromosome  (integer)\n"
-            + "\tpC\tCrossover probability   (real; 0 < x < 1)\n"
-            + "\tpM\tMutation probability    (real; 0 < x < 1)\n"
-            + "\tg\tGenerations to run      (integer)\n"
-            + "\tf\tTerminal fitness        (real)\n\n");
+            + "\nusage: <program> [-v] < GA | CHC > m s pC pM g f fpp\n\n"
+            + "\tm\tPopulation size                (integer)\n"
+            + "\ts\tAlleles per chromosome         (integer)\n"
+            + "\tpC\tCrossover probability           (real; 0 < x < 1)\n"
+            + "\tpM\tMutation probability            (real; 0 < x < 1)\n"
+            + "\tg\tGenerations to run             (integer)\n"
+            + "\tf\tTerminal fitness               (real)\n\n"
+            + "\tfpp\tFP precision (decimal places)  (integer)\n\n");
 
         System.exit(1);
     }
 
     private static void printBeginInfo(String a, Integer m, Integer s,
-        Double pC, Double pM, Integer g, Double f)
+        Double pC, Double pM, Integer g, Double f, Integer fpp)
     {
         System.out.println(String.format(""
             + "\nRunning %s for %d generations "
@@ -126,8 +150,9 @@ public class GARunner
             + "    Crossover probability: %f\n"
             + "    Mutation probability:  %f\n"
             + "    Terminal generation:   %d\n"
-            + "    Terminal fitness:      %f\n",
-            a, g, f, m, s, pC, pM, g, f));
+            + "    Terminal fitness:      %f\n"
+            + "    FPP (decimal places):  %d\n",
+            a, g, f, m, s, pC, pM, g, f, fpp));
     }
 
     private static void printEndInfo(GAResultSet results)

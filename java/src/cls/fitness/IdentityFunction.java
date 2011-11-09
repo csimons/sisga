@@ -1,8 +1,8 @@
-package cls.fitness.function;
+package cls.fitness;
 
 import java.util.List;
 
-public class ReverseParabola implements Function
+public class IdentityFunction implements Function
 {
     public double f(List<Double> inputs)
     {
@@ -10,8 +10,6 @@ public class ReverseParabola implements Function
             throw new IllegalArgumentException(
                     "Expecting  1 input variable.");
 
-        double x = inputs.get(0);
-
-        return 100 - (x * x);
+        return inputs.get(0);
     }
 }

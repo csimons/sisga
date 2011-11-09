@@ -1,6 +1,7 @@
 package cls.alg.selection.survivor;
 
-import cls.fitness.FitnessDeterminant;
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.model.Chromosome;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,13 +14,15 @@ import java.util.List;
  */
 public class TournamentSurvivorSelection implements SurvivorSelection
 {
-    private FitnessDeterminant fd;
+    private Decoder d;
+    private Function f;
 
     private TournamentSurvivorSelection() {}
 
-    public TournamentSurvivorSelection(FitnessDeterminant fd)
+    public TournamentSurvivorSelection(Decoder d, Function f)
     {
-        this.fd = fd;
+        this.d = d;
+        this.f = f;
     }
 
     public List<Chromosome> select(List<Chromosome> population,
@@ -39,7 +42,7 @@ public class TournamentSurvivorSelection implements SurvivorSelection
             Chromosome a = population.get(indexA);
             Chromosome b = population.get(indexB);
 
-            population.remove(fd.fitness(a) < fd.fitness(b) ? a : b);
+            population.remove(f.f(d.decode(a)) < f.f(d.decode(b)) ? a : b);
         }
 
         return population;
