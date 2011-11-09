@@ -5,14 +5,16 @@ import cls.alg.mutation.population.PopulationMutation;
 import cls.alg.selection.parent.ParentSelection;
 import cls.alg.selection.survivor.SurvivorSelection;
 import cls.alg.recombination.Recombination;
-import cls.fitness.FitnessDeterminant;
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.model.Chromosome;
 import cls.util.GAResultSet;
 import java.util.List;
 
 public abstract class AbstractGA implements GA
 {
-    protected FitnessDeterminant    fd;
+    protected Decoder               d;
+    protected Function              f;
     protected SurvivorSelection     algSS;
     protected ParentSelection       algPS;
     protected Recombination         algRec;
@@ -20,14 +22,16 @@ public abstract class AbstractGA implements GA
     protected PopulationMutation    algMutP;
 
     public AbstractGA(
-            FitnessDeterminant  fd,
+            Decoder             d,
+            Function            f,
             SurvivorSelection   algSS,
             ParentSelection     algPS,
             Recombination       algRec,
             ChromosomeMutation  algMutC,
             PopulationMutation  algMutP )
     {
-        this.fd         = fd;
+        this.d          = d;
+        this.f          = f;
         this.algSS      = algSS;
         this.algPS      = algPS;
         this.algRec     = algRec;
@@ -50,9 +54,14 @@ public abstract class AbstractGA implements GA
             Double pC, Double pM,
             Integer termGeneration, Double termFitness, boolean verbose);
 
-    protected double fitness(Chromosome chromosome)
+    protected Object decode(Chromosome chromosome)
     {
-        return fd.fitness(chromosome);
+        return d.decode(chromosome);
+    }
+
+    protected double fitness(List<Double> input)
+    {
+        return f.f(input);
     }
 
     protected List<Chromosome> getSurvivors(List<Chromosome> population,

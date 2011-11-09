@@ -55,4 +55,15 @@ public class Chromosome
 
         return distance;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+        
+        for (Boolean i : chromosome)
+            sb.append(i ? "1" : "0");
+
+        return sb.toString();
+    }
 }

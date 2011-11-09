@@ -1,9 +1,10 @@
 package cls.ga;
 
-import cls.fitness.FitnessDeterminant;
 import cls.alg.mutation.chromosome.RandomBitFlipMutation;
 import cls.alg.recombination.SinglePointCrossover;
 import cls.alg.selection.parent.RouletteParentSelection;
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.model.Chromosome;
 import cls.util.GAResultSet;
 import cls.util.PopulationAnalyzer;
@@ -12,11 +13,11 @@ import java.util.List;
 
 public class CanonicalGA extends AbstractGA
 {
-    public CanonicalGA(FitnessDeterminant fd)
+    public CanonicalGA(Decoder d, Function f)
     {
-        super(fd,
+        super(d, f,
                 null,
-                new RouletteParentSelection(fd),
+                new RouletteParentSelection(d, f),
                 new SinglePointCrossover(),
                 new RandomBitFlipMutation(),
                 null);
@@ -49,20 +50,20 @@ public class CanonicalGA extends AbstractGA
         for (int i = 0; true; i += 1)
         {
             if (gBest == null)
-                gBest = PopulationAnalyzer.bestFitness(population, fd);
+                gBest = PopulationAnalyzer.bestFitness(population, d, f);
             else
-                if (gBest < PopulationAnalyzer.bestFitness(population, fd))
-                    gBest = PopulationAnalyzer.bestFitness(population, fd);
+                if (gBest < PopulationAnalyzer.bestFitness(population, d, f))
+                    gBest = PopulationAnalyzer.bestFitness(population, d, f);
 
             if (gWorst == null)
-                gWorst = PopulationAnalyzer.worstFitness(population, fd);
+                gWorst = PopulationAnalyzer.worstFitness(population, d, f);
             else
-                if (gWorst > PopulationAnalyzer.worstFitness(population, fd))
-                    gWorst = PopulationAnalyzer.worstFitness(population, fd);
+                if (gWorst > PopulationAnalyzer.worstFitness(population, d, f))
+                    gWorst = PopulationAnalyzer.worstFitness(population, d, f);
 
             results.bestFitnesses.add(gBest);
             results.avgFitnesses.add(PopulationAnalyzer
-                    .avgFitness(population, fd));
+                    .avgFitness(population, d, f));
             results.worstFitnesses.add(gWorst);
 
             if (termGeneration != null && i >= termGeneration)
