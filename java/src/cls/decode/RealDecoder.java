@@ -11,8 +11,6 @@ public class RealDecoder implements Decoder
 {
     private Integer decimalPlaces;
 
-    private RealDecoder() {} // force specification of decimal places.
-
     public RealDecoder(int decimalPlaces)
     {
         this.decimalPlaces = decimalPlaces;
@@ -26,10 +24,11 @@ public class RealDecoder implements Decoder
         double value = 0;
 
         /*
-         * Note we stop before the first bit (while "i >= 1").
+         * Note we stop before the first bit of each number's chromosome.
          *
-         * This is intentional, as this bit will represent whether
-         * the number is positive (false) or negative (true).
+         * This is intentional, as this bit is not part of the number itself
+         * but instead represents whether the number is positive (false) or
+         * negative (true).
          */
         int base = 1;
         for (int i = chromosome.size() - 1; i >= 1; base *= 2) // :)
