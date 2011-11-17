@@ -11,8 +11,6 @@ public class PositiveRealDecoder implements Decoder
 {
     private Integer decimalPlaces;
 
-    private PositiveRealDecoder() {} // force specification of decimal places.
-
     public PositiveRealDecoder(int decimalPlaces)
     {
         this.decimalPlaces = decimalPlaces;
