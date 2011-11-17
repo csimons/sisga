@@ -133,7 +133,7 @@ public class GARunner
             + "\tpC\tCrossover probability           (real; 0 < x < 1)\n"
             + "\tpM\tMutation probability            (real; 0 < x < 1)\n"
             + "\tg\tGenerations to run             (integer)\n"
-            + "\tf\tTerminal fitness               (real)\n\n"
+            + "\tf\tTerminal fitness               (real)\n"
             + "\tfpp\tFP precision (decimal places)  (integer)\n\n");
 
         System.exit(1);
