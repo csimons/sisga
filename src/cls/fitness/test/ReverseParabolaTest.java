@@ -12,7 +12,9 @@ public class ReverseParabolaTest
     @Test
     public void expectedValues()
     {
-        assertEquals(100, new ReverseParabola().f(wrap(0)), 0.0001);
+        assertEquals(0, new ReverseParabola(0).f(wrap(0)), 0.0001);
+        assertEquals(100, new ReverseParabola(100).f(wrap(0)), 0.0001);
+        assertEquals(-100, new ReverseParabola(-100).f(wrap(0)), 0.0001);
     }
 
     private List<Double> wrap (double x)

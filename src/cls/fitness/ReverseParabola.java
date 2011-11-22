@@ -4,6 +4,13 @@ import java.util.List;
 
 public class ReverseParabola implements Function
 {
+    private double max;
+
+    public ReverseParabola(double max)
+    {
+        this.max = max;
+    }
+
     public double f(List<Double> inputs)
     {
         if (inputs.size() != 1)
@@ -12,6 +19,6 @@ public class ReverseParabola implements Function
 
         double x = inputs.get(0);
 
-        return 100 - (x * x);
+        return max - (x * x);
     }
 }
