@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Decodes chromosomes into two real-valued, positive or negative numbers.
+ * Decodes a chromosome into two real-valued, positive or negative numbers.
  */
 public class TwoRealDecoder implements Decoder
 {
