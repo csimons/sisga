@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Counts the number of set bits in the bit string.
+ * Counts the number of set bits in the bit string (chromosome).
  */
 public class NumSetBitsDecoder implements Decoder
 {
