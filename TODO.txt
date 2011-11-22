@@ -1,5 +1,3 @@
 - Allow user to specify fitness function at run-time.
-
 - Implement additional fitness functions.
-
 - Print periodic statistics during runs if verbose flag has been specified.
