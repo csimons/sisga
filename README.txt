@@ -19,8 +19,8 @@ To build:
    a. Ensure that the directory containing the "gnuplot" executable
       is present in your PATH environment variable.
 
-4. From the java/ directory, run "ant".  The build should succeed, and
-   should end with a usage message.
+4. From the project root directory, run "ant".  The build should
+   succeed, and should end with a usage message.
 
 5. To see what arguments need to be supplied to the program, view a
    usage message by running the generated JAR file without any arguments:
