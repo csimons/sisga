@@ -22,7 +22,9 @@ To build:
 4. From the project root directory, run "ant".  The build should
    succeed, and should end with a usage message.
 
-5. To see what arguments need to be supplied to the program, view a
+RUNNING
+
+1. To see what arguments need to be supplied to the program, view a
    usage message by running the generated JAR file without any arguments:
 
    $ java -jar dist/JGA.jar
@@ -35,7 +37,7 @@ To build:
    where [algorithm] is the high-level GA algorithm specified on the
    command-line (above, "GA").
 
-6. To plot the results as a PNG image file, run the following, passing in
+2. To plot the results as a PNG image file, run the following, passing in
    the same algorithm you passed to the JGA JAR (for example, "GA" or "CHC"):
 
    $ bash scripts/plot.sh GA
