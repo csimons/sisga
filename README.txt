@@ -1,6 +1,4 @@
-This project has been built in the UNIX environment and has not been tested
-under Windows.  The plotting script definitely will not work natively in
-Windows (a bash script), although it might run with 'cygwin'.
+An extensible genetic algorithm engine.
 
 
 BUILDING
@@ -21,6 +19,7 @@ To build:
 
 4. From the project root directory, run "ant".  The build should
    succeed, and should end with a usage message.
+
 
 RUNNING
 
