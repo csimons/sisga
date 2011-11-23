@@ -21,22 +21,14 @@ public abstract class AbstractGA implements GA
     protected ChromosomeMutation    algMutC;
     protected PopulationMutation    algMutP;
 
-    public AbstractGA(
-            Decoder             d,
-            Function            f,
-            SurvivorSelection   algSS,
-            ParentSelection     algPS,
-            Recombination       algRec,
-            ChromosomeMutation  algMutC,
-            PopulationMutation  algMutP )
+    public void setDecoder(Decoder d)   { this.d = d; }
+    public void setFunction(Function f) { this.f = f; }
+
+    public void init()
     {
-        this.d          = d;
-        this.f          = f;
-        this.algSS      = algSS;
-        this.algPS      = algPS;
-        this.algRec     = algRec;
-        this.algMutC    = algMutC;
-        this.algMutP    = algMutP;
+        if (d == null || f == null)
+            throw new IllegalStateException(
+                "Cannot initialize without decoder and fitness function.");
     }
 
     /**

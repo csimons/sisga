@@ -13,14 +13,14 @@ import java.util.List;
 
 public class CanonicalGA extends AbstractGA
 {
-    public CanonicalGA(Decoder d, Function f)
+    @Override
+    public void init()
     {
-        super(d, f,
-                null,
-                new RouletteParentSelection(d, f),
-                new SinglePointCrossover(),
-                new RandomBitFlipMutation(),
-                null);
+        super.init();
+
+        algPS = new RouletteParentSelection(d, f);
+        algRec = new SinglePointCrossover();
+        algMutC = new RandomBitFlipMutation();
     }
 
     /**

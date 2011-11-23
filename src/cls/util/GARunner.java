@@ -10,15 +10,68 @@ import cls.decode.RealDecoder;
 import cls.fitness.Function;
 import cls.fitness.IdentityFunction;
 import cls.fitness.ReverseParabola;
+import cls.util.Configuration;
 import cls.util.GAResultSet;
 
 public class GARunner
 {
+    private static boolean verbose = false;
+
     public static void main(String[] args)
+    {
+        Configuration config = configure(args);
+
+        // TODO: Fix broken dynamic class-loading:
+
+//      Function function = (Function) config.getAlgorithm(config.ALG_FITNESS);
+        Function function = new IdentityFunction();
+//      Decoder decoder = (Decoder) config.getAlgorithm(config.ALG_DECODER);
+        Decoder decoder = new PositiveRealDecoder();
+        decoder.setPrecision(config.getFPP());
+//      GA ga = (GA) config.getAlgorithm(config.ALG_GA);
+        GA ga;
+        if (config.getGA().equals("CanonicalGA"))
+            ga = new CanonicalGA();
+        else if (config.getGA().equals("CHC"))
+            ga = new CHC();
+        else
+            throw new IllegalArgumentException(
+                "Dynamic GA loading unsupported for now.");
+        ga.setDecoder(decoder);
+        ga.setFunction(function);
+        ga.init();
+
+        if (verbose)
+            printBeginInfo(config);
+
+        GAResultSet results = ga.run
+        (
+            config.getSizePopulation(),
+            config.getSizeChromosome(),
+            config.getPC(),
+            config.getPM(),
+            config.getTermGeneration(),
+            config.getTermFitness(),
+            verbose
+        );
+
+        if (verbose)
+            printEndInfo(results);
+
+        try
+        {
+            results.writeToGnuPlotDataFile(config.getGA() + ".dat");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Could not write results: " + e.getMessage());
+        }
+    }
+
+    private static Configuration configure(String[] args)
     {
         String configName  = null;
         String verboseFlag = null;
-        boolean verbose = false;
 
         if (args.length == 1)
             configName = args[0];
@@ -34,63 +87,7 @@ public class GARunner
         if (verboseFlag != null && (! verboseFlag.equals("-v")))
            usage();
 
-        Configuration config = new Configuration(configName);
-
-        GA ga = null;
-
-        // ############################################################
-        // # LOW-LEVEL ALGORITHM CONFIGURATION
-        // ############################################################
-        /*
-         * TODO: Rip this out, load classes dynamically based on config.
-         */
-        Function function = new IdentityFunction();
-        Decoder decoder = new PositiveRealDecoder();
-        decoder.setPrecision(config.getFPP());
-
-        if (config.getGA().equals("CanonicalGA"))
-            ga = new CanonicalGA(decoder, function);
-        else if (config.getGA().equals("CHC"))
-            ga = new CHC(decoder, function);
-        else
-            throw new IllegalArgumentException(
-                "Algortihm should be one of {CanonicalGA, CHC}.");
-        // ############################################################
-
-        String  a   = config.getGA();
-        Integer m   = config.getSizePopulation();
-        Integer s   = config.getSizeChromosome();
-        Double  pC  = config.getPC();
-        Double  pM  = config.getPM();
-        Integer g   = config.getTermGeneration();
-        Double  f   = config.getTermFitness();
-        Integer fpp = config.getFPP();
-
-        if (verbose)
-            printBeginInfo(a, m, s, pC, pM, g, f, fpp);
-
-        GAResultSet results = ga.run
-        (
-            m,      // population size
-            s,      // gene size
-            pC,     // recombination (crossover) probability
-            pM,     // mutation probability
-            g,      // terminal number of generations
-            f,      // terminal fitness
-            verbose // verbose flag
-        );
-
-        try
-        {
-            results.writeToGnuPlotDataFile(a + ".dat");
-        }
-        catch (Exception e)
-        {
-            System.err.println("Could not write results: " + e.getMessage());
-        }
-
-        if (verbose)
-            printEndInfo(results);
+        return new Configuration(configName);
     }
 
     private static void usage()
@@ -99,8 +96,7 @@ public class GARunner
         System.exit(1);
     }
 
-    private static void printBeginInfo(String a, Integer m, Integer s,
-        Double pC, Double pM, Integer g, Double f, Integer fpp)
+    private static void printBeginInfo(Configuration config)
     {
         System.out.println(String.format(""
             + "\nRunning %s for %d generations "
@@ -112,7 +108,16 @@ public class GARunner
             + "    Terminal generation:   %d\n"
             + "    Terminal fitness:      %f\n"
             + "    FPP (decimal places):  %d\n",
-            a, g, f, m, s, pC, pM, g, f, fpp));
+            config.getGA(),
+            config.getTermGeneration(),
+            config.getTermFitness(),
+            config.getSizePopulation(),
+            config.getSizeChromosome(),
+            config.getPC(),
+            config.getPM(),
+            config.getTermGeneration(),
+            config.getTermFitness(),
+            config.getFPP()));
     }
 
     private static void printEndInfo(GAResultSet results)

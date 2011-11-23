@@ -4,9 +4,11 @@ import java.util.List;
 
 public class ReverseParabola implements Function
 {
-    private double max;
+    private int max;
 
-    public ReverseParabola(double max)
+    public ReverseParabola() { this(100); }
+
+    public ReverseParabola(int max)
     {
         this.max = max;
     }
