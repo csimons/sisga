@@ -1,4 +1,4 @@
-package cls.ga;
+package cls.alg.ga;
 
 import cls.util.GAResultSet;
 

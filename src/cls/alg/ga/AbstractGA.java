@@ -1,4 +1,4 @@
-package cls.ga;
+package cls.alg.ga;
 
 import cls.alg.mutation.chromosome.ChromosomeMutation;
 import cls.alg.mutation.population.PopulationMutation;

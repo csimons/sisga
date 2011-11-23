@@ -1,4 +1,4 @@
-package cls.ga;
+package cls.alg.ga;
 
 import cls.alg.mutation.chromosome.RandomBitFlipMutation;
 import cls.alg.recombination.SinglePointCrossover;
