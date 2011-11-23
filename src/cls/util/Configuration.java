@@ -9,14 +9,6 @@ import java.util.Properties;
 
 public class Configuration
 {
-    private static final String ALG_GA      = "algorithm.ga";
-    private static final String ALG_SEL_PAR = "algorithm.selection.parent";
-    private static final String ALG_SEL_SUR = "algorithm.selection.survivor";
-    private static final String ALG_MUT_CHR = "algorithm.mutation.chromosome";
-    private static final String ALG_MUT_POP = "algorithm.mutation.population";
-    private static final String ALG_RECOMB  = "algorithm.recombination";
-    private static final String ALG_DECODER = "algorithm.decoder";
-    private static final String ALG_FITNESS = "algorithm.fitness.function";
     private static final String PARAM_SZ_P  = "param.size.population";
     private static final String PARAM_SZ_C  = "param.size.chromosome";
     private static final String PARAM_P_C   = "param.probability.crossover";
@@ -24,8 +16,12 @@ public class Configuration
     private static final String PARAM_TRM_F = "param.terminal.fitness";
     private static final String PARAM_TRM_G = "param.terminal.generation";
     private static final String PARAM_FPP   = "param.floating.point.precision";
+    public  static final String ALG_GA      = "algorithm.ga";
+    public  static final String ALG_DECODER = "algorithm.decoder";
+    public  static final String ALG_FITNESS = "algorithm.fitness.function";
 
     private static Map<String, String> validationPatterns;
+    private static Map<String, Class<?>> algClasses;
 
     private String  ga;
     private Integer sizePopulation;
@@ -45,11 +41,6 @@ public class Configuration
         String real      = "^[0-9]*(\\.[0-9]+)?$";
 
         validationPatterns.put(ALG_GA,      className);
-        validationPatterns.put(ALG_SEL_PAR, className);
-        validationPatterns.put(ALG_SEL_SUR, className);
-        validationPatterns.put(ALG_MUT_CHR, className);
-        validationPatterns.put(ALG_MUT_POP, className);
-        validationPatterns.put(ALG_RECOMB,  className);
         validationPatterns.put(ALG_DECODER, className);
         validationPatterns.put(ALG_FITNESS, className);
         validationPatterns.put(PARAM_SZ_P,  integer);
@@ -89,8 +80,6 @@ public class Configuration
                     paramName));
         }
 
-        // TODO: add validation for dynamic class-loading.
-
         return value;
     }
 
@@ -128,6 +117,24 @@ public class Configuration
         if (fpp > sizeChromosome - 1)
             throw new IllegalArgumentException(
                 "FP precision must be greater than chromosomeSize - 1");
+
+        algClasses = new HashMap<String, Class<?>>();
+
+        try
+        {
+            algClasses.put(ALG_GA, getClass().getClassLoader()
+                .loadClass(String.format(
+                "cls.alg.ga.%s", fetchParam(pConfig, ALG_GA))));
+            algClasses.put(ALG_DECODER, Class.forName(String.format(
+                "cls.decode.%s", fetchParam(pConfig, ALG_DECODER))));
+            algClasses.put(ALG_FITNESS, Class.forName(String.format(
+                "cls.fitness.%s", fetchParam(pConfig, ALG_FITNESS))));
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException(
+                "Failed to load algorithm component class.", e);
+        }
     }
 
     public String getGA()               { return ga; }
@@ -138,4 +145,21 @@ public class Configuration
     public Integer getTermGeneration()  { return termGeneration; }
     public Double getTermFitness()      { return termFitness; }
     public Integer getFPP()             { return fpp; }
+
+    public Object getAlgorithm(String algSymbol)
+    {
+        Object object;
+
+        try
+        {
+            Class c = algClasses.get(algSymbol);
+            object = c.getDeclaredConstructor(c).newInstance();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        return object;
+    }
 }

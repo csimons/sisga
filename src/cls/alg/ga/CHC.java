@@ -14,14 +14,15 @@ import java.util.List;
 
 public class CHC extends AbstractGA
 {
-    public CHC(Decoder d, Function f)
+    @Override
+    public void init()
     {
-        super(d, f,
-                new ElitistSurvivorSelection(d, f),
-                new RouletteParentSelection(d, f),
-                new HUXRecombination(),
-                null,
-                new CHCCataclysmicMutation(d, f));
+        super.init();
+
+        algSS = new ElitistSurvivorSelection(d, f);
+        algPS = new RouletteParentSelection(d, f);
+        algRec = new HUXRecombination();
+        algMutP = new CHCCataclysmicMutation(d, f);
     }
 
     /**

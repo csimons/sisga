@@ -1,5 +1,7 @@
 package cls.alg.ga;
 
+import cls.decode.Decoder;
+import cls.fitness.Function;
 import cls.util.GAResultSet;
 
 public interface GA
@@ -19,4 +21,8 @@ public interface GA
             Double pC, Double pM,
             Integer termGeneration, Double termFitness,
             boolean verbose);
+
+    public void setDecoder(Decoder d);
+    public void setFunction(Function f);
+    public void init();
 }

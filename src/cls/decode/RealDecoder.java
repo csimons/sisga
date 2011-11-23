@@ -11,6 +11,8 @@ public class RealDecoder extends AbstractDecoder
 {
     private Integer decimalPlaces;
 
+    public RealDecoder() { super(); }
+
     public void setPrecision(Integer decimalPlaces)
     {
         this.decimalPlaces = decimalPlaces;
