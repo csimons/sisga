@@ -16,86 +16,54 @@ public class GARunner
 {
     public static void main(String[] args)
     {
+        String configName  = null;
+        String verboseFlag = null;
         boolean verbose = false;
 
-        if (! (args.length == 8 || args.length == 9))
+        if (args.length == 1)
+            configName = args[0];
+        else if (args.length == 2)
+        {
+            verboseFlag = args[0];
+            configName  = args[1];
+            verbose     = true;
+        }
+        else
             usage();
 
-        String  vf  = null;
-        String  a   = null;
-        Integer m   = null;
-        Integer s   = null;
-        Double  pC  = null;
-        Double  pM  = null;
-        Integer g   = null;
-        Double  f   = null;
-        Integer fpp = null;
+        if (verboseFlag != null && (! verboseFlag.equals("-v")))
+           usage();
 
-        try
-        {
-            if (args.length == 8)
-            {
-                a   = args[0];
-                m   = Integer.parseInt(args[1]);
-                s   = Integer.parseInt(args[2]);
-                pC  = Double.parseDouble(args[3]);
-                pM  = Double.parseDouble(args[4]);
-                g   = Integer.parseInt(args[5]);
-                f   = Double.parseDouble(args[6]);
-                fpp = Integer.parseInt(args[7]);
-            }
-            else if (args.length == 9)
-            {
-                vf  = args[0];
-                a   = args[1];
-                m   = Integer.parseInt(args[2]);
-                s   = Integer.parseInt(args[3]);
-                pC  = Double.parseDouble(args[4]);
-                pM  = Double.parseDouble(args[5]);
-                g   = Integer.parseInt(args[6]);
-                f   = Double.parseDouble(args[7]);
-                fpp = Integer.parseInt(args[8]);
-
-                verbose = true;
-            }
-            else
-                throw new IllegalStateException("Should not reach here.");
-
-            if (vf != null)
-                if (! vf.equals("-v"))
-                    throw new NumberFormatException();
-
-            if (! (a.equals("GA") || a.equals("CHC")))
-                throw new NumberFormatException();
-
-            if (fpp > s - 1)
-                throw new IllegalArgumentException(
-                        "fpp must be <= s - 1");
-        }
-        catch (NumberFormatException e) { usage(); }
+        Configuration config = new Configuration(configName);
 
         GA ga = null;
 
         // ############################################################
-        // # CONFIGURE HERE
+        // # LOW-LEVEL ALGORITHM CONFIGURATION
         // ############################################################
         /*
-         * TODO: Allow decoder, function to be specified on the command-line.
+         * TODO: Rip this out, load classes dynamically based on config.
          */
-        Decoder decoder = new PositiveRealDecoder(fpp);
+        Decoder decoder = new PositiveRealDecoder(config.getFPP());
         Function function = new IdentityFunction();
 
-        /*
-         * TODO: Allow GA-type to be specified on the command-line.
-         */
-        if (a.equals("GA"))
+        if (config.getGA().equals("CanonicalGA"))
             ga = new CanonicalGA(decoder, function);
-        else if (a.equals("CHC"))
+        else if (config.getGA().equals("CHC"))
             ga = new CHC(decoder, function);
         else
             throw new IllegalArgumentException(
-                    "Algortihm should be one of {GA, CHC}.");
+                "Algortihm should be one of {CanonicalGA, CHC}.");
         // ############################################################
+
+        String  a   = config.getGA();
+        Integer m   = config.getSizePopulation();
+        Integer s   = config.getSizeChromosome();
+        Double  pC  = config.getPC();
+        Double  pM  = config.getPM();
+        Integer g   = config.getTermGeneration();
+        Double  f   = config.getTermFitness();
+        Integer fpp = config.getFPP();
 
         if (verbose)
             printBeginInfo(a, m, s, pC, pM, g, f, fpp);
@@ -126,16 +94,7 @@ public class GARunner
 
     private static void usage()
     {
-        System.out.println(""
-            + "\nusage: <program> [-v] < GA | CHC > m s pC pM g f fpp\n\n"
-            + "\tm\tPopulation size                (integer)\n"
-            + "\ts\tAlleles per chromosome         (integer)\n"
-            + "\tpC\tCrossover probability           (real; 0 < x < 1)\n"
-            + "\tpM\tMutation probability            (real; 0 < x < 1)\n"
-            + "\tg\tGenerations to run             (integer)\n"
-            + "\tf\tTerminal fitness               (real)\n"
-            + "\tfpp\tFP precision (decimal places)  (integer)\n\n");
-
+        System.out.println("usage: <program> [-v] <configurationName>");
         System.exit(1);
     }
 

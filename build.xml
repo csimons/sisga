@@ -2,7 +2,7 @@
 <project name="JGA" basedir="." default="main">
 
  <!-- Christopher L. Simons -->
- <!-- Depends on JUnit4 being installed. -->
+ <!-- Depends on JUnit4. -->
 
  <property name="main-class"  value="cls.util.GARunner" />
 
@@ -60,7 +60,6 @@
     <fileset dir="${dist.dir}" includes="${ant.project.name}.jar" />
     <fileset dir="${lib.dir}" includes="*.jar" />
    </classpath>
-   <arg value="ebs" />
   </java>
  </target>
 

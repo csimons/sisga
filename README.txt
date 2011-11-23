@@ -24,23 +24,28 @@ To build:
 
 RUNNING
 
-1. To see what arguments need to be supplied to the program, view a
-   usage message by running the generated JAR file without any arguments:
+1. Algorithm configuration and parameters are specified in configuration
+   files located in the config/ directory.  An example has been provided,
+   "ga.properties".  To run a configuration, execute the JAR, specifying
+   the configuration name (the file name without the ".properties" suffix)
+   as the argument.  Optionally, you may also specify the "-v" flag, which
+   will print summary information during execution; if specified, this flag
+   must come BEFORE the configuration name:
 
-   $ java -jar dist/JGA.jar
-
-   Then run it, as follows, substituting other parameter values as desired:
-
-   $ java -jar dist/JGA.jar -v GA 10 10 0.7 0.1 200 99999 0
+   $ java -jar dist/JGA.jar -v config/ga
 
    This will create a GnuPlot data file with the name "[algorithm].dat",
-   where [algorithm] is the high-level GA algorithm specified on the
-   command-line (above, "GA").
+   where [algorithm] is the high-level GA algorithm specified in the
+   configuration.  For example, for the default "ga" configuration, the
+   file will be named "CanonicalGA.dat".
 
-2. To plot the results as a PNG image file, run the following, passing in
-   the same algorithm you passed to the JGA JAR (for example, "GA" or "CHC"):
+2. To plot the results as a PNG image file, run the following:
 
-   $ bash scripts/plot.sh GA
+   $ bash scripts/plot.sh
 
-   Th above will create the file GA.png, containing the graph image.
+   Th above will create PNG image files in the current directory for any
+   GnuPlot data files it finds in the current directory ("CanonicalGA.png"
+   would be generated from "CanonicalGA.dat").  Bear in mind that these PNG
+   image files will be blindly over-written on subsequent runs of this
+   plotting script.
 
