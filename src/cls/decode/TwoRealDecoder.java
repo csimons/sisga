@@ -7,16 +7,11 @@ import java.util.List;
 /**
  * Decodes a chromosome into two real-valued, positive or negative numbers.
  */
-public class TwoRealDecoder implements Decoder
+public class TwoRealDecoder extends AbstractDecoder
 {
     private Integer decimalPlaces;
 
-    /**
-     * @param decimalPlaces
-     * @param splitIndex Index of the first bit of the second number
-     *                   (remember, these are zero-based indices).
-     */
-    public TwoRealDecoder(int decimalPlaces)
+    public void setPrecision(Integer decimalPlaces)
     {
         this.decimalPlaces = decimalPlaces;
     }

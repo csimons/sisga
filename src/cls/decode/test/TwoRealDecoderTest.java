@@ -18,7 +18,8 @@ public class TwoRealDecoderTest
     @Test
     public void oneThroughFour()
     {
-        Decoder decoder = new TwoRealDecoder(0);
+        Decoder decoder = new TwoRealDecoder();
+        decoder.setPrecision(0);
 
         assertEquals(1, decoder.decode(s2c("0000100010")).get(0), 0.0001);
         assertEquals(2, decoder.decode(s2c("0000100010")).get(1), 0.0001);
@@ -30,7 +31,8 @@ public class TwoRealDecoderTest
     @Test
     public void negativeOneThroughFour()
     {
-        Decoder decoder = new TwoRealDecoder(0);
+        Decoder decoder = new TwoRealDecoder();
+        decoder.setPrecision(0);
 
         assertEquals(-1, decoder.decode(s2c("1000110010")).get(0), 0.0001);
         assertEquals(-2, decoder.decode(s2c("1000110010")).get(1), 0.0001);
@@ -42,7 +44,8 @@ public class TwoRealDecoderTest
     @Test
     public void oneThroughFourTimesPointOne()
     {
-        Decoder decoder = new TwoRealDecoder(1);
+        Decoder decoder = new TwoRealDecoder();
+        decoder.setPrecision(1);
 
         assertEquals(0.1, decoder.decode(s2c("0000100010")).get(0), 0.0001);
         assertEquals(0.2, decoder.decode(s2c("0000100010")).get(1), 0.0001);
@@ -54,7 +57,8 @@ public class TwoRealDecoderTest
     @Test
     public void negativeOneThroughFourTimesPointOne()
     {
-        Decoder decoder = new TwoRealDecoder(1);
+        Decoder decoder = new TwoRealDecoder();
+        decoder.setPrecision(1);
 
         assertEquals(-0.1, decoder.decode(s2c("1000110010")).get(0), 0.0001);
         assertEquals(-0.2, decoder.decode(s2c("1000110010")).get(1), 0.0001);

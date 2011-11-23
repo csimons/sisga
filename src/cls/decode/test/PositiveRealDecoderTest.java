@@ -18,7 +18,8 @@ public class PositiveRealDecoderTest
     @Test
     public void oneThroughEight()
     {
-        Decoder decoder = new PositiveRealDecoder(0);
+        Decoder decoder = new PositiveRealDecoder();
+        decoder.setPrecision(0);
 
         assertEquals(0, decoder.decode(s2c("0")).get(0), 0.0001);
         assertEquals(1, decoder.decode(s2c("1")).get(0), 0.0001);
@@ -34,7 +35,8 @@ public class PositiveRealDecoderTest
     @Test
     public void oneThroughEightTimesPointOhOne()
     {
-        Decoder decoder = new PositiveRealDecoder(2);
+        Decoder decoder = new PositiveRealDecoder();
+        decoder.setPrecision(2);
 
         assertEquals(0.00, decoder.decode(s2c("0")).get(0), 0.0001);
         assertEquals(0.01, decoder.decode(s2c("1")).get(0), 0.0001);

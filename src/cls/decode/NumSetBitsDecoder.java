@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Counts the number of set bits in the bit string (chromosome).
  */
-public class NumSetBitsDecoder implements Decoder
+public class NumSetBitsDecoder extends AbstractDecoder
 {
     public List<Double> decode(Chromosome chromosome)
     {

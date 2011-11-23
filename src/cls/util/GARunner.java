@@ -44,8 +44,9 @@ public class GARunner
         /*
          * TODO: Rip this out, load classes dynamically based on config.
          */
-        Decoder decoder = new PositiveRealDecoder(config.getFPP());
         Function function = new IdentityFunction();
+        Decoder decoder = new PositiveRealDecoder();
+        decoder.setPrecision(config.getFPP());
 
         if (config.getGA().equals("CanonicalGA"))
             ga = new CanonicalGA(decoder, function);

@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * Decodes a chromosome into a real-valued, positive or negative number.
  */
-public class RealDecoder implements Decoder
+public class RealDecoder extends AbstractDecoder
 {
     private Integer decimalPlaces;
 
-    public RealDecoder(int decimalPlaces)
+    public void setPrecision(Integer decimalPlaces)
     {
         this.decimalPlaces = decimalPlaces;
     }
