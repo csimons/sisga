@@ -1,4 +1,3 @@
-- Allow user to specify (dynamically load) low-level algorithms at run-time.
 - Implement additional fitness functions (standard De Jong functions, etc.).
 - Allow secondary parameters for fitness functions to be specied at run-time.
 - Print periodic statistics during runs if verbose flag has been specified.
