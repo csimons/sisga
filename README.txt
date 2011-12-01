@@ -31,7 +31,7 @@ RUNNING
    will print summary information during execution; if specified, this flag
    must come BEFORE the configuration name:
 
-   $ java -jar dist/JGA.jar -v config/ga
+   $ java -jar dist/sisga.jar -v config/ga
 
    This will create a GnuPlot data file with the name "[algorithm].dat",
    where [algorithm] is the high-level GA algorithm specified in the
