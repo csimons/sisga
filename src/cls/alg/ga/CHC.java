@@ -70,17 +70,11 @@ public class CHC extends AbstractGA
                     .avgFitness(population, d, f));
             results.worstFitnesses.add(gWorst);
 
-            if (termGeneration != null && i >= termGeneration)
-                break;
-
-            // If the last best fitnesses was at least as good as the
-            // terminal best fitness, break out of run.
-            if (termFitness != null && results.bestFitnesses != null
-                    && termFitness <= results.bestFitnesses
-                                        .get(results.bestFitnesses.size() - 1))
+            if (i >= termGeneration || gBest >= termFitness)
                 break;
 
             List newGeneration = new LinkedList<Chromosome>();
+            newGeneration.addAll(population);
             int matings = Math.round(population.size() / 2);
             List<Chromosome> children = new LinkedList<Chromosome>();
 
@@ -93,28 +87,21 @@ public class CHC extends AbstractGA
                 if ((dad.hammingDistanceTo(mom) / 2) > threshold)
                     for (int k = 0; k < 2; k += 1)
                         children.add(recombinate(dad, mom, pC));
-
-                if (children.size() == 0)
-                {
-                    newGeneration = population;
-                    threshold -= 1;
-                }
-                else
-                {
-                    newGeneration.addAll(population);
-                    newGeneration.addAll(children);
-
-                    newGeneration = getSurvivors(newGeneration,
-                            population.size());
-                }
-
-                if (threshold <= 0)
-                {
-                    population = mutate(newGeneration, pCM);
-                    threshold = (int) Math.round(
-                        pCM * (1.0 - pCM) * chromosomeSize);
-                }
             }
+
+            if (children.isEmpty())
+                threshold -= 1;
+            else
+                newGeneration.addAll(children);
+
+            if (threshold <= 0)
+            {
+                population = mutate(newGeneration, pCM);
+                threshold = (int) Math.round(
+                    pCM * (1.0 - pCM) * chromosomeSize);
+            }
+
+            newGeneration = getSurvivors(newGeneration, population.size());
         }
 
         return results;
