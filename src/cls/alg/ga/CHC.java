@@ -49,9 +49,10 @@ public class CHC extends AbstractGA
 
         int threshold = Math.round(population.size() / 4);
 
-        Double gBest = null;
+        Double gBest  = null;
         Double gWorst = null;
-        for (int i = 0; true; i += 1)
+        for (int i = 0; i <= termGeneration
+            && (gBest == null || gBest < termFitness); i += 1)
         {
             if (gBest == null)
                 gBest = PopulationAnalyzer.bestFitness(population, d, f);
@@ -70,14 +71,10 @@ public class CHC extends AbstractGA
                     .avgFitness(population, d, f));
             results.worstFitnesses.add(gWorst);
 
-            if (i >= termGeneration || gBest >= termFitness)
-                break;
-
-            List newGeneration = new LinkedList<Chromosome>();
-            newGeneration.addAll(population);
             int matings = Math.round(population.size() / 2);
             List<Chromosome> children = new LinkedList<Chromosome>();
-
+            List newGeneration = new LinkedList<Chromosome>();
+            newGeneration.addAll(population);
             for (int j = 0; j < matings; j += 1)
             {
                 List<Chromosome> parents = getParents(population);

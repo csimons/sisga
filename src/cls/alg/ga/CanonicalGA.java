@@ -45,9 +45,10 @@ public class CanonicalGA extends AbstractGA
         for (int i = 0; i < populationSize; i += 1)
             population.add(new Chromosome(chromosomeSize));
 
-        Double gBest = null;
+        Double gBest  = null;
         Double gWorst = null;
-        for (int i = 0; true; i += 1)
+        for (int i = 0; i <= termGeneration
+            && (gBest == null || gBest < termFitness); i += 1)
         {
             if (gBest == null)
                 gBest = PopulationAnalyzer.bestFitness(population, d, f);
@@ -66,11 +67,7 @@ public class CanonicalGA extends AbstractGA
                     .avgFitness(population, d, f));
             results.worstFitnesses.add(gWorst);
 
-            if (i >= termGeneration || gBest >= termFitness)
-                break;
-
             List<Chromosome> newGeneration = new LinkedList<Chromosome>();
-
             while (newGeneration.size() < population.size())
             {
                 List<Chromosome> parents = getParents(population);
