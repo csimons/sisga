@@ -66,14 +66,7 @@ public class CanonicalGA extends AbstractGA
                     .avgFitness(population, d, f));
             results.worstFitnesses.add(gWorst);
 
-            if (termGeneration != null && i >= termGeneration)
-                break;
-
-            // If the last best fitnesses was at least as good as the
-            // terminal best fitness, break out of run.
-            if (termFitness != null && results.bestFitnesses != null
-                    && termFitness <= results.bestFitnesses
-                                        .get(results.bestFitnesses.size() - 1))
+            if (i >= termGeneration || gBest >= termFitness)
                 break;
 
             List<Chromosome> newGeneration = new LinkedList<Chromosome>();
