@@ -153,7 +153,8 @@ public class Configuration
         try
         {
             Class c = algClasses.get(algSymbol);
-            object = c.getDeclaredConstructor(c).newInstance();
+            // object = c.getDeclaredConstructor(c).newInstance();
+            object = c.newInstance();
         }
         catch (Exception e)
         {
