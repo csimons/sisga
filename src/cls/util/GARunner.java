@@ -21,22 +21,10 @@ public class GARunner
     {
         Configuration config = configure(args);
 
-        // TODO: Fix broken dynamic class-loading:
-
-//      Function function = (Function) config.getAlgorithm(config.ALG_FITNESS);
-        Function function = new IdentityFunction();
-//      Decoder decoder = (Decoder) config.getAlgorithm(config.ALG_DECODER);
-        Decoder decoder = new PositiveRealDecoder();
+        Function function = (Function) config.getAlgorithm(config.ALG_FITNESS);
+        Decoder decoder = (Decoder) config.getAlgorithm(config.ALG_DECODER);
         decoder.setPrecision(config.getFPP());
-//      GA ga = (GA) config.getAlgorithm(config.ALG_GA);
-        GA ga;
-        if (config.getGA().equals("CanonicalGA"))
-            ga = new CanonicalGA();
-        else if (config.getGA().equals("CHC"))
-            ga = new CHC();
-        else
-            throw new IllegalArgumentException(
-                "Dynamic GA loading unsupported for now.");
+        GA ga = (GA) config.getAlgorithm(config.ALG_GA);
         ga.setDecoder(decoder);
         ga.setFunction(function);
         ga.init();
