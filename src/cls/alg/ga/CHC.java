@@ -14,6 +14,14 @@ import java.util.List;
 
 public class CHC extends AbstractGA
 {
+    private static final boolean debugging = false;
+
+    private static void debug(String message)
+    {
+        if (debugging)
+            System.out.println("DEBUGGING: " + message);
+    }
+
     @Override
     public void init()
     {
@@ -91,8 +99,10 @@ public class CHC extends AbstractGA
             else
                 newGeneration.addAll(children);
 
+debug("Children added: " + (newGeneration.size() - population.size()));
             if (threshold <= 0)
             {
+debug("CATACLYSMIC MUTATION!");
                 population = mutate(newGeneration, pCM);
                 threshold = (int) Math.round(
                     pCM * (1.0 - pCM) * chromosomeSize);

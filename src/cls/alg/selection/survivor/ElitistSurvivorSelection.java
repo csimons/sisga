@@ -37,8 +37,6 @@ public class ElitistSurvivorSelection implements SurvivorSelection
         Map<Double, List<Chromosome>> fitnessMap
             = new HashMap<Double, List<Chromosome>>();
 
-        List<Chromosome> survivors = new LinkedList<Chromosome>();
-
         for (Chromosome i : population)
         {
             double fitness = f.f(d.decode(i));
@@ -57,20 +55,20 @@ public class ElitistSurvivorSelection implements SurvivorSelection
         /*
          * Sorted to ascending order, so iterate backward.
          */
-        for (int i = fitnesses.length - 1; i > 0; i -= 1)
+        List<Chromosome> survivors = new LinkedList<Chromosome>();
+        for (int i = fitnesses.length - 1; i >= 0; i -= 1)
         {
             if (survivors.size() + fitnessMap.get(fitnesses[i]).size()
-                    > targetPopulationSize)
+                    <= targetPopulationSize)
+                survivors.addAll(fitnessMap.get(fitnesses[i]));
+            else
             {
                 int chromosomesToSave
                     = targetPopulationSize - survivors.size();
 
-                int k = 0;
                 for (int j = 0; j < chromosomesToSave; j += 1)
-                    survivors.add(fitnessMap.get(fitnesses[i]).get(k++));
+                    survivors.add(fitnessMap.get(fitnesses[i]).get(j));
             }
-            else
-                survivors.addAll(fitnessMap.get(fitnesses[i]));
         }
 
         return survivors;
