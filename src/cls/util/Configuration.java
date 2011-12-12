@@ -152,8 +152,8 @@ public class Configuration
 
         try
         {
+            @SuppressWarnings("rawtypes")
             Class c = algClasses.get(algSymbol);
-            // object = c.getDeclaredConstructor(c).newInstance();
             object = c.newInstance();
         }
         catch (Exception e)
