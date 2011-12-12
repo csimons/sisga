@@ -21,10 +21,12 @@ public class GARunner
     {
         Configuration config = configure(args);
 
-        Function function = (Function) config.getAlgorithm(config.ALG_FITNESS);
-        Decoder decoder = (Decoder) config.getAlgorithm(config.ALG_DECODER);
+        Function function = (Function) config
+            .getAlgorithm(Configuration.ALG_FITNESS);
+        Decoder decoder = (Decoder) config
+            .getAlgorithm(Configuration.ALG_DECODER);
         decoder.setPrecision(config.getFPP());
-        GA ga = (GA) config.getAlgorithm(config.ALG_GA);
+        GA ga = (GA) config.getAlgorithm(Configuration.ALG_GA);
         ga.setDecoder(decoder);
         ga.setFunction(function);
         ga.init();
