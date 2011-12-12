@@ -24,6 +24,7 @@
    <classpath>
     <fileset dir="${lib.dir}" includes="*.jar" />
    </classpath>
+   <compilerarg value="-Xlint" />
   </javac>
  </target>
 
