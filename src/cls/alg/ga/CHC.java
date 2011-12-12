@@ -81,7 +81,7 @@ public class CHC extends AbstractGA
 
             int matings = Math.round(population.size() / 2);
             List<Chromosome> children = new LinkedList<Chromosome>();
-            List newGeneration = new LinkedList<Chromosome>();
+            List<Chromosome> newGeneration = new LinkedList<Chromosome>();
             newGeneration.addAll(population);
             for (int j = 0; j < matings; j += 1)
             {
