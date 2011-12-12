@@ -15,8 +15,8 @@ do
         set grid
 
         plot \
-        "$file" using 1:2 title "Average Fitness" with lines lw 2, \
-             "" using 1:3 title "Best Fitness"    with lines lw 2, \
-             "" using 1:4 title "Worst Fitness"   with lines lw 2
+        "$file" using 1:2 title "Average Fitness" with dots lw 2, \
+             "" using 1:3 title "Best Fitness"    with lines lw 3, \
+             "" using 1:4 title "Worst Fitness"   with dots lw 1
 EOF
 done
