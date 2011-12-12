@@ -22,7 +22,7 @@ public interface GA
             Integer termGeneration, Double termFitness,
             boolean verbose);
 
-    public void setDecoder(Decoder d);
-    public void setFunction(Function f);
-    public void init();
+    public abstract void setDecoder(Decoder d);
+    public abstract void setFunction(Function f);
+    public abstract void init();
 }
