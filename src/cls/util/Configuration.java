@@ -19,6 +19,7 @@ public class Configuration
     public  static final String ALG_GA      = "algorithm.ga";
     public  static final String ALG_DECODER = "algorithm.decoder";
     public  static final String ALG_FITNESS = "algorithm.fitness.function";
+    private static final String CFG_DT_FMT  = "config.timestamp.format";
 
     private static Map<String, String> validationPatterns;
     private static Map<String, Class<?>> algClasses;
@@ -31,18 +32,19 @@ public class Configuration
     private Integer termGeneration;
     private Double  termFitness;
     private Integer fpp;
+    private String  timestampFormat;
 
     static
     {
         validationPatterns = new HashMap<String, String>();
 
-        String className = "^\\S+$";
-        String integer   = "^[0-9]+$";
-        String real      = "^[0-9]*(\\.[0-9]+)?$";
+        String singleWord = "^\\S+$";
+        String integer    = "^[0-9]+$";
+        String real       = "^[0-9]*(\\.[0-9]+)?$";
 
-        validationPatterns.put(ALG_GA,      className);
-        validationPatterns.put(ALG_DECODER, className);
-        validationPatterns.put(ALG_FITNESS, className);
+        validationPatterns.put(ALG_GA,      singleWord);
+        validationPatterns.put(ALG_DECODER, singleWord);
+        validationPatterns.put(ALG_FITNESS, singleWord);
         validationPatterns.put(PARAM_SZ_P,  integer);
         validationPatterns.put(PARAM_SZ_C,  integer);
         validationPatterns.put(PARAM_P_C,   real);
@@ -50,6 +52,7 @@ public class Configuration
         validationPatterns.put(PARAM_TRM_F, real);
         validationPatterns.put(PARAM_TRM_G, integer);
         validationPatterns.put(PARAM_FPP,   integer);
+        validationPatterns.put(CFG_DT_FMT,  singleWord);
     }
 
     private boolean isProbability(String paramName)
@@ -105,7 +108,7 @@ public class Configuration
                 "Error reading configuration file \"%s\".", filename),e);
         }
 
-        ga              = fetchParam(pConfig, ALG_GA);
+        ga              = fetchParam(pConfig,                    ALG_GA);
         sizePopulation  = Integer.parseInt(fetchParam(pConfig,   PARAM_SZ_P));
         sizeChromosome  = Integer.parseInt(fetchParam(pConfig,   PARAM_SZ_C));
         pC              = Double.parseDouble(fetchParam(pConfig, PARAM_P_C));
@@ -113,6 +116,8 @@ public class Configuration
         termGeneration  = Integer.parseInt(fetchParam(pConfig,   PARAM_TRM_G));
         termFitness     = Double.parseDouble(fetchParam(pConfig, PARAM_TRM_F));
         fpp             = Integer.parseInt(fetchParam(pConfig,   PARAM_FPP));
+
+        timestampFormat = fetchParam(pConfig,                    CFG_DT_FMT);
 
         if (fpp > sizeChromosome - 1)
             throw new IllegalArgumentException(
@@ -145,6 +150,7 @@ public class Configuration
     public Integer getTermGeneration()  { return termGeneration; }
     public Double getTermFitness()      { return termFitness; }
     public Integer getFPP()             { return fpp; }
+    public String getTimestampFormat()  { return timestampFormat; }
 
     public Object getAlgorithm(String algSymbol)
     {
