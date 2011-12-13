@@ -14,14 +14,6 @@ import java.util.List;
 
 public class CHC extends AbstractGA
 {
-    private static final boolean debugging = false;
-
-    private static void debug(String message)
-    {
-        if (debugging)
-            System.out.println("DEBUGGING: " + message);
-    }
-
     @Override
     public void init()
     {
@@ -82,7 +74,6 @@ public class CHC extends AbstractGA
             int matings = Math.round(population.size() / 2);
             List<Chromosome> children = new LinkedList<Chromosome>();
             List<Chromosome> newGeneration = new LinkedList<Chromosome>();
-            newGeneration.addAll(population);
             for (int j = 0; j < matings; j += 1)
             {
                 List<Chromosome> parents = getParents(population);
@@ -94,21 +85,21 @@ public class CHC extends AbstractGA
                         children.add(recombinate(dad, mom, pC));
             }
 
+            newGeneration.addAll(population);
+
             if (children.isEmpty())
                 threshold -= 1;
             else
                 newGeneration.addAll(children);
 
-debug("Children added: " + (newGeneration.size() - population.size()));
             if (threshold <= 0)
             {
-debug("CATACLYSMIC MUTATION!");
                 population = mutate(newGeneration, pCM);
                 threshold = (int) Math.round(
                     pCM * (1.0 - pCM) * chromosomeSize);
             }
 
-            newGeneration = getSurvivors(newGeneration, population.size());
+            population = getSurvivors(newGeneration, population.size());
         }
 
         return results;
