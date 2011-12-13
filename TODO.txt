@@ -1,3 +1,8 @@
-- Implement rest of De Jong test functions.
-- Allow secondary parameters for fitness functions to be specied at run-time.
-- Print periodic statistics during runs if verbose flag has been specified.
+- Implement rest of De Jong F4, F5 functions.
+- Implement Ackley function.
+- Create aggregate analysis programs for determining metrics
+  - Success rate ("SR")
+  - Average number of evaluations to a solution ("AES")
+  - Mean best fitness ("MBR")
+  - Standard deviation of AES
+  - Standard deviation of MBR
