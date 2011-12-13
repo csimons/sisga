@@ -13,6 +13,9 @@ import cls.fitness.ReverseParabola;
 import cls.util.Configuration;
 import cls.util.GAResultSet;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class GARunner
 {
     private static boolean verbose = false;
@@ -50,7 +53,8 @@ public class GARunner
 
         try
         {
-            results.writeToGnuPlotDataFile(config.getGA() + ".dat");
+            results.writeToGnuPlotDataFile(String.format(
+                "%s-%s.dat", config.getGA(), getDateString()));
         }
         catch (Exception e)
         {
@@ -128,5 +132,11 @@ public class GARunner
             results.worstFitnesses.get(results.worstFitnesses.size() - 1),
             results.avgFitnesses.get(results.avgFitnesses.size() - 1),
             results.avgFitnesses.size() - 1));
+    }
+
+    private static String getDateString()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return sdf.format(new Date());
     }
 }
