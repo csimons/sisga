@@ -3,8 +3,6 @@ An extensible genetic algorithm engine.
 
 BUILDING
 
-To build:
-
 1. Install the JDK (versions 5 and up should work).
    a. Ensure that the JAVA_HOME environment variable is set.
    b. Ensure that JAVA_HOME/bin is present in your PATH.
