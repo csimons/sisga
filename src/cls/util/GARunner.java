@@ -54,7 +54,7 @@ public class GARunner
         try
         {
             results.writeToGnuPlotDataFile(String.format(
-                "%s-%s.dat", config.getGA(), getDateString()));
+                "%s-%s.dat", config.getConfigName(), getDateString()));
         }
         catch (Exception e)
         {
