@@ -90,7 +90,7 @@ public class Configuration
 
     public Configuration(String configName)
     {
-        this.configName = (new File(configName)).getName();
+        Configuration.configName = (new File(configName)).getName();
 
         String filename = String.format("%s.properties", configName);
         Properties pConfig = new Properties();
