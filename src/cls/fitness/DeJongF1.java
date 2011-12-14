@@ -22,6 +22,7 @@ public class DeJongF1 implements Function
         for (Double i : inputs)
             result += (i * i);
 
+        result *= (-1);
         return result;
     }
 }

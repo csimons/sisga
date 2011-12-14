@@ -27,6 +27,7 @@ public class DeJongF2 implements Function
          */
         result = (100 * ((x * x) - y) * ((x * x) - y)) + ((1 - x) * (1 - x));
 
+        result *= (-1);
         return result;
     }
 }
