@@ -12,12 +12,12 @@ public class DeJongF2Test
     @Test
     public void expectedValues()
     {
-        assertEquals( 101, new DeJongF2().f(wrap(0, 1)), 0.0001);
-        assertEquals( 100, new DeJongF2().f(wrap(1, 0)), 0.0001);
-        assertEquals( 100, new DeJongF2().f(wrap(1, 2)), 0.0001);
-        assertEquals( 901, new DeJongF2().f(wrap(2, 1)), 0.0001);
-        assertEquals( 101, new DeJongF2().f(wrap(2, 3)), 0.0001);
-        assertEquals(4904, new DeJongF2().f(wrap(3, 2)), 0.0001);
+        assertEquals(- 101, new DeJongF2().f(wrap(0, 1)), 0.0001);
+        assertEquals(- 100, new DeJongF2().f(wrap(1, 0)), 0.0001);
+        assertEquals(- 100, new DeJongF2().f(wrap(1, 2)), 0.0001);
+        assertEquals(- 901, new DeJongF2().f(wrap(2, 1)), 0.0001);
+        assertEquals(- 101, new DeJongF2().f(wrap(2, 3)), 0.0001);
+        assertEquals(-4904, new DeJongF2().f(wrap(3, 2)), 0.0001);
     }
 
     private List<Double> wrap (double x, double y)

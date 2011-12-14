@@ -12,9 +12,9 @@ public class DeJongF1Test
     @Test
     public void expectedValues()
     {
-        assertEquals( 5, new DeJongF1().f(wrap(0, 1, 2)), 0.0001);
-        assertEquals(14, new DeJongF1().f(wrap(1, 2, 3)), 0.0001);
-        assertEquals(29, new DeJongF1().f(wrap(2, 3, 4)), 0.0001);
+        assertEquals(- 5, new DeJongF1().f(wrap(0, 1, 2)), 0.0001);
+        assertEquals(-14, new DeJongF1().f(wrap(1, 2, 3)), 0.0001);
+        assertEquals(-29, new DeJongF1().f(wrap(2, 3, 4)), 0.0001);
     }
 
     private List<Double> wrap (double x, double y, double z)
