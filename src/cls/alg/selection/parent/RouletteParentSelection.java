@@ -31,25 +31,28 @@ public class RouletteParentSelection implements ParentSelection
 
         for (Chromosome i : population)
         {
-            double fitness = f.f(d.decode(i));
+            double fitness = Math.abs(f.f(d.decode(i)));
             totalFitness += fitness;
             absoluteFitnesses.add(fitness);
         }
+
+        if (totalFitness == 0)
+            throw new ArithmeticException(""
+                + "Sum fitness is zero in RouletteParentSelection, "
+                + "so cannot determine proportional fitness.");
 
         for (Double i : absoluteFitnesses)
             proportionalFitnesses.add(i / totalFitness);
 
         List<Chromosome> parents = new LinkedList<Chromosome>();
 
-        for (int i = 0; i < 2; i += 1)
+        while (parents.size() < 2)
         {
             double p = Math.random();
 
-            for (int j = 0; j < population.size(); j += 1)
-                if (p < proportionalFitnesses.get(j))
-                    parents.add(population.get(j));
-                else
-                    p -= proportionalFitnesses.get(j);
+            for (int i = 0; i < population.size(); i += 1)
+                if (p < proportionalFitnesses.get(i) && parents.size() < 2)
+                    parents.add(population.get(i));
         }
 
         return parents;
