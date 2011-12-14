@@ -94,8 +94,8 @@ public class GARunner
     private static String getBeginInfo(Configuration config)
     {
         return String.format(""
-            + "# Running %s for %d generations,\n"
-            + "# or until fitness %f is reached.\n#\n"
+            + "# Run parameters:\n#\n"
+            + "#     GA Class:              %s\n"
             + "#     Population size:       %d\n"
             + "#     Chromosome size:       %d\n"
             + "#     Crossover probability: %f\n"
@@ -104,8 +104,6 @@ public class GARunner
             + "#     Terminal fitness:      %f\n"
             + "#     FPP (decimal places):  %d",
             config.getGA(),
-            config.getTermGeneration(),
-            config.getTermFitness(),
             config.getSizePopulation(),
             config.getSizeChromosome(),
             config.getPC(),
