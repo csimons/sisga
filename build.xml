@@ -64,6 +64,15 @@
   </java>
  </target>
 
+ <target name="skip-tests" depends="jar">
+  <java fork="true" classname="${main-class}">
+   <classpath>
+    <fileset dir="${dist.dir}" includes="${ant.project.name}.jar" />
+    <fileset dir="${lib.dir}" includes="*.jar" />
+   </classpath>
+  </java>
+ </target>
+
  <target name="clean-build" depends="clean,jar" />
  <target name="main" depends="clean,run" />
 
