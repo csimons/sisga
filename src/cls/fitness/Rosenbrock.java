@@ -3,13 +3,13 @@ package cls.fitness;
 import java.util.List;
 
 /*
+ * Also known as F2 in Kenneth De Jong's test suite.
  * See Kenneth De Jong's doctoral thesis for details.
- *
  * Available at the time of this writing at:
  *
  * http://cs.gmu.edu/~eclab/kdj_thesis.html
  */
-public class DeJongF2 implements Function
+public class Rosenbrock implements Function
 {
     public double f(List<Double> inputs)
     {
