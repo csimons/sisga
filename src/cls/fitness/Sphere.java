@@ -3,13 +3,13 @@ package cls.fitness;
 import java.util.List;
 
 /*
+ * Also known as F1 in Kenneth De Jong's test suite.
  * See Kenneth De Jong's doctoral thesis for details.
- *
  * Available at the time of this writing at:
  *
  * http://cs.gmu.edu/~eclab/kdj_thesis.html
  */
-public class DeJongF1 implements Function
+public class Sphere implements Function
 {
     public double f(List<Double> inputs)
     {
