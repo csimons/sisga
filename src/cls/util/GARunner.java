@@ -1,15 +1,8 @@
 package cls.util;
 
 import cls.alg.ga.GA;
-import cls.alg.ga.CanonicalGA;
-import cls.alg.ga.CHC;
 import cls.decode.Decoder;
-import cls.decode.NumSetBitsDecoder;
-import cls.decode.PositiveRealDecoder;
-import cls.decode.RealDecoder;
 import cls.fitness.Function;
-import cls.fitness.IdentityFunction;
-import cls.fitness.ReverseParabola;
 import cls.util.Configuration;
 import cls.util.GAResultSet;
 
