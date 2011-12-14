@@ -34,16 +34,16 @@ RUNNING
    $ java -jar dist/sisga.jar -v config/ga
 
    This will create a GnuPlot data file with a name "A-T.dat", where A
-   is the name of the GA algorithm (its class name) and T is a timestamp,
+   is the name of the run configuration and T is a timestamp,
    in the format specified in the run's configuration file (here,
    "config/ga.properties").  For example, for the default "ga"
-   configuration, the file might be named "CanonicalGA-201112131733.dat".
+   configuration, the file might be named "ga-201112131733.dat".
 
 2. To plot the results as a PNG image file, run the following:
 
    $ bash scripts/plot.sh
 
    Th above will create PNG image files in the current directory for any
-   GnuPlot data files it finds in the current directory ("Blah-1234.png"
-   would be generated from "Blah-1234.dat").
+   GnuPlot data files it finds in the current directory ("testing-1234.png"
+   would be generated from "testing-1234.dat").
 

@@ -1,5 +1,6 @@
 package cls.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class Configuration
 
     private static Map<String, String> validationPatterns;
     private static Map<String, Class<?>> algClasses;
+    private static String configName;
 
     private String  ga;
     private Integer sizePopulation;
@@ -88,6 +90,8 @@ public class Configuration
 
     public Configuration(String configName)
     {
+        this.configName = (new File(configName)).getName();
+
         String filename = String.format("%s.properties", configName);
         Properties pConfig = new Properties();
 
@@ -142,6 +146,7 @@ public class Configuration
         }
     }
 
+    public String getConfigName()       { return configName; }
     public String getGA()               { return ga; }
     public Integer getSizePopulation()  { return sizePopulation; }
     public Integer getSizeChromosome()  { return sizeChromosome; }
