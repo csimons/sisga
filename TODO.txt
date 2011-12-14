@@ -1,8 +1,13 @@
-- Implement rest of De Jong F4, F5 functions.
+- Implement De Jong F4, F5 functions.
 - Implement Ackley function.
-- Create aggregate analysis programs for determining metrics
-  - Success rate ("SR")
-  - Average number of evaluations to a solution ("AES")
-  - Mean best fitness ("MBR")
-  - Standard deviation of AES
-  - Standard deviation of MBR
+
+- Create program for aggregate analysis, including calculation of:
+  - Success rate ("SR") (where known).
+  - Average number of evaluations to a solution ("AES").
+  - Mean best fitness ("MBR").
+  - Standard deviation of AES.
+  - Standard deviation of MBR.
+  - Percent deviation from optimality (where known).
+
+- Develop metrics for analysis where optimum is unknown.
+  - Some percentage of deviation from MBR considered good enough?
