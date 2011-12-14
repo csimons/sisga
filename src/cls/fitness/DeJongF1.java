@@ -13,9 +13,9 @@ public class DeJongF1 implements Function
 {
     public double f(List<Double> inputs)
     {
-        if (inputs.size() != 3)
+        if (inputs.size() < 1)
             throw new IllegalArgumentException(
-                    "Expecting 3 input variables.");
+                    "Expecting at least one input variable.");
 
         double result = 0;
 
