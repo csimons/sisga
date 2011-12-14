@@ -4,10 +4,10 @@
 - Create program for aggregate analysis, including calculation of:
   - Success rate ("SR") (where known).
   - Average number of evaluations to a solution ("AES").
-  - Mean best fitness ("MBR").
+  - Mean best fitness ("MBF").
   - Standard deviation of AES.
-  - Standard deviation of MBR.
+  - Standard deviation of MBF.
   - Percent deviation from optimality (where known).
 
 - Develop metrics for analysis where optimum is unknown.
-  - Some percentage of deviation from MBR considered good enough?
+  - Some percentage of deviation from MBF considered good enough?
