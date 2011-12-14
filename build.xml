@@ -40,7 +40,7 @@
   </jar>
  </target>
 
- <target name="test" depends="jar">
+ <target name="test" depends="clean-build">
   <junit showoutput="yes" printsummary="yes" haltonfailure="yes">
    <formatter type="brief" usefile="false" />
    <classpath>
@@ -64,7 +64,7 @@
   </java>
  </target>
 
- <target name="skip-tests" depends="jar">
+ <target name="skip-tests" depends="clean-build">
   <java fork="true" classname="${main-class}">
    <classpath>
     <fileset dir="${dist.dir}" includes="${ant.project.name}.jar" />
