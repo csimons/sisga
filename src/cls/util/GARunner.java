@@ -114,10 +114,10 @@ public class GARunner
             + "#     Beginning best fitness:    %f\n"
             + "#     Beginning worst fitness:   %f\n"
             + "#     Beginning average fitness: %f\n#\n"
-            + "#     Terminal best fitness:     %f\n"
-            + "#     Terminal worst fitness:    %f\n"
-            + "#     Terminal average fitness:  %f\n"
-            + "#     Terminal generation:       %d",
+            + "#     Ending best fitness:       %f\n"
+            + "#     Ending worst fitness:      %f\n"
+            + "#     Ending average fitness:    %f\n"
+            + "#     Ending generation:         %d",
             results.bestFitnesses.get(0),
             results.worstFitnesses.get(0),
             results.avgFitnesses.get(0),
