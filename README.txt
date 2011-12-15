@@ -19,7 +19,7 @@ BUILDING
    succeed, and should end with a usage message.
 
 
-RUNNING
+RUNNING (SINGLE RUNS)
 
 1. Algorithm configuration and parameters are specified in configuration
    files located in the config/ directory.  An example has been provided,
@@ -44,4 +44,35 @@ RUNNING
    Th above will create PNG image files in the current directory for any
    GnuPlot data files it finds in the current directory ("testing-1234.png"
    would be generated from "testing-1234.dat").
+
+
+AGGREGATE ANALYSIS
+
+1. Read above section on single runs.
+
+2. Scripts can be used to handle multiple runs of data.  These scripts must be
+   run from the project root directory (sisga/), and can be executed only after
+   the project has been built.
+
+   A. Several runs can be executed at once by using the scripts/n-runs.sh
+      program.  Run the program without arguments to view the usage message.
+
+   B. Aggregate metrics can be viewed by using the aggregate analyzer program.
+      The user interface for this is the scripts/analyze.sh program.  Run the
+      program without arguments to view the usage message.  Current metrics
+      include the following, with more to be added soon:
+      - Success rate,
+      - Average number of evaluations to solution, and
+      - Mean best fitness.
+
+   So, a common manner of gathering aggregate data might be as follows:
+
+   $ git clone http://github.com/csimons/sisga  # Download the project.
+   $ cd sisga                                   # Go to project root directory.
+   $ ant                                        # Build the project.
+   $ cd config                                  # Navigate to configurations.
+   $ cp ga.properties my-ga.properties          # Create a configuration
+   $ vim config/my-ga.properties                # Set parameters, function.
+   $ bash scripts/n-runs.sh 50 config/my-ga     # Execute 50 runs.
+   $ bash scripts/analyze.sh my-ga-*.dat        # View aggregate metrics.
 
