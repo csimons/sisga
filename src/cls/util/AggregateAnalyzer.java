@@ -20,27 +20,28 @@ public class AggregateAnalyzer
         extract(getFiles(args));
 
         double totalFitness = 0;
-        double successes    = 0;
-        double evaluations  = 0;
+        double totalEvals   = 0;
+        int    successes    = 0;
 
         for (int i = 0; i < optima.size(); i += 1)
         {
             totalFitness += fitnesses.get(i);
-            evaluations  += generations.get(i);
+            totalEvals   += generations.get(i);
 
             if ((optima.get(i) - fitnesses.get(i)) < 0.000001)
                 successes += 1;
         }
 
-        double mbf = totalFitness / ((double) optima.size());
-        double aes = evaluations / ((double) optima.size());
-        double sr  = (successes / ((double) optima.size())) * 100.0;
+        double mbf = totalFitness / optima.size();
+        double sr  = (((double) successes) / optima.size());
+        double aes = totalEvals / successes;
 
-        String output = "\n"
-            + "    Success Rate:         " + sr + "%\n"
-            + "    Mean Best Fitness:    " + mbf + "\n"
-            + "    Avg. Evals. to Soln.: " + aes + "\n"
-            + "\n";
+        String output = String.format("\n"
+            + "    Runs analyzed:        %d\n"
+            + "    Successes:            %d (%d%%)\n"
+            + "    Avg. Evals. to Soln.: %f\n"
+            + "    Mean Best Fitness:    %f\n"
+            + "\n", optima.size(), successes, Math.round(sr * 100), aes, mbf);
 
         System.out.print(output);
     }
