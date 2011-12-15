@@ -1,4 +1,4 @@
-An extensible genetic algorithm engine.
+SISGA, an extensible genetic algorithm engine.
 
 
 BUILDING
@@ -83,14 +83,14 @@ To extend the engine, to do things like implementing other GAs (GENITOR, etc.),
 fitness functions, decoders, and so forth, simply create a new class extending
 the appropriate interface, which will be one of the following:
 
-cls.alg.ga.GA
-cls.alg.mutation.chromosome.ChromosomeMutation
-cls.alg.mutation.population.PopulationMutation
-cls.alg.recombination.Recombination
-cls.alg.selection.parent.ParentSelection
-cls.alg.selection.survivor.SurvivorSelection
-cls.decode.Decoder
-cls.fitness.Function
+    cls.alg.ga.GA
+    cls.alg.mutation.chromosome.ChromosomeMutation
+    cls.alg.mutation.population.PopulationMutation
+    cls.alg.recombination.Recombination
+    cls.alg.selection.parent.ParentSelection
+    cls.alg.selection.survivor.SurvivorSelection
+    cls.decode.Decoder
+    cls.fitness.Function
 
 The class cls.alg.ga.AbstractGA has been provided to make the development of
 new GA implementations more finger-friendly.  It implements the GA interface
