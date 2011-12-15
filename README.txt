@@ -72,7 +72,8 @@ AGGREGATE ANALYSIS
    $ ant                                        # Build the project.
    $ cd config                                  # Navigate to configurations.
    $ cp ga.properties my-ga.properties          # Create a configuration
-   $ vim config/my-ga.properties                # Set parameters, function.
+   $ vim my-ga.properties                       # Set parameters, function.
+   $ cd ..                                      # Go to project root directory.
    $ bash scripts/n-runs.sh 50 config/my-ga     # Execute 50 runs.
    $ bash scripts/analyze.sh my-ga-*.dat        # View aggregate metrics.
 
