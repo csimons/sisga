@@ -47,7 +47,8 @@ public class GARunner
         try
         {
             results.writeToGnuPlotDataFile(String.format(
-                "%s-%s.dat", config.getConfigName(), getDateString()),
+                "%s-%s.dat", config.getConfigName(),
+                getDateString(config.getTimestampFormat())),
                 getBeginInfo(config), getEndInfo(results));
         }
         catch (Exception e)
@@ -126,9 +127,9 @@ public class GARunner
             results.avgFitnesses.size() - 1);
     }
 
-    private static String getDateString()
+    private static String getDateString(String formatString)
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat sdf = new SimpleDateFormat(formatString);
         return sdf.format(new Date());
     }
 }
