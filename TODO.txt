@@ -1,8 +1,7 @@
+- Implement grey-code real decoders.
 - Implement De Jong F4, F5 functions.
 - Implement Ackley function.
 - Update aggregate analysis program to include calculation of:
   - Standard deviation of AES.
   - Standard deviation of MBF.
-  - Percent deviation from optimality (where known).
-- Develop metrics for analysis where optimum is unknown.
-  - Some percentage of deviation from MBF considered good enough?
+  - Percent deviation of MBF from optimum (where known).
