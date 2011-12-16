@@ -3,7 +3,6 @@ package cls.alg.ga;
 import cls.alg.mutation.chromosome.RandomBitFlipMutation;
 import cls.alg.recombination.SinglePointCrossover;
 import cls.alg.selection.parent.RouletteParentSelection;
-import cls.alg.selection.survivor.TournamentSurvivorSelection;
 import cls.decode.Decoder;
 import cls.fitness.Function;
 import cls.model.Chromosome;
@@ -12,7 +11,7 @@ import cls.util.PopulationAnalyzer;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CanonicalGA extends AbstractGA
+public class CanonicalGANoSelection extends AbstractGA
 {
     @Override
     public void init()
@@ -20,7 +19,6 @@ public class CanonicalGA extends AbstractGA
         super.init();
 
         algPS = new RouletteParentSelection(d, f);
-        algSS = new TournamentSurvivorSelection(d, f);
         algRec = new SinglePointCrossover();
         algMutC = new RandomBitFlipMutation();
     }
@@ -83,8 +81,6 @@ public class CanonicalGA extends AbstractGA
                     newGeneration.add(childB);
             }
 
-            newGeneration.addAll(population);
-            newGeneration = getSurvivors(newGeneration, population.size());
             population = newGeneration;
         }
 
