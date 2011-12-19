@@ -23,7 +23,7 @@ public class AggregateAnalyzer
         double totalEvals   = 0;
         int    successes    = 0;
 
-        for (int i = 0; i < optima.size(); i += 1)
+        for (int i = 0; i < fitnesses.size(); i += 1)
         {
             totalFitness += fitnesses.get(i);
             totalEvals   += generations.get(i);
@@ -32,16 +32,29 @@ public class AggregateAnalyzer
                 successes += 1;
         }
 
-        double mbf = totalFitness / optima.size();
         double sr  = (((double) successes) / optima.size());
+        double mbf = totalFitness / optima.size();
         double aes = totalEvals / successes;
 
+        double mbfSD = 0;
+        double aesSD = 0;
+        for (int i = 0; i < fitnesses.size(); i += 1)
+        {
+            mbfSD += Math.pow((fitnesses.get(i) - mbf), 2);
+            aesSD += Math.pow((generations.get(i) - aes), 2);
+        }
+        mbfSD = Math.sqrt(mbfSD / fitnesses.size());
+        aesSD = Math.sqrt(aesSD / successes);
+
         String output = String.format("\n"
-            + "    Runs analyzed:        %d\n"
-            + "    Successes:            %d (%d%%)\n"
-            + "    Avg. Evals. to Soln.: %f\n"
-            + "    Mean Best Fitness:    %f\n"
-            + "\n", optima.size(), successes, Math.round(sr * 100), aes, mbf);
+            + "         Runs: %d\n"
+            + "    Successes: %d (%d%%)\n\n"
+            + "          MBF: %f\n"
+            + "        SDMBF: %f\n"
+            + "          AES: %f\n"
+            + "        SDAES: %f\n"
+            + "\n", optima.size(), successes, Math.round(sr * 100),
+            mbf, mbfSD, aes, aesSD);
 
         System.out.print(output);
     }
