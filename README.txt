@@ -59,11 +59,7 @@ AGGREGATE ANALYSIS
 
    B. Aggregate metrics can be viewed by using the aggregate analyzer program.
       The user interface for this is the scripts/analyze.sh program.  Run the
-      program without arguments to view the usage message.  Current metrics
-      include the following, with more to be added soon:
-      - Success rate,
-      - Average number of evaluations to solution, and
-      - Mean best fitness.
+      program without arguments to view the usage message.
 
    So, a common manner of gathering aggregate data might be as follows:
 
