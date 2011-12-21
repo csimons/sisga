@@ -33,7 +33,7 @@ public class RealDecoder extends AbstractDecoder
          * negative (true).
          */
         int base = 1;
-        for (int i = chromosome.size() - 1; i >= 1; base *= 2) // :)
+        for (int i = chromosome.size() - 1; i >= 1; base *= 2)
             value += chromosome.get(i--) ? base : 0;
 
         /*

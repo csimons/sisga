@@ -39,7 +39,7 @@ public class TwoRealDecoder extends AbstractDecoder
          * negative (true).
          */
         base = 1;
-        for (int i = splitIndex - 1; i >= 1; base *= 2) // :)
+        for (int i = splitIndex - 1; i >= 1; base *= 2)
             valueA += chromosome.get(i--) ? base : 0;
 
         base = 1;
