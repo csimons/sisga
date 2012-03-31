@@ -45,6 +45,7 @@ public class Rastrigin implements Function
 
         result += (A * inputs.size());
 
+        result *= (-1);
         return result;
     }
 }
