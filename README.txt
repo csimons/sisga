@@ -41,7 +41,7 @@ RUNNING (SINGLE RUNS)
 
    $ bash scripts/plot.sh
 
-   Th above will create PNG image files in the current directory for any
+   The above will create PNG image files in the current directory for any
    GnuPlot data files it finds in the current directory ("testing-1234.png"
    would be generated from "testing-1234.dat").
 
@@ -72,6 +72,11 @@ AGGREGATE ANALYSIS
    $ cd ..                                      # Go to project root directory.
    $ bash scripts/n-runs.sh 50 config/my-ga     # Execute 50 runs.
    $ bash scripts/analyze.sh my-ga-*.dat        # View aggregate metrics.
+
+   The script "scripts/do-collect.sh" will run a collection for all existing
+   configurations in the "config" directory, for the number of executions
+   specified in the command-line argument.  This may be useful if one wishes to
+   compare performance among configurations.
 
 
 EXTENDING
