@@ -63,8 +63,8 @@ public class Configuration
         validationPatterns = new HashMap<String, String>();
 
         String singleWord = "^\\S+$";
-        String integer    = "^[0-9]+$";
-        String real       = "^[0-9]*(\\.[0-9]+)?$";
+        String integer    = "^-?[0-9]+$";
+        String real       = "^-?[0-9]*(\\.[0-9]+)?$";
 
         validationPatterns.put(ALG_GA,      singleWord);
         validationPatterns.put(ALG_DECODER, singleWord);
