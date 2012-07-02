@@ -16,7 +16,10 @@ BUILDING
       is present in your PATH environment variable.
 
 4. From the project root directory, run "ant".  The build should
-   succeed, and should end with a usage message.
+   succeed, and should end with a usage message.  If you instead
+   receive an error message about the JUnit task not being found,
+   you probably installed Ant through a distribution package and/or
+   don't have the ANT_HOME environment variable set properly.
 
 
 RUNNING (SINGLE RUNS)
