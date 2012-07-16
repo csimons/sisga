@@ -55,6 +55,7 @@ An extensible genetic algorithm engine.
      The user interface for this is the scripts/analyze.sh program.  Run the
      program without arguments to view the usage message.
      So, a common manner of gathering aggregate data might be as follows:
+
     $ git clone http://github.com/csimons/sisga  # Download the project.
     $ cd sisga                                   # Go to project root directory.
     $ ant                                        # Build the project.
