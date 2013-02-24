@@ -1,1 +1,6 @@
 - Implement gray-code real-value decoders.
+- Implement dominance.
+- Implement diploidy.
+- Implement abeyance.
+- Implement inversion.
+- Implement niche and speciation.
