@@ -1,4 +1,4 @@
-SISGA, an extensible genetic algorithm engine.
+SISGA, an extensible genetic algorithm engine and benchmarking suite.
 
 
 BUILDING
