@@ -9,7 +9,7 @@ fi
 n=$1
 config=$2
 
-if [ ! -f dist/sisga.jar ]
+if [ ! -f target/sisga.jar ]
 then
     echo "You must build the project first."
 else
@@ -18,7 +18,7 @@ else
     i=0
     while [ $i -lt $n ]
     do
-        java -jar dist/sisga.jar $config
+        java -jar target/sisga.jar $config
         i=$[$i+1]
     done
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ! -f dist/sisga.jar ]
+if [ ! -f target/sisga.jar ]
 then
     echo "You must build the project first."
 else
-    java -cp dist/sisga.jar cls.util.AggregateAnalyzer $*
+    java -cp target/sisga.jar cls.util.AggregateAnalyzer $*
 fi
