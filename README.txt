@@ -3,7 +3,7 @@ SISGA, an extensible genetic algorithm engine and benchmarking suite.
 
 BUILDING
 
-1. Assuming the JDK (version 5+ should work), Apache Maven, and Gnuplot have
+1. Assuming the JDK (version 8+ should work), Apache Maven, and Gnuplot have
    been properly installed, the project can be built by issuing the following
    command from the project's root directory: mvn install.
 
