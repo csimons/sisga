@@ -3,24 +3,9 @@ SISGA, an extensible genetic algorithm engine and benchmarking suite.
 
 BUILDING
 
-1. Install the JDK (versions 5 and up should work).
-   a. Ensure that the JAVA_HOME environment variable is set.
-   b. Ensure that JAVA_HOME/bin is present in your PATH.
-
-2. Install Apache Ant (1.7+ REQUIRED, due to JUnit4 stuff).
-   a. Ensure the ANT_HOME environment variable is set.
-   b. Ensure that ANT_HOME/bin is present in your PATH.
-
-3. Install Gnuplot
-   a. Ensure that the directory containing the "gnuplot" executable
-      is present in your PATH environment variable.
-
-4. From the project root directory, run "ant".  The build should
-   succeed, and should end with a usage message.  If you instead
-   receive an error message about the JUnit task not being found,
-   you probably installed Ant through a distribution package and/or
-   don't have the ANT_HOME environment variable set properly.
-
+1. Assuming the JDK (version 5+ should work), Apache Maven, and Gnuplot have
+   been properly installed, the project can be built by issuing the following
+   command from the project's root directory: mvn install.
 
 RUNNING (SINGLE RUNS)
 
@@ -32,7 +17,7 @@ RUNNING (SINGLE RUNS)
    will print summary information during execution; if specified, this flag
    must come BEFORE the configuration name:
 
-   $ java -jar dist/sisga.jar -v config/ga
+   $ java -jar target/sisga.jar -v config/ga
 
    This will create a GnuPlot data file with a name "A-T.dat", where A
    is the name of the run configuration and T is a timestamp,
@@ -105,4 +90,3 @@ in the CHC and CanonicalGA classes for examples.
 Once you have created your new component implementations (and they are in the
 appropriate directory and implement the appropriate interface), simply rebuild
 the project in order to be able to use the components in new configurations.
-
