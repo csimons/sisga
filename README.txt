@@ -73,19 +73,19 @@ To extend the engine, to do things like implementing other GAs (GENITOR, etc.),
 fitness functions, decoders, and so forth, simply create a new class extending
 the appropriate interface, which will be one of the following:
 
-    cls.alg.ga.GA
-    cls.alg.mutation.chromosome.ChromosomeMutation
-    cls.alg.mutation.population.PopulationMutation
-    cls.alg.recombination.Recombination
-    cls.alg.selection.parent.ParentSelection
-    cls.alg.selection.survivor.SurvivorSelection
-    cls.decode.Decoder
-    cls.fitness.Function
+    com.oracli.sisga.alg.ga.GA
+    com.oracli.sisga.alg.mutation.chromosome.ChromosomeMutation
+    com.oracli.sisga.alg.mutation.population.PopulationMutation
+    com.oracli.sisga.alg.recombination.Recombination
+    com.oracli.sisga.alg.selection.parent.ParentSelection
+    com.oracli.sisga.alg.selection.survivor.SurvivorSelection
+    com.oracli.sisga.decode.Decoder
+    com.oracli.sisga.fitness.Function
 
-The class cls.alg.ga.AbstractGA has been provided to make the development of
-new GA implementations more finger-friendly.  It implements the GA interface
-and can be extended rather than implementing GA directly.  See how this is used
-in the CHC and CanonicalGA classes for examples.
+The class com.oracli.sisga.alg.ga.AbstractGA has been provided to make the
+development of new GA implementations more finger-friendly.  It implements the
+GA interface and can be extended rather than implementing GA directly.  See
+how this is used in the CHC and CanonicalGA classes for examples.
 
 Once you have created your new component implementations (and they are in the
 appropriate directory and implement the appropriate interface), simply rebuild
