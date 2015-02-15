@@ -43,7 +43,7 @@
                     <finalName>sisga</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>cls.util.GARunner</mainClass>
+                            <mainClass>com.oracli.sisga.util.GARunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
