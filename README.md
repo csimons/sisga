@@ -4,9 +4,9 @@ An extensible genetic algorithm engine and benchmarking suite.
 
 ## BUILDING
 
-Assuming the JDK (version 8+ should work), Apache Maven, and Gnuplot have been
-properly installed, the project can be built by issuing the following command
-from the project's root directory: mvn install.
+Assuming the JDK (version 1.5+ should work), Apache Maven, and Gnuplot have
+been properly installed, the project can be built by issuing the following
+command from the project's root directory: mvn install.
 
 ## RUNNING (SINGLE RUNS)
 
