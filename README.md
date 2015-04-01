@@ -1,5 +1,7 @@
 # SISGA
 
+[![Build Status](https://travis-ci.org/csimons/sisga.svg?branch=master)](https://travis-ci.org/csimons/sisga)
+
 An extensible genetic algorithm engine and benchmarking suite.
 
 ## BUILDING
