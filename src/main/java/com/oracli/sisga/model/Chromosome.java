@@ -29,8 +29,6 @@ public class Chromosome
 {
 	private List<Boolean> chromosome;
 
-	private Chromosome() {}
-
 	public Chromosome(int length)
 	{
 		chromosome = new ArrayList<Boolean>(length);

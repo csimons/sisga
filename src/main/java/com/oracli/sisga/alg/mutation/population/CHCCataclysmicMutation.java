@@ -38,8 +38,6 @@ public class CHCCataclysmicMutation implements PopulationMutation
 	private Decoder d;
 	private Function<List<Double>, Double> f;
 
-	private CHCCataclysmicMutation() {}
-
 	public CHCCataclysmicMutation(Decoder d, Function<List<Double>, Double> f)
 	{
 		this.d = d;

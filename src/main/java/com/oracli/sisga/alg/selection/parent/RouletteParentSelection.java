@@ -37,8 +37,6 @@ public class RouletteParentSelection implements ParentSelection
 	private Decoder d;
 	private Function<List<Double>, Double> f;
 
-	private RouletteParentSelection() {}
-
 	public RouletteParentSelection(Decoder d, Function<List<Double>, Double> f)
 	{
 		this.d = d;

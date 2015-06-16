@@ -38,6 +38,7 @@ public class GARunner
 	{
 		Configuration config = configure(args);
 
+		@SuppressWarnings("unchecked")
 		Function<List<Double>, Double> function
 				= (Function<List<Double>, Double>) config
 						.getAlgorithm(Configuration.ALG_FITNESS);

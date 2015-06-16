@@ -22,7 +22,6 @@
 
 package com.oracli.sisga.alg.selection.survivor;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -40,8 +39,6 @@ public class TournamentSurvivorSelection implements SurvivorSelection
 	private Decoder d;
 	private Function<List<Double>, Double> f;
 
-	private TournamentSurvivorSelection() {}
-
 	public TournamentSurvivorSelection(
 			Decoder d, Function<List<Double>, Double> f)
 	{
@@ -55,8 +52,6 @@ public class TournamentSurvivorSelection implements SurvivorSelection
 		if (targetPopulationSize > population.size())
 			throw new IllegalArgumentException(
 					"targetPopulationSize > populationSize");
-
-		List<Chromosome> survivorSet = new LinkedList<Chromosome>();
 
 		while(population.size() > targetPopulationSize)
 		{
