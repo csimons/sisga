@@ -23,15 +23,15 @@
 package com.oracli.sisga.util;
 
 import java.util.List;
+import java.util.function.Function;
 
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 
 public class PopulationAnalyzer
 {
 	public static void print(List<Chromosome> population,
-			Decoder d, Function f)
+			Decoder d, Function<List<Double>, Double> f)
 	{
 		System.out.println("CHROMOSOME\tDECODED_VALUES\tFITNESS");
 
@@ -46,23 +46,23 @@ public class PopulationAnalyzer
 			sb.append("}");
 
 			System.out.println(String.format("%s\t%s\t%f",
-						i.toString(), sb.toString(), f.f(vals)));
+						i.toString(), sb.toString(), f.apply(vals)));
 		}
 	}
 
 	public static double avgFitness(List<Chromosome> population,
-			Decoder d, Function f)
+			Decoder d, Function<List<Double>, Double> f)
 	{
 		double acc = 0;
 
 		for (Chromosome chromosome : population)
-			acc += f.f(d.decode(chromosome));
+			acc += f.apply(d.decode(chromosome));
 
 		return acc / population.size();
 	}
 
 	public static double bestFitness(List<Chromosome> population,
-			Decoder d, Function f)
+			Decoder d, Function<List<Double>, Double> f)
 	{
 		/*
 		 * Don't initialize this to zero as it will cause incorrect
@@ -73,10 +73,10 @@ public class PopulationAnalyzer
 		for (Chromosome chromosome : population)
 		{
 			if (best == null)
-				best = f.f(d.decode(chromosome));
+				best = f.apply(d.decode(chromosome));
 			else
 			{
-				double current = f.f(d.decode(chromosome));
+				double current = f.apply(d.decode(chromosome));
 				best = current > best ? current : best;
 			}
 		}
@@ -85,7 +85,7 @@ public class PopulationAnalyzer
 	}
 
 	public static double worstFitness(List<Chromosome> population,
-			Decoder d, Function f)
+			Decoder d, Function<List<Double>, Double> f)
 	{
 		/*
 		 * Don't initialize this to zero as it will cause incorrect
@@ -96,10 +96,10 @@ public class PopulationAnalyzer
 		for (Chromosome chromosome : population)
 		{
 			if (worst == null)
-				worst = f.f(d.decode(chromosome));
+				worst = f.apply(d.decode(chromosome));
 			else
 			{
-				double current = f.f(d.decode(chromosome));
+				double current = f.apply(d.decode(chromosome));
 				worst = current < worst ? current : worst;
 			}
 		}

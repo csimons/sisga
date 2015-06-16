@@ -22,14 +22,14 @@
 
 package com.oracli.sisga.test.decode;
 
+import static com.oracli.sisga.test.decode.Util.stringToChromosome;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import com.oracli.sisga.decode.Decoder;
 import com.oracli.sisga.decode.PositiveRealDecoder;
 import com.oracli.sisga.model.Chromosome;
-
-import static com.oracli.sisga.test.decode.Util.stringToChromosome;
-import static org.junit.Assert.assertEquals;
 
 public class PositiveRealDecoderTest
 {

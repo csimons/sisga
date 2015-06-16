@@ -24,12 +24,11 @@ package com.oracli.sisga.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
 
 import com.oracli.sisga.alg.ga.GA;
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
-import com.oracli.sisga.util.Configuration;
-import com.oracli.sisga.util.GAResultSet;
 
 public class GARunner
 {
@@ -39,8 +38,9 @@ public class GARunner
 	{
 		Configuration config = configure(args);
 
-		Function function = (Function) config
-			.getAlgorithm(Configuration.ALG_FITNESS);
+		Function<List<Double>, Double> function
+				= (Function<List<Double>, Double>) config
+						.getAlgorithm(Configuration.ALG_FITNESS);
 		Decoder decoder = (Decoder) config
 			.getAlgorithm(Configuration.ALG_DECODER);
 		decoder.setPrecision(config.getFPP());

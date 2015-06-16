@@ -23,6 +23,7 @@
 package com.oracli.sisga.fitness;
 
 import java.util.List;
+import java.util.function.Function;
 
 /*
  * See Kenneth De Jong's doctoral thesis for details.
@@ -31,9 +32,9 @@ import java.util.List;
  *
  * http://cs.gmu.edu/~eclab/kdj_thesis.html
  */
-public class DeJongF3 implements Function
+public class DeJongF3 implements Function<List<Double>, Double>
 {
-	public double f(List<Double> inputs)
+	public Double apply(List<Double> inputs)
 	{
 		if (inputs.size() < 1)
 			throw new IllegalArgumentException(

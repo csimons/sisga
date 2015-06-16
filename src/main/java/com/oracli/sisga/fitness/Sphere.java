@@ -23,6 +23,7 @@
 package com.oracli.sisga.fitness;
 
 import java.util.List;
+import java.util.function.Function;
 
 /*
  * Also known as F1 in Kenneth De Jong's test suite.
@@ -31,20 +32,20 @@ import java.util.List;
  *
  * http://cs.gmu.edu/~eclab/kdj_thesis.html
  */
-public class Sphere implements Function
+public class Sphere implements Function<List<Double>, Double>
 {
-	public double f(List<Double> inputs)
-	{
-		if (inputs.size() < 1)
-			throw new IllegalArgumentException(
-					"Expecting at least one input variable.");
+    public Double apply(List<Double> inputs)
+    {
+        if (inputs.size() < 1)
+            throw new IllegalArgumentException(
+                    "Expecting at least one input variable.");
 
-		double result = 0;
+        double result = 0;
 
-		for (Double i : inputs)
-			result += (i * i);
+        for (Double i : inputs)
+            result += (i * i);
 
-		result *= (-1);
-		return result;
-	}
+        result *= (-1);
+        return result;
+    }
 }

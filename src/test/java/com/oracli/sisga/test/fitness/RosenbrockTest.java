@@ -1,15 +1,15 @@
 /* Copyright (c) 2011, 2012 Christopher L. Simons
  *
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
+ * Permission is hereby granted,.applyree .apply charge, to any person obtaining
+ * a copy .apply this s.applytware and associated documentation.applyiles (the
+ * "S.applytware"), to deal in the S.applytware without restriction, including
+ * without limitation the rights to use, copy, mod.applyy, merge, publish,
+ * distribute, sublicense, and/or sell copies .apply the S.applytware, and to
+ * permit persons to whom the S.applytware is.applyurnished to do so, subject to
+ * the.applyollowing conditions:
  * 
  * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
+ * in all copies or substantial portions .apply the S.applytware.
  * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
@@ -22,35 +22,30 @@
 
 package com.oracli.sisga.test.fitness;
 
-import java.util.LinkedList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import com.oracli.sisga.fitness.Rosenbrock;
-
-import static org.junit.Assert.assertEquals;
 
 public class RosenbrockTest
 {
 	@Test
 	public void expectedValues()
 	{
-		assertEquals(- 101, new Rosenbrock().f(wrap(0, 1)), 0.0001);
-		assertEquals(- 100, new Rosenbrock().f(wrap(1, 0)), 0.0001);
-		assertEquals(- 100, new Rosenbrock().f(wrap(1, 2)), 0.0001);
-		assertEquals(- 901, new Rosenbrock().f(wrap(2, 1)), 0.0001);
-		assertEquals(- 101, new Rosenbrock().f(wrap(2, 3)), 0.0001);
-		assertEquals(-4904, new Rosenbrock().f(wrap(3, 2)), 0.0001);
-	}
-
-	private List<Double> wrap (double x, double y)
-	{
-		List<Double> variables = new LinkedList<Double>();
-
-		variables.add(x);
-		variables.add(y);
-
-		return variables;
+		assertEquals(- 101, new Rosenbrock().apply(Arrays.asList(
+				new Double[] {0.0, 1.0})), 0.0001);
+		assertEquals(- 100, new Rosenbrock().apply(Arrays.asList(
+				new Double[] {1.0, 0.0})), 0.0001);
+		assertEquals(- 100, new Rosenbrock().apply(Arrays.asList(
+				new Double[] {1.0, 2.0})), 0.0001);
+		assertEquals(- 901, new Rosenbrock().apply(Arrays.asList(
+				new Double[] {2.0, 1.0})), 0.0001);
+		assertEquals(- 101, new Rosenbrock().apply(Arrays.asList(
+				new Double[] {2.0, 3.0})), 0.0001);
+		assertEquals(-4904, new Rosenbrock().apply(Arrays.asList(
+				new Double[] {3.0, 2.0})), 0.0001);
 	}
 }

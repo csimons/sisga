@@ -22,33 +22,24 @@
 
 package com.oracli.sisga.test.fitness;
 
-import java.util.LinkedList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import com.oracli.sisga.fitness.Sphere;
-
-import static org.junit.Assert.assertEquals;
 
 public class SphereTest
 {
 	@Test
 	public void expectedValues()
 	{
-		assertEquals(- 5, new Sphere().f(wrap(0, 1, 2)), 0.0001);
-		assertEquals(-14, new Sphere().f(wrap(1, 2, 3)), 0.0001);
-		assertEquals(-29, new Sphere().f(wrap(2, 3, 4)), 0.0001);
-	}
-
-	private List<Double> wrap (double x, double y, double z)
-	{
-		List<Double> variables = new LinkedList<Double>();
-
-		variables.add(x);
-		variables.add(y);
-		variables.add(z);
-
-		return variables;
+		assertEquals(- 5, new Sphere().apply(Arrays.asList(
+				new Double[] {0.0, 1.0, 2.0})), 0.0001);
+		assertEquals(-14, new Sphere().apply(Arrays.asList(
+				new Double[] {1.0, 2.0, 3.0})), 0.0001);
+		assertEquals(-29, new Sphere().apply(Arrays.asList(
+				new Double[] {2.0, 3.0, 4.0})), 0.0001);
 	}
 }

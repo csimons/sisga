@@ -23,9 +23,9 @@
 package com.oracli.sisga.alg.mutation.population;
 
 import java.util.List;
+import java.util.function.Function;
 
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 import com.oracli.sisga.util.PopulationAnalyzer;
 
@@ -36,11 +36,11 @@ import com.oracli.sisga.util.PopulationAnalyzer;
 public class CHCCataclysmicMutation implements PopulationMutation
 {
 	private Decoder d;
-	private Function f;
+	private Function<List<Double>, Double> f;
 
 	private CHCCataclysmicMutation() {}
 
-	public CHCCataclysmicMutation(Decoder d, Function f)
+	public CHCCataclysmicMutation(Decoder d, Function<List<Double>, Double> f)
 	{
 		this.d = d;
 		this.f = f;
@@ -54,7 +54,7 @@ public class CHCCataclysmicMutation implements PopulationMutation
 			.bestFitness(population, d, f);
 
 		for (Chromosome chromosome : population)
-			if (f.f(d.decode(chromosome)) == bestFitness)
+			if (f.apply(d.decode(chromosome)) == bestFitness)
 				bestFitChromosome = chromosome;
 
 		if (bestFitChromosome == null)

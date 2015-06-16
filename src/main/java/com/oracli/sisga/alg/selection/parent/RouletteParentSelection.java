@@ -24,9 +24,9 @@ package com.oracli.sisga.alg.selection.parent;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 
 /*
@@ -35,11 +35,11 @@ import com.oracli.sisga.model.Chromosome;
 public class RouletteParentSelection implements ParentSelection
 {
 	private Decoder d;
-	private Function f;
+	private Function<List<Double>, Double> f;
 
 	private RouletteParentSelection() {}
 
-	public RouletteParentSelection(Decoder d, Function f)
+	public RouletteParentSelection(Decoder d, Function<List<Double>, Double> f)
 	{
 		this.d = d;
 		this.f = f;
@@ -54,7 +54,7 @@ public class RouletteParentSelection implements ParentSelection
 
 		for (Chromosome i : population)
 		{
-			double fitness = Math.abs(f.f(d.decode(i)));
+			double fitness = Math.abs(f.apply(d.decode(i)));
 			totalFitness += fitness;
 			absoluteFitnesses.add(fitness);
 		}
