@@ -35,38 +35,38 @@ import com.oracli.sisga.util.PopulationAnalyzer;
  */
 public class CHCCataclysmicMutation implements PopulationMutation
 {
-    private Decoder d;
-    private Function f;
+	private Decoder d;
+	private Function f;
 
-    private CHCCataclysmicMutation() {}
+	private CHCCataclysmicMutation() {}
 
-    public CHCCataclysmicMutation(Decoder d, Function f)
-    {
-        this.d = d;
-        this.f = f;
-    }
+	public CHCCataclysmicMutation(Decoder d, Function f)
+	{
+		this.d = d;
+		this.f = f;
+	}
 
-    public List<Chromosome> mutate(List<Chromosome> population, double pCM)
-    {
-        Chromosome bestFitChromosome = null;
+	public List<Chromosome> mutate(List<Chromosome> population, double pCM)
+	{
+		Chromosome bestFitChromosome = null;
 
-        double bestFitness = PopulationAnalyzer
-            .bestFitness(population, d, f);
+		double bestFitness = PopulationAnalyzer
+			.bestFitness(population, d, f);
 
-        for (Chromosome chromosome : population)
-            if (f.f(d.decode(chromosome)) == bestFitness)
-                bestFitChromosome = chromosome;
+		for (Chromosome chromosome : population)
+			if (f.f(d.decode(chromosome)) == bestFitness)
+				bestFitChromosome = chromosome;
 
-        if (bestFitChromosome == null)
-            throw new IllegalStateException(
-                "Unable to determine best-fit chromosome.");
+		if (bestFitChromosome == null)
+			throw new IllegalStateException(
+				"Unable to determine best-fit chromosome.");
 
-        for (Chromosome chromosome : population)
-            if (chromosome != bestFitChromosome)
-                for (int i = 0; i < chromosome.size(); i += 1)
-                    if (Math.random() < pCM)
-                        chromosome.flip(i);
+		for (Chromosome chromosome : population)
+			if (chromosome != bestFitChromosome)
+				for (int i = 0; i < chromosome.size(); i += 1)
+					if (Math.random() < pCM)
+						chromosome.flip(i);
 
-        return population;
-    }
+		return population;
+	}
 }

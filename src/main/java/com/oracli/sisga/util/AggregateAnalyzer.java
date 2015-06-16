@@ -30,133 +30,133 @@ import java.util.List;
 
 public class AggregateAnalyzer
 {
-    private static List<Double>  optima      = new LinkedList<Double>();
-    private static List<Double>  fitnesses   = new LinkedList<Double>();
-    private static List<Integer> generations = new LinkedList<Integer>();
+	private static List<Double>  optima      = new LinkedList<Double>();
+	private static List<Double>  fitnesses   = new LinkedList<Double>();
+	private static List<Integer> generations = new LinkedList<Integer>();
 
-    public static void main(String[] args)
-    {
-        if (args.length < 1)
-            usage();
+	public static void main(String[] args)
+	{
+		if (args.length < 1)
+			usage();
 
-        extract(getFiles(args));
+		extract(getFiles(args));
 
-        double totalFitness = 0;
-        double totalEvals   = 0;
-        int    successes    = 0;
+		double totalFitness = 0;
+		double totalEvals   = 0;
+		int	successes	= 0;
 
-        for (int i = 0; i < fitnesses.size(); i += 1)
-        {
-            totalFitness += fitnesses.get(i);
-            totalEvals   += generations.get(i);
+		for (int i = 0; i < fitnesses.size(); i += 1)
+		{
+			totalFitness += fitnesses.get(i);
+			totalEvals   += generations.get(i);
 
-            if ((optima.get(i) - fitnesses.get(i)) < 0.000001)
-                successes += 1;
-        }
+			if ((optima.get(i) - fitnesses.get(i)) < 0.000001)
+				successes += 1;
+		}
 
-        double sr  = (((double) successes) / optima.size());
-        double mbf = totalFitness / optima.size();
-        double aes = totalEvals / successes;
+		double sr  = (((double) successes) / optima.size());
+		double mbf = totalFitness / optima.size();
+		double aes = totalEvals / successes;
 
-        double mbfSD = 0;
-        double aesSD = 0;
-        for (int i = 0; i < fitnesses.size(); i += 1)
-        {
-            mbfSD += Math.pow((fitnesses.get(i) - mbf), 2);
-            aesSD += Math.pow((generations.get(i) - aes), 2);
-        }
-        mbfSD = Math.sqrt(mbfSD / fitnesses.size());
-        aesSD = Math.sqrt(aesSD / successes);
+		double mbfSD = 0;
+		double aesSD = 0;
+		for (int i = 0; i < fitnesses.size(); i += 1)
+		{
+			mbfSD += Math.pow((fitnesses.get(i) - mbf), 2);
+			aesSD += Math.pow((generations.get(i) - aes), 2);
+		}
+		mbfSD = Math.sqrt(mbfSD / fitnesses.size());
+		aesSD = Math.sqrt(aesSD / successes);
 
-        String output = String.format("\n"
-            + "         Runs: %d\n"
-            + "    Successes: %d (%d%%)\n\n"
-            + "          MBF: %f\n"
-            + "        SDMBF: %f\n"
-            + "          AES: %f\n"
-            + "        SDAES: %f\n"
-            + "\n", optima.size(), successes, Math.round(sr * 100),
-            mbf, mbfSD, aes, aesSD);
+		String output = String.format("\n"
+			+ "         Runs: %d\n"
+			+ "    Successes: %d (%d%%)\n\n"
+			+ "          MBF: %f\n"
+			+ "        SDMBF: %f\n"
+			+ "          AES: %f\n"
+			+ "        SDAES: %f\n"
+			+ "\n", optima.size(), successes, Math.round(sr * 100),
+			mbf, mbfSD, aes, aesSD);
 
-        System.out.print(output);
-    }
+		System.out.print(output);
+	}
 
-    private static void usage()
-    {
-        System.out.println("usage: <program> file1 [file2 [file3 [...]]]");
-        System.exit(1);
-    }
+	private static void usage()
+	{
+		System.out.println("usage: <program> file1 [file2 [file3 [...]]]");
+		System.exit(1);
+	}
 
-    private static List<File> getFiles(String[] filenames)
-    {
-        List<File> files = new LinkedList<File>();
+	private static List<File> getFiles(String[] filenames)
+	{
+		List<File> files = new LinkedList<File>();
 
-        for (String filename : filenames)
-        {
-            File file = new File(filename);
+		for (String filename : filenames)
+		{
+			File file = new File(filename);
 
-            if (file.canRead())
-                files.add(file);
-            else
-            {
-                System.out.println(String
-                    .format("Could not read file \"%s\".", filename));
-            }
-        }
+			if (file.canRead())
+				files.add(file);
+			else
+			{
+				System.out.println(String
+					.format("Could not read file \"%s\".", filename));
+			}
+		}
 
-        if (files.size() < filenames.length)
-            System.exit(1);
+		if (files.size() < filenames.length)
+			System.exit(1);
 
-        return files;
-    }
+		return files;
+	}
 
-    private static void extract(List<File> files)
-    {
-        for (File file : files)
-        {
-            try
-            {
-                Double optimum     = null;
-                Double fitness     = null;
-                Integer generation = null;
+	private static void extract(List<File> files)
+	{
+		for (File file : files)
+		{
+			try
+			{
+				Double optimum     = null;
+				Double fitness     = null;
+				Integer generation = null;
 
-                BufferedReader r = new BufferedReader(new FileReader(file));
-                String line;
-                while ((line = r.readLine()) != null)
-                {
-                    if (line.matches("^.*Terminal fitness:\\s+(\\S+)$"))
-                        optimum = Double.parseDouble(line.replaceAll(
-                            "^.*Terminal fitness:\\s+(\\S+)$", "$1"));
-                    else if (line.matches("^.*Ending best fitness:\\s+(\\S+)$"))
-                        fitness = Double.parseDouble(line.replaceAll(
-                            "^.*Ending best fitness:\\s+(\\S+)$", "$1"));
-                    else if (line.matches("^.*Ending generation:\\s+(\\S+)$"))
-                        generation = Integer.parseInt(line.replaceAll(
-                            "^.*Ending generation:\\s+(\\S+)$", "$1"));
-                }
-                r.close();
+				BufferedReader r = new BufferedReader(new FileReader(file));
+				String line;
+				while ((line = r.readLine()) != null)
+				{
+					if (line.matches("^.*Terminal fitness:\\s+(\\S+)$"))
+						optimum = Double.parseDouble(line.replaceAll(
+							"^.*Terminal fitness:\\s+(\\S+)$", "$1"));
+					else if (line.matches("^.*Ending best fitness:\\s+(\\S+)$"))
+						fitness = Double.parseDouble(line.replaceAll(
+							"^.*Ending best fitness:\\s+(\\S+)$", "$1"));
+					else if (line.matches("^.*Ending generation:\\s+(\\S+)$"))
+						generation = Integer.parseInt(line.replaceAll(
+							"^.*Ending generation:\\s+(\\S+)$", "$1"));
+				}
+				r.close();
 
-                if (optimum == null)
-                    throw new IllegalArgumentException(
-                        "Terminal fitness line not found in file: "
-                        + file.getName());
-                if (fitness == null)
-                    throw new IllegalArgumentException(
-                        "Ending best fitness line not found in file: "
-                        + file.getName());
-                if (generation == null)
-                    throw new IllegalArgumentException(
-                        "Ending generation line found in file: "
-                        + file.getName());
+				if (optimum == null)
+					throw new IllegalArgumentException(
+						"Terminal fitness line not found in file: "
+						+ file.getName());
+				if (fitness == null)
+					throw new IllegalArgumentException(
+						"Ending best fitness line not found in file: "
+						+ file.getName());
+				if (generation == null)
+					throw new IllegalArgumentException(
+						"Ending generation line found in file: "
+						+ file.getName());
 
-                optima.add(optimum);
-                fitnesses.add(fitness);
-                generations.add(generation);
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+				optima.add(optimum);
+				fitnesses.add(fitness);
+				generations.add(generation);
+			}
+			catch (Exception e)
+			{
+				throw new RuntimeException(e);
+			}
+		}
+	}
 }

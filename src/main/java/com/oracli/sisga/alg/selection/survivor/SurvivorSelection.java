@@ -28,6 +28,6 @@ import com.oracli.sisga.model.Chromosome;
 
 public interface SurvivorSelection
 {
-    public List<Chromosome> select(List<Chromosome> population,
-            int targetPopulationSize);
+	public List<Chromosome> select(List<Chromosome> population,
+			int targetPopulationSize);
 }

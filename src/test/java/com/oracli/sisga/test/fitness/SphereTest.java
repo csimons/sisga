@@ -33,22 +33,22 @@ import static org.junit.Assert.assertEquals;
 
 public class SphereTest
 {
-    @Test
-    public void expectedValues()
-    {
-        assertEquals(- 5, new Sphere().f(wrap(0, 1, 2)), 0.0001);
-        assertEquals(-14, new Sphere().f(wrap(1, 2, 3)), 0.0001);
-        assertEquals(-29, new Sphere().f(wrap(2, 3, 4)), 0.0001);
-    }
+	@Test
+	public void expectedValues()
+	{
+		assertEquals(- 5, new Sphere().f(wrap(0, 1, 2)), 0.0001);
+		assertEquals(-14, new Sphere().f(wrap(1, 2, 3)), 0.0001);
+		assertEquals(-29, new Sphere().f(wrap(2, 3, 4)), 0.0001);
+	}
 
-    private List<Double> wrap (double x, double y, double z)
-    {
-        List<Double> variables = new LinkedList<Double>();
+	private List<Double> wrap (double x, double y, double z)
+	{
+		List<Double> variables = new LinkedList<Double>();
 
-        variables.add(x);
-        variables.add(y);
-        variables.add(z);
+		variables.add(x);
+		variables.add(y);
+		variables.add(z);
 
-        return variables;
-    }
+		return variables;
+	}
 }

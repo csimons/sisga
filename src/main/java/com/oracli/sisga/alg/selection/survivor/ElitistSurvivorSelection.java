@@ -39,61 +39,61 @@ import com.oracli.sisga.model.Chromosome;
  */
 public class ElitistSurvivorSelection implements SurvivorSelection
 {
-    private Decoder d;
-    private Function f;
+	private Decoder d;
+	private Function f;
 
-    private ElitistSurvivorSelection() {}
+	private ElitistSurvivorSelection() {}
 
-    public ElitistSurvivorSelection(Decoder d, Function f)
-    {
-        this.d = d;
-        this.f = f;
-    }
+	public ElitistSurvivorSelection(Decoder d, Function f)
+	{
+		this.d = d;
+		this.f = f;
+	}
 
-    public List<Chromosome> select(List<Chromosome> population,
-            int targetPopulationSize)
-    {
-        if (targetPopulationSize > population.size())
-            throw new IllegalArgumentException(
-                    "targetPopulationSize > populationSize");
+	public List<Chromosome> select(List<Chromosome> population,
+			int targetPopulationSize)
+	{
+		if (targetPopulationSize > population.size())
+			throw new IllegalArgumentException(
+					"targetPopulationSize > populationSize");
 
-        Map<Double, List<Chromosome>> fitnessMap
-            = new HashMap<Double, List<Chromosome>>();
+		Map<Double, List<Chromosome>> fitnessMap
+			= new HashMap<Double, List<Chromosome>>();
 
-        for (Chromosome i : population)
-        {
-            double fitness = f.f(d.decode(i));
+		for (Chromosome i : population)
+		{
+			double fitness = f.f(d.decode(i));
 
-            if (fitnessMap.get(fitness) == null)
-                fitnessMap.put(fitness, new LinkedList<Chromosome>());
+			if (fitnessMap.get(fitness) == null)
+				fitnessMap.put(fitness, new LinkedList<Chromosome>());
 
-            fitnessMap.get(fitness).add(i);
-        }
+			fitnessMap.get(fitness).add(i);
+		}
 
-        Double[] fitnesses = fitnessMap
-            .keySet().toArray(new Double[fitnessMap.size()]);
+		Double[] fitnesses = fitnessMap
+			.keySet().toArray(new Double[fitnessMap.size()]);
 
-        Arrays.sort(fitnesses);
+		Arrays.sort(fitnesses);
 
-        /*
-         * Sorted to ascending order, so iterate backward.
-         */
-        List<Chromosome> survivors = new LinkedList<Chromosome>();
-        for (int i = fitnesses.length - 1; i >= 0; i -= 1)
-        {
-            if (survivors.size() + fitnessMap.get(fitnesses[i]).size()
-                    <= targetPopulationSize)
-                survivors.addAll(fitnessMap.get(fitnesses[i]));
-            else
-            {
-                int chromosomesToSave
-                    = targetPopulationSize - survivors.size();
+		/*
+		 * Sorted to ascending order, so iterate backward.
+		 */
+		List<Chromosome> survivors = new LinkedList<Chromosome>();
+		for (int i = fitnesses.length - 1; i >= 0; i -= 1)
+		{
+			if (survivors.size() + fitnessMap.get(fitnesses[i]).size()
+					<= targetPopulationSize)
+				survivors.addAll(fitnessMap.get(fitnesses[i]));
+			else
+			{
+				int chromosomesToSave
+					= targetPopulationSize - survivors.size();
 
-                for (int j = 0; j < chromosomesToSave; j += 1)
-                    survivors.add(fitnessMap.get(fitnesses[i]).get(j));
-            }
-        }
+				for (int j = 0; j < chromosomesToSave; j += 1)
+					survivors.add(fitnessMap.get(fitnesses[i]).get(j));
+			}
+		}
 
-        return survivors;
-    }
+		return survivors;
+	}
 }

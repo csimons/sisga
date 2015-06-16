@@ -28,5 +28,5 @@ import com.oracli.sisga.model.Chromosome;
 
 public interface PopulationMutation
 {
-    public List<Chromosome> mutate(List<Chromosome> population, double pM);
+	public List<Chromosome> mutate(List<Chromosome> population, double pM);
 }

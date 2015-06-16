@@ -33,32 +33,32 @@ import static org.junit.Assert.assertEquals;
 
 public class SchwefelTest
 {
-    @Test
-    public void expectedValues()
-    {
-        assertEquals(0, new Schwefel().f(wrap(0)), 0.0001);
+	@Test
+	public void expectedValues()
+	{
+		assertEquals(0, new Schwefel().f(wrap(0)), 0.0001);
 
-        /*
-         * TODO: Add more tests.
-         */
-    }
+		/*
+		 * TODO: Add more tests.
+		 */
+	}
 
-    private List<Double> wrap(double x)
-    {
-        List<Double> variables = new LinkedList<Double>();
+	private List<Double> wrap(double x)
+	{
+		List<Double> variables = new LinkedList<Double>();
 
-        variables.add(x);
+		variables.add(x);
 
-        return variables;
-    }
+		return variables;
+	}
 
-    private List<Double> wrap(double x, double y)
-    {
-        List<Double> variables = new LinkedList<Double>();
+	private List<Double> wrap(double x, double y)
+	{
+		List<Double> variables = new LinkedList<Double>();
 
-        variables.add(x);
-        variables.add(y);
+		variables.add(x);
+		variables.add(y);
 
-        return variables;
-    }
+		return variables;
+	}
 }

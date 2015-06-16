@@ -37,94 +37,94 @@ import com.oracli.sisga.util.PopulationAnalyzer;
 
 public class CHC extends AbstractGA
 {
-    @Override
-    public void init()
-    {
-        super.init();
+	@Override
+	public void init()
+	{
+		super.init();
 
-        algSS = new ElitistSurvivorSelection(d, f);
-        algPS = new RouletteParentSelection(d, f);
-        algRec = new HUXRecombination();
-        algMutP = new CHCCataclysmicMutation(d, f);
-    }
+		algSS = new ElitistSurvivorSelection(d, f);
+		algPS = new RouletteParentSelection(d, f);
+		algRec = new HUXRecombination();
+		algMutP = new CHCCataclysmicMutation(d, f);
+	}
 
-    /**
-     * @param populationSize Population size.
-     * @param chromosomeSize Chromosome size (genes per chromosome).
-     * @param pC Crossover probability (ignored for CHC).
-     * @param pCM Cataclysmic mutation probability.
-     * @param termGeneration Number of generations to run,
-     *        or null for fitness-based termination.
-     * @param termFitness Fitness at which to halt,
-     *        or null for generation-based termination.
-     * @param verbose Whether to print periodic statistics.
-     */
-    public GAResultSet run(int populationSize, int chromosomeSize,
-            Double pC, Double pCM,
-            Integer termGeneration, Double termFitness,
-            boolean verbose)
-    {
-        GAResultSet results = new GAResultSet();
+	/**
+	 * @param populationSize Population size.
+	 * @param chromosomeSize Chromosome size (genes per chromosome).
+	 * @param pC Crossover probability (ignored for CHC).
+	 * @param pCM Cataclysmic mutation probability.
+	 * @param termGeneration Number of generations to run,
+	 *		or null for fitness-based termination.
+	 * @param termFitness Fitness at which to halt,
+	 *		or null for generation-based termination.
+	 * @param verbose Whether to print periodic statistics.
+	 */
+	public GAResultSet run(int populationSize, int chromosomeSize,
+			Double pC, Double pCM,
+			Integer termGeneration, Double termFitness,
+			boolean verbose)
+	{
+		GAResultSet results = new GAResultSet();
 
-        List<Chromosome> population = new LinkedList<Chromosome>();
-        for (int i = 0; i < populationSize; i += 1)
-            population.add(new Chromosome(chromosomeSize));
+		List<Chromosome> population = new LinkedList<Chromosome>();
+		for (int i = 0; i < populationSize; i += 1)
+			population.add(new Chromosome(chromosomeSize));
 
-        int threshold = Math.round(population.size() / 4);
+		int threshold = Math.round(population.size() / 4);
 
-        Double gBest  = null;
-        Double gWorst = null;
-        for (int i = 0; i <= termGeneration
-            && (gBest == null || gBest < termFitness); i += 1)
-        {
-            if (gBest == null)
-                gBest = PopulationAnalyzer.bestFitness(population, d, f);
-            else
-                if (gBest < PopulationAnalyzer.bestFitness(population, d, f))
-                    gBest = PopulationAnalyzer.bestFitness(population, d, f);
+		Double gBest  = null;
+		Double gWorst = null;
+		for (int i = 0; i <= termGeneration
+			&& (gBest == null || gBest < termFitness); i += 1)
+		{
+			if (gBest == null)
+				gBest = PopulationAnalyzer.bestFitness(population, d, f);
+			else
+				if (gBest < PopulationAnalyzer.bestFitness(population, d, f))
+					gBest = PopulationAnalyzer.bestFitness(population, d, f);
 
-            if (gWorst == null)
-                gWorst = PopulationAnalyzer.worstFitness(population, d, f);
-            else
-                if (gWorst > PopulationAnalyzer.worstFitness(population, d, f))
-                    gWorst = PopulationAnalyzer.worstFitness(population, d, f);
+			if (gWorst == null)
+				gWorst = PopulationAnalyzer.worstFitness(population, d, f);
+			else
+				if (gWorst > PopulationAnalyzer.worstFitness(population, d, f))
+					gWorst = PopulationAnalyzer.worstFitness(population, d, f);
 
-            results.bestFitnesses.add(gBest);
-            results.avgFitnesses.add(PopulationAnalyzer
-                    .avgFitness(population, d, f));
-            results.worstFitnesses.add(gWorst);
+			results.bestFitnesses.add(gBest);
+			results.avgFitnesses.add(PopulationAnalyzer
+					.avgFitness(population, d, f));
+			results.worstFitnesses.add(gWorst);
 
-            int matings = Math.round(population.size() / 2);
-            List<Chromosome> children = new LinkedList<Chromosome>();
-            List<Chromosome> newGeneration = new LinkedList<Chromosome>();
-            for (int j = 0; j < matings; j += 1)
-            {
-                List<Chromosome> parents = getParents(population);
-                Chromosome dad = parents.get(0);
-                Chromosome mom = parents.get(1);
+			int matings = Math.round(population.size() / 2);
+			List<Chromosome> children = new LinkedList<Chromosome>();
+			List<Chromosome> newGeneration = new LinkedList<Chromosome>();
+			for (int j = 0; j < matings; j += 1)
+			{
+				List<Chromosome> parents = getParents(population);
+				Chromosome dad = parents.get(0);
+				Chromosome mom = parents.get(1);
 
-                if ((dad.hammingDistanceTo(mom) / 2) > threshold)
-                    for (int k = 0; k < 2; k += 1)
-                        children.add(recombinate(dad, mom, pC));
-            }
+				if ((dad.hammingDistanceTo(mom) / 2) > threshold)
+					for (int k = 0; k < 2; k += 1)
+						children.add(recombinate(dad, mom, pC));
+			}
 
-            newGeneration.addAll(population);
+			newGeneration.addAll(population);
 
-            if (children.isEmpty())
-                threshold -= 1;
-            else
-                newGeneration.addAll(children);
+			if (children.isEmpty())
+				threshold -= 1;
+			else
+				newGeneration.addAll(children);
 
-            if (threshold <= 0)
-            {
-                population = mutate(newGeneration, pCM);
-                threshold = (int) Math.round(
-                    pCM * (1.0 - pCM) * chromosomeSize);
-            }
+			if (threshold <= 0)
+			{
+				population = mutate(newGeneration, pCM);
+				threshold = (int) Math.round(
+					pCM * (1.0 - pCM) * chromosomeSize);
+			}
 
-            population = getSurvivors(newGeneration, population.size());
-        }
+			population = getSurvivors(newGeneration, population.size());
+		}
 
-        return results;
-    }
+		return results;
+	}
 }

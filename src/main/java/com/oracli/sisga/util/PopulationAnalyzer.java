@@ -30,80 +30,80 @@ import com.oracli.sisga.model.Chromosome;
 
 public class PopulationAnalyzer
 {
-    public static void print(List<Chromosome> population,
-            Decoder d, Function f)
-    {
-        System.out.println("CHROMOSOME\tDECODED_VALUES\tFITNESS");
+	public static void print(List<Chromosome> population,
+			Decoder d, Function f)
+	{
+		System.out.println("CHROMOSOME\tDECODED_VALUES\tFITNESS");
 
-        for (Chromosome i : population)
-        {
-            List<Double> vals = d.decode(i);
+		for (Chromosome i : population)
+		{
+			List<Double> vals = d.decode(i);
 
-            StringBuffer sb = new StringBuffer();
-            sb.append("{ ");
-            for (Double j : vals)
-                sb.append(String.format("%f ", j));
-            sb.append("}");
+			StringBuffer sb = new StringBuffer();
+			sb.append("{ ");
+			for (Double j : vals)
+				sb.append(String.format("%f ", j));
+			sb.append("}");
 
-            System.out.println(String.format("%s\t%s\t%f",
-                        i.toString(), sb.toString(), f.f(vals)));
-        }
-    }
+			System.out.println(String.format("%s\t%s\t%f",
+						i.toString(), sb.toString(), f.f(vals)));
+		}
+	}
 
-    public static double avgFitness(List<Chromosome> population,
-            Decoder d, Function f)
-    {
-        double acc = 0;
+	public static double avgFitness(List<Chromosome> population,
+			Decoder d, Function f)
+	{
+		double acc = 0;
 
-        for (Chromosome chromosome : population)
-            acc += f.f(d.decode(chromosome));
+		for (Chromosome chromosome : population)
+			acc += f.f(d.decode(chromosome));
 
-        return acc / population.size();
-    }
+		return acc / population.size();
+	}
 
-    public static double bestFitness(List<Chromosome> population,
-            Decoder d, Function f)
-    {
-        /*
-         * Don't initialize this to zero as it will cause incorrect
-         * results if the fitnesses of all chromosomes are negative.
-         */
-        Double best = null;
+	public static double bestFitness(List<Chromosome> population,
+			Decoder d, Function f)
+	{
+		/*
+		 * Don't initialize this to zero as it will cause incorrect
+		 * results if the fitnesses of all chromosomes are negative.
+		 */
+		Double best = null;
 
-        for (Chromosome chromosome : population)
-        {
-            if (best == null)
-                best = f.f(d.decode(chromosome));
-            else
-            {
-                double current = f.f(d.decode(chromosome));
-                best = current > best ? current : best;
-            }
-        }
+		for (Chromosome chromosome : population)
+		{
+			if (best == null)
+				best = f.f(d.decode(chromosome));
+			else
+			{
+				double current = f.f(d.decode(chromosome));
+				best = current > best ? current : best;
+			}
+		}
 
-        return best;
-    }
+		return best;
+	}
 
-    public static double worstFitness(List<Chromosome> population,
-            Decoder d, Function f)
-    {
-        /*
-         * Don't initialize this to zero as it will cause incorrect
-         * results if the fitnesses of all genes are negative.
-         */
-        Double worst = null;
+	public static double worstFitness(List<Chromosome> population,
+			Decoder d, Function f)
+	{
+		/*
+		 * Don't initialize this to zero as it will cause incorrect
+		 * results if the fitnesses of all genes are negative.
+		 */
+		Double worst = null;
 
-        for (Chromosome chromosome : population)
-        {
-            if (worst == null)
-                worst = f.f(d.decode(chromosome));
-            else
-            {
-                double current = f.f(d.decode(chromosome));
-                worst = current < worst ? current : worst;
-            }
-        }
+		for (Chromosome chromosome : population)
+		{
+			if (worst == null)
+				worst = f.f(d.decode(chromosome));
+			else
+			{
+				double current = f.f(d.decode(chromosome));
+				worst = current < worst ? current : worst;
+			}
+		}
 
-        return worst;
-    }
+		return worst;
+	}
 }
