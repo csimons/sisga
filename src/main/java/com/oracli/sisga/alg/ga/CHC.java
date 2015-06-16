@@ -29,8 +29,6 @@ import com.oracli.sisga.alg.mutation.population.CHCCataclysmicMutation;
 import com.oracli.sisga.alg.recombination.HUXRecombination;
 import com.oracli.sisga.alg.selection.parent.RouletteParentSelection;
 import com.oracli.sisga.alg.selection.survivor.ElitistSurvivorSelection;
-import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 import com.oracli.sisga.util.GAResultSet;
 import com.oracli.sisga.util.PopulationAnalyzer;

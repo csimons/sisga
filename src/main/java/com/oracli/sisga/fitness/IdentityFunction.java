@@ -23,15 +23,16 @@
 package com.oracli.sisga.fitness;
 
 import java.util.List;
+import java.util.function.Function;
 
-public class IdentityFunction implements Function
+public class IdentityFunction implements Function<List<Double>, Double>
 {
-	public double f(List<Double> inputs)
-	{
-		if (inputs.size() != 1)
-			throw new IllegalArgumentException(
-					"Expecting  1 input variable.");
+    public Double apply(List<Double> inputs)
+    {
+        if (inputs.size() != 1)
+            throw new IllegalArgumentException(
+                    "Expecting  1 input variable.");
 
-		return inputs.get(0);
-	}
+        return inputs.get(0);
+    }
 }

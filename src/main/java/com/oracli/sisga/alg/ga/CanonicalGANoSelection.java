@@ -28,8 +28,6 @@ import java.util.List;
 import com.oracli.sisga.alg.mutation.chromosome.RandomBitFlipMutation;
 import com.oracli.sisga.alg.recombination.SinglePointCrossover;
 import com.oracli.sisga.alg.selection.parent.RouletteParentSelection;
-import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 import com.oracli.sisga.util.GAResultSet;
 import com.oracli.sisga.util.PopulationAnalyzer;

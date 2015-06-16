@@ -22,8 +22,10 @@
 
 package com.oracli.sisga.alg.ga;
 
+import java.util.List;
+import java.util.function.Function;
+
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.util.GAResultSet;
 
 public interface GA
@@ -45,6 +47,6 @@ public interface GA
 			boolean verbose);
 
 	public abstract void setDecoder(Decoder d);
-	public abstract void setFunction(Function f);
+	public abstract void setFunction(Function<List<Double>, Double> f);
 	public abstract void init();
 }

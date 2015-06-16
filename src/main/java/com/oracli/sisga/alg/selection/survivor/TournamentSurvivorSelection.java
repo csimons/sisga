@@ -24,9 +24,9 @@ package com.oracli.sisga.alg.selection.survivor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 
 /*
@@ -38,11 +38,12 @@ import com.oracli.sisga.model.Chromosome;
 public class TournamentSurvivorSelection implements SurvivorSelection
 {
 	private Decoder d;
-	private Function f;
+	private Function<List<Double>, Double> f;
 
 	private TournamentSurvivorSelection() {}
 
-	public TournamentSurvivorSelection(Decoder d, Function f)
+	public TournamentSurvivorSelection(
+			Decoder d, Function<List<Double>, Double> f)
 	{
 		this.d = d;
 		this.f = f;
@@ -65,7 +66,8 @@ public class TournamentSurvivorSelection implements SurvivorSelection
 			Chromosome a = population.get(indexA);
 			Chromosome b = population.get(indexB);
 
-			population.remove(f.f(d.decode(a)) < f.f(d.decode(b)) ? a : b);
+			population.remove(f.apply(d.decode(a)) < f.apply(d.decode(b))
+					? a : b);
 		}
 
 		return population;

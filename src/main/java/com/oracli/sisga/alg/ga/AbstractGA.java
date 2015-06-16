@@ -23,6 +23,7 @@
 package com.oracli.sisga.alg.ga;
 
 import java.util.List;
+import java.util.function.Function;
 
 import com.oracli.sisga.alg.mutation.chromosome.ChromosomeMutation;
 import com.oracli.sisga.alg.mutation.population.PopulationMutation;
@@ -30,22 +31,21 @@ import com.oracli.sisga.alg.recombination.Recombination;
 import com.oracli.sisga.alg.selection.parent.ParentSelection;
 import com.oracli.sisga.alg.selection.survivor.SurvivorSelection;
 import com.oracli.sisga.decode.Decoder;
-import com.oracli.sisga.fitness.Function;
 import com.oracli.sisga.model.Chromosome;
 import com.oracli.sisga.util.GAResultSet;
 
 public abstract class AbstractGA implements GA
 {
-	protected Decoder               d;
-	protected Function              f;
-	protected SurvivorSelection     algSS;
-	protected ParentSelection       algPS;
-	protected Recombination         algRec;
-	protected ChromosomeMutation    algMutC;
-	protected PopulationMutation    algMutP;
+	protected Decoder                        d;
+	protected Function<List<Double>, Double> f;
+	protected SurvivorSelection              algSS;
+	protected ParentSelection                algPS;
+	protected Recombination                  algRec;
+	protected ChromosomeMutation             algMutC;
+	protected PopulationMutation             algMutP;
 
-	public void setDecoder(Decoder d)   { this.d = d; }
-	public void setFunction(Function f) { this.f = f; }
+	public void setDecoder(Decoder d) { this.d = d; }
+	public void setFunction(Function<List<Double>, Double> f) { this.f = f; }
 
 	public void init()
 	{
@@ -76,7 +76,7 @@ public abstract class AbstractGA implements GA
 
 	protected double fitness(List<Double> input)
 	{
-		return f.f(input);
+		return f.apply(input);
 	}
 
 	protected List<Chromosome> getSurvivors(List<Chromosome> population,
