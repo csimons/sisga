@@ -32,15 +32,15 @@ import com.oracli.sisga.model.Chromosome;
  */
 public class NumSetBitsDecoder extends AbstractDecoder
 {
-    public List<Double> decode(Chromosome chromosome)
-    {
-        List<Double> results = new LinkedList<Double>();
+	public List<Double> decode(Chromosome chromosome)
+	{
+		List<Double> results = new LinkedList<Double>();
 
-        double value = 0.0;
-        for (int i = 0; i < chromosome.size(); i += 1)
-            value += chromosome.get(i) ? 1 : 0;
+		double value = 0.0;
+		for (int i = 0; i < chromosome.size(); i += 1)
+			value += chromosome.get(i) ? 1 : 0;
 
-        results.add(value);
-        return results;
-    }
+		results.add(value);
+		return results;
+	}
 }

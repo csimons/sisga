@@ -26,16 +26,16 @@ import com.oracli.sisga.model.Chromosome;
 
 public class Util
 {
-    public static Chromosome stringToChromosome(String bitstring)
-    {
-        if (! bitstring.matches("^[01]+$"))
-            throw new IllegalArgumentException();
+	public static Chromosome stringToChromosome(String bitstring)
+	{
+		if (! bitstring.matches("^[01]+$"))
+			throw new IllegalArgumentException();
 
-        Chromosome chromosome = new Chromosome(bitstring.length());
+		Chromosome chromosome = new Chromosome(bitstring.length());
 
-        for (int i = 0; i < bitstring.length(); i += 1)
-            chromosome.set(i, bitstring.charAt(i) == '1');
+		for (int i = 0; i < bitstring.length(); i += 1)
+			chromosome.set(i, bitstring.charAt(i) == '1');
 
-        return chromosome;
-    }
+		return chromosome;
+	}
 }

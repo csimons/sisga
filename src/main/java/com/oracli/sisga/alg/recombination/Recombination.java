@@ -26,5 +26,5 @@ import com.oracli.sisga.model.Chromosome;
 
 public interface Recombination
 {
-    public Chromosome recombinate(Chromosome dad, Chromosome mom, Double pC);
+	public Chromosome recombinate(Chromosome dad, Chromosome mom, Double pC);
 }

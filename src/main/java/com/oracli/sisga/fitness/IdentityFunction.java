@@ -26,12 +26,12 @@ import java.util.List;
 
 public class IdentityFunction implements Function
 {
-    public double f(List<Double> inputs)
-    {
-        if (inputs.size() != 1)
-            throw new IllegalArgumentException(
-                    "Expecting  1 input variable.");
+	public double f(List<Double> inputs)
+	{
+		if (inputs.size() != 1)
+			throw new IllegalArgumentException(
+					"Expecting  1 input variable.");
 
-        return inputs.get(0);
-    }
+		return inputs.get(0);
+	}
 }

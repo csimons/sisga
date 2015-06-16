@@ -28,5 +28,5 @@ import com.oracli.sisga.model.Chromosome;
 
 public interface ParentSelection
 {
-    public List<Chromosome> select(List<Chromosome> population);
+	public List<Chromosome> select(List<Chromosome> population);
 }

@@ -26,5 +26,5 @@ import com.oracli.sisga.model.Chromosome;
 
 public interface ChromosomeMutation
 {
-    public Chromosome mutate(Chromosome chromosome, double pM);
+	public Chromosome mutate(Chromosome chromosome, double pM);
 }

@@ -28,6 +28,6 @@ import com.oracli.sisga.model.Chromosome;
 
 public abstract class AbstractDecoder implements Decoder
 {
-    public void setPrecision(Integer decimalPlaces) {};
-    public abstract List<Double> decode(Chromosome chromosome);
+	public void setPrecision(Integer decimalPlaces) {};
+	public abstract List<Double> decode(Chromosome chromosome);
 }

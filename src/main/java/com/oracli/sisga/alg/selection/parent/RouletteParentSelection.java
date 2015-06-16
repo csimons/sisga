@@ -34,50 +34,50 @@ import com.oracli.sisga.model.Chromosome;
  */
 public class RouletteParentSelection implements ParentSelection
 {
-    private Decoder d;
-    private Function f;
+	private Decoder d;
+	private Function f;
 
-    private RouletteParentSelection() {}
+	private RouletteParentSelection() {}
 
-    public RouletteParentSelection(Decoder d, Function f)
-    {
-        this.d = d;
-        this.f = f;
-    }
+	public RouletteParentSelection(Decoder d, Function f)
+	{
+		this.d = d;
+		this.f = f;
+	}
 
-    public List<Chromosome> select(List<Chromosome> population)
-    {
-        List<Double> absoluteFitnesses = new LinkedList<Double>();
-        List<Double> proportionalFitnesses = new LinkedList<Double>();
+	public List<Chromosome> select(List<Chromosome> population)
+	{
+		List<Double> absoluteFitnesses = new LinkedList<Double>();
+		List<Double> proportionalFitnesses = new LinkedList<Double>();
 
-        double totalFitness = 0;
+		double totalFitness = 0;
 
-        for (Chromosome i : population)
-        {
-            double fitness = Math.abs(f.f(d.decode(i)));
-            totalFitness += fitness;
-            absoluteFitnesses.add(fitness);
-        }
+		for (Chromosome i : population)
+		{
+			double fitness = Math.abs(f.f(d.decode(i)));
+			totalFitness += fitness;
+			absoluteFitnesses.add(fitness);
+		}
 
-        if (totalFitness == 0)
-            throw new ArithmeticException(""
-                + "Sum fitness is zero in RouletteParentSelection, "
-                + "so cannot determine proportional fitness.");
+		if (totalFitness == 0)
+			throw new ArithmeticException(""
+				+ "Sum fitness is zero in RouletteParentSelection, "
+				+ "so cannot determine proportional fitness.");
 
-        for (Double i : absoluteFitnesses)
-            proportionalFitnesses.add(i / totalFitness);
+		for (Double i : absoluteFitnesses)
+			proportionalFitnesses.add(i / totalFitness);
 
-        List<Chromosome> parents = new LinkedList<Chromosome>();
+		List<Chromosome> parents = new LinkedList<Chromosome>();
 
-        while (parents.size() < 2)
-        {
-            double p = Math.random();
+		while (parents.size() < 2)
+		{
+			double p = Math.random();
 
-            for (int i = 0; i < population.size(); i += 1)
-                if (p < proportionalFitnesses.get(i) && parents.size() < 2)
-                    parents.add(population.get(i));
-        }
+			for (int i = 0; i < population.size(); i += 1)
+				if (p < proportionalFitnesses.get(i) && parents.size() < 2)
+					parents.add(population.get(i));
+		}
 
-        return parents;
-    }
+		return parents;
+	}
 }
