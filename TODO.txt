@@ -1,6 +1,4 @@
-- Migrate from Function classes to FunctionalInterfaces.
 - Use BigDecimal rather than double for values.
-- Refactor high-level GA algorithms.
 
 - Implement gray-code real-value decoders.
 - Implement dominance.
