@@ -42,8 +42,6 @@ public class ElitistSurvivorSelection implements SurvivorSelection
 	private Decoder d;
 	private Function<List<Double>, Double> f;
 
-	private ElitistSurvivorSelection() {}
-
 	public ElitistSurvivorSelection(Decoder d, Function<List<Double>, Double> f)
 	{
 		this.d = d;
